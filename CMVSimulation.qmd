@@ -105,12 +105,14 @@ semPlotModel_lavaanModel(cfa_model) |>
 Now we'll simulate data for this model.  In this case all item weights are simulated as being equal
 
 ::: {.callout-note}
-Right now everything is coded in the same direction.  
+Right now everything is coded in the same direction. Will need to fix loading at -1 for reverse coded items
 :::
 
 
 ```{r}
 cfa_sim <- simulateData(cfa_model, model.type = "cfa", sample.nobs = 500)
+#change to likert scores
+cfa_sim <- cfa_sim |> mutate(across(everything(), \(x) findInterval(x, vec=c(-Inf,-2.5,-1, 1,2.5,Inf))))
 cfa_sim
 ```
 
