@@ -119,8 +119,8 @@ cfa_sim
 Check the fit of the simulation
 
 ```{r}
-fit <- cfa(cfa_model, cfa_sim)
-summary(fit, fit.measures = TRUE)
+fit <- cfa(cfa_model, cfa_sim, ordered = TRUE)
+summary(fit)
 ```
 ## Means and Standard Deviations
 
@@ -194,6 +194,6 @@ cfa_model_with_means <- '
   plearn ~~ plearn
 '
 
-fit <- cfa(cfa_model_with_means, cfa_sim_with_means)
-summary(fit, fit.measures = TRUE)
+fit <- cfa(cfa_model_with_means, cfa_sim_with_means) # ordered = TRUE does not identify
+summary(fit)
 ```
