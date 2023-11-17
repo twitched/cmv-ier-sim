@@ -2,6 +2,7 @@
 title: "CMV Simulation Main"
 author: "Doug Twitchell"
 format: html
+bibliography: references.bib
 ---
 
 ## CMV Simulation
@@ -14,11 +15,10 @@ This is a collection of CVM Simulations for the CMV IER project by Doug Twitchel
 
 [Simulation 1](CMVSimulation.qmd)
 
-This was the first attempt to use [lavaan](https://lavaan.ugent.be) to simulate data for CMV.  In it there is no CMV or IER.  Nor does it really create good data since the thresholds aren't modeled in lavaan.  Instead they are simply added afterward.  Also, in this simulation I attempted modeling a mean structure, but that caused the model to not converge.  I don't believe a mean structure is needed.
+This was the first attempt to use [lavaan](https://lavaan.ugent.be) to simulate data for CMV. In it there is no CMV or IER. Nor does it really create good data since the thresholds aren't modeled in lavaan. Instead they are simply added afterward. Also, in this simulation I attempted modeling a mean structure, but that caused the model to not converge. I don't believe a mean structure is needed.
 
 ### Simulation 2 - Base model with no CMV or IER
 
 [Simulation 2](CMVSimulation2.qmd)
 
-Clark [@clark_item_2018] provides a [chapter](https://m-clark.github.io/sem/item-response-theory.html) on how IRT is modeled in SEM.  In this simulation I follow this chapter to create a base model from which to create simulated data. 
-
+[@clark2018] provides a [chapter](https://m-clark.github.io/sem/item-response-theory.html) on how IRT is modeled in SEM. In this simulation I follow this chapter to create a base model from which to create simulated data.

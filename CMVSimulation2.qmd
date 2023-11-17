@@ -1,6 +1,4 @@
 ---
-project:
-  output: out
 title: "CMV Simulation 2"
 format:
   html:
