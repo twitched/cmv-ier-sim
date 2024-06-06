@@ -1,5 +1,5 @@
 ---
-title: "CMV Simulation"
+title: "CMV Simulation using Lavaan"
 format:
   html:
     page-layout: full
@@ -12,7 +12,7 @@ format:
 
 ## CMV Simulation
 
-This document will go through simulating CMV and IEP.
+This document will go through simulating CMV and IEP with the JBR data using Lavaan's `simulateData()` function.
 
 ## Initialization
 
@@ -84,8 +84,8 @@ We'll input the model in lavaan formula syntax and have it create an SEM diagram
 #| fig-height: 10
 cfa_model <- '
   # measurement model
-  phone_add =~ mw + conc + .5*pain + reqp + imp + 5*think + ngu + check + use + puse
-  stress =~ upset + nocont + .4*nerv + hass + cop + 4*conf + way + nocope + cont + ontop + angr + anx + time + pile
+  phone_add =~ mw + conc + pain + reqp + imp + think + ngu + check + use + puse
+  stress =~ upset + nocont + nerv + hass + cop + conf + way + nocope + cont + ontop + angr + anx + time + pile
   plearn =~ org + guid + usek + att + crit + selfr + soph
   
   # covariances
