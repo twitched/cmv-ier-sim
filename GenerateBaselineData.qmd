@@ -47,6 +47,7 @@ Each of these constructs has several measures, and the model is expressed as a c
 
 ```{r}
 cfa_sim_model <- "
+  # Measurement model
   SSR =~ ssr1 + ssr2 + ssr3
   RI  =~ ri1 + ri2 + ri3
   WOM =~ wom1 + wom2 + wom3
@@ -55,6 +56,7 @@ cfa_sim_model <- "
   IJ  =~ ij1 + ij2 + ij3 + ij4
   PJ  =~ pj1 + pj2 + pj3 + pj4
 
+  # Variances
   SSR ~~ SSR
   RI ~~ RI
   WOM ~~ WOM
@@ -62,10 +64,60 @@ cfa_sim_model <- "
   DJ ~~ DJ
   IJ ~~ IJ
   PJ ~~ PJ
+  
+  # Covariances
+  SSR ~~ RI  
+  SSR ~~ WOM 
+  SSR ~~ SAT 
+  SSR ~~ DJ  
+  SSR ~~ IJ  
+  SSR ~~ PJ  
+  RI ~~ WOM 
+  RI ~~ SAT 
+  RI ~~ DJ  
+  RI ~~ IJ  
+  RI ~~ PJ  
+  WOM ~~ SAT 
+  WOM ~~ DJ  
+  WOM ~~ IJ  
+  WOM ~~ PJ  
+  SAT ~~ DJ  
+  SAT ~~ IJ  
+  SAT ~~ PJ  
+  DJ ~~ IJ  
+  DJ ~~ PJ  
+  IJ ~~ PJ
+  
+  # Means
+  ssr1 ~ ssr_int * 1
+  ssr2 ~ ssr_int * 1
+  ssr3 ~ ssr_int * 1 
+  ri1 ~ ri_int * 1
+  ri2 ~ ri_int * 1
+  ri3 ~ ri_int * 1
+  wom1 ~ wom_int * 1
+  wom2 ~ wom_int * 1
+  wom3 ~ wom_int * 1
+  sat1 ~ sat_int * 1
+  sat2 ~ sat_int * 1
+  sat3 ~ sat_int * 1
+  dj1 ~ dj_int * 1
+  dj2 ~ dj_int * 1
+  dj3 ~ dj_int * 1
+  dj4 ~ dj_int * 1
+  ij1 ~ ij_int * 1
+  ij2 ~ ij_int * 1
+  ij3 ~ ij_int * 1
+  ij4 ~ ij_int * 1
+  pj1 ~ pj_int * 1
+  pj2 ~ pj_int * 1
+  pj3 ~ pj_int * 1
+  pj4 ~ pj_int * 1
 "
 semPlotModel_lavaanModel(cfa_sim_model) |> 
-  semPaths(layout="tree", rotation=2, nCharNodes=5, sizeMan2 = 2.5, mar = c(1,4,1,3), label.norm = "OOOOO", residuals = FALSE)
+  semPaths(layout="tree2", rotation=2, nCharNodes=5, sizeMan2 = 2.5, mar = c(1,4,1,3), label.norm = "OOOOO", intAtSide = TRUE, levels = c(1,2,7,8), curvature = 2, residuals = FALSE)
 ```
+
 ## The Data
 
 Let's use the correlation matrix data from [@fuller_common_2016] to fit this model
@@ -115,11 +167,27 @@ cov_matrix
 
 ## Simulating New Data
 
-To simulate data we need all of the left-side components of the following [@ji_bayesian_2022]
+To simulate data we need all of the right-side components of the following [@ji_bayesian_2022]:
 
 $$
 \boldsymbol{y_j}=\boldsymbol{\beta} + \boldsymbol{\Lambda}\boldsymbol\eta_{j} + \boldsymbol{\epsilon_{j}}
 $$
+
+The notation is as follows:
+
+-   $y_{ij}$ is the response of person $j\,(j=1,...,J)$ on item $i\,(i=1,...,I)$.
+
+-   $β_i$ is the intercept for item $i$ or the mean
+
+-   $η_{jk}$ is the $k$th common factor for person $j$.
+
+-   $λ_{ik}$ is the factor loading of item $i$ on factor $k$.
+
+-   $ϵ_{ij}$ is the random error term for person $j$ on item $i$.
+
+-   Ψ is the variance-covariance matrix of the common factors $η_j$.
+
+-   Θ is the variance-covariance matrix of the residuals (or unique factors) $ϵ_j$.
 
 In expanded format
 
@@ -154,7 +222,7 @@ y_{i j}
 \vdots \\
 \epsilon_{i j}
 \end{array}\right]}_{\boldsymbol{\epsilon}_j}
-$$ 
+$$
 
 Where
 
@@ -203,7 +271,8 @@ $$
 We can derive $\boldsymbol{\beta}$ by assuming the mean for each item of each construct is the same, $\beta_{ijk} = \mu_k$.
 
 ```{r}
-beta <- construct_means
+items_per_construct <- c(3,3,3,3,4,4,4)
+beta <- rep(construct_means, items_per_construct)
 ```
 
 The covariance matrix is $\boldsymbol{\Psi}$, which we derived from the given correlation matrix.
@@ -212,21 +281,20 @@ The covariance matrix is $\boldsymbol{\Psi}$, which we derived from the given co
 psi <- cov_matrix
 ```
 
-
 For $\boldsymbol{\Theta}$ we need to determine the error of each item. Since we only have there reliability for each construct, we'll need to derive each $\theta_{ii}$, or the covariance for each item. We are given the reliability of each construct $R_{kk}$, which is an estimate of the correlation coefficient of each construct. The covariance $\epsilon_k$, then, for each construct is $(1 - R_{kk})^2$. The linear combination of the covariance of each item $x_i$ in construct $k$ is $\epsilon_k = \frac{\sum_1^ix_{i}}{N_i}$. If $x_1 = x_2 ...= x_i$, then $\epsilon_k = \frac{N_ix}{N_i} = x$. Therefore, each $\theta_{ii} = (1 - R_{kk})^2$ for each $i$ in each $k$.
 
 So, for each construct we will use one minus its reliability for the covariance of its error term to construct $\boldsymbol{\Theta}$ .
 
 ```{r}
-items_per_construct <- c(3,3,3,3,4,4,4)
 sigma_k <- (1 - reliabilities)^2 #construct error variance
 theta <- sigma_k |> rep(items_per_construct) |> diag(sum(items_per_construct), sum(items_per_construct))
 ```
+
 ::: callout-note
-We know the averagle loading for each item on each construct, but we don't know what each item loading is exactly.  
+We know the average loading for each item on each construct, but we don't know what each item loading is exactly.
 :::
 
-Finally, we need $\boldsymbol{\Lambda}$. In measurement theory the reliability $r_{11}$ is defined as $r_{11} = \frac{\sigma^2_t}{\sigma^2_x}$ where $t$ is the true factor score and $x$ is the measured score[@nunnally_psychometric_1994, eq. 6-9]  . Therfore, $\sigma_t^2 = r_{11}\sigma_x^2$.  $\sigma_x2$ is represented by $\boldsymbol{\Psi}$, so $\boldsymbol{\Lambda}$ can be represented by the reliability for each construct $r_{kk}$ 
+Finally, we need $\boldsymbol{\Lambda}$. In measurement theory, the reliability $r_{11}$ is defined as $r_{11} = \frac{\sigma^2_t}{\sigma^2_x}$ where $t$ is the true factor score and $x$ is the measured score[@nunnally_psychometric_1994, eq. 6-9] . Therefore, $\sigma_t^2 = r_{11}\sigma_x^2$. $\sigma_x^2$ is represented by $\boldsymbol{\Psi}$, so $\boldsymbol{\Lambda}$ can be represented by the reliability for each construct $r_{kk}$
 
 ```{r}
 # Create a matrix filled with zeros with rows equal to the total number of items
@@ -244,7 +312,7 @@ for (i in seq_along(items_per_construct)) {
 }
 ```
 
-We can now use all of the components to generate a data set.
+We can now use all of the components to generate a data set
 
 ```{r}
 J <- 500
@@ -256,7 +324,7 @@ eta <- MASS::mvrnorm(J, mu = rep(0, nrow(psi)), Sigma = psi)
 epsilon <- MASS::mvrnorm(J, mu = rep(0, ncol(theta)),Sigma = theta)
 
 
-Y <- rep(beta, items_per_construct) + tcrossprod(eta, lambda) + epsilon 
+Y <- beta + tcrossprod(eta, lambda) + epsilon 
 
 Y <- Y |> round() # turn in to likert.  Should already be normally distributed
 Y[Y==0] <- 1 #capture those that end up just below 0.5 and just above 7.5
@@ -267,17 +335,18 @@ item_names <- mapply(function(name, num) paste0(name, seq(num)), var_names, item
 cfa_data  <-  Y |> as.data.frame() |> setNames(item_names)
 cfa_data
 ```
+
 ```{r}
+#| echo: false
 library(downloadthis)
 cfa_data |>
   download_this(
     output_name = "simulated_cmv_data",
-    output_extension = ".csv",
+    output_extension = ".xlsx",
     button_label = "Download data",
     button_type = "warning",
     has_icon = TRUE,
-    icon = "fa fa-save",
-    csv2 = TRUE
+    icon = "fa fa-save"
   )
 ```
 
