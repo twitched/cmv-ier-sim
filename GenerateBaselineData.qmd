@@ -170,24 +170,24 @@ cov_matrix
 To simulate data we need all of the right-side components of the following [@ji_bayesian_2022]:
 
 $$
-\boldsymbol{y_j}=\boldsymbol{\beta} + \boldsymbol{\Lambda}\boldsymbol\eta_{j} + \boldsymbol{\epsilon_{j}}
+\mathbf{y_j}=\mathbf{\beta} + \mathbf{\Lambda}\mathbf\eta_{j} + \mathbf{\epsilon_{j}}
 $$
 
 The notation is as follows:
 
 -   $y_{ij}$ is the response of person $j\,(j=1,...,J)$ on item $i\,(i=1,...,I)$.
 
--   $β_i$ is the intercept for item $i$ or the mean
+-   $\beta_i$ is the intercept for item $i$ or the mean
 
--   $η_{jk}$ is the $k$th common factor for person $j$.
+-   $\eta_{jk}$ is the $k$th common factor for person $j$.
 
--   $λ_{ik}$ is the factor loading of item $i$ on factor $k$.
+-   $\lambda_{ik}$ is the factor loading of item $i$ on factor $k$.
 
--   $ϵ_{ij}$ is the random error term for person $j$ on item $i$.
+-   $\epsilon_{ij}$ is the random error term for person $j$ on item $i$.
 
--   Ψ is the variance-covariance matrix of the common factors $η_j$.
+-   $\mathbf{\Psi}$ is the variance-covariance matrix of the common factors $η_j$.
 
--   Θ is the variance-covariance matrix of the residuals (or unique factors) $ϵ_j$.
+-   $\mathbf{\Theta}$ is the variance-covariance matrix of the residuals (or unique factors) $ϵ_j$.
 
 In expanded format
 
@@ -197,12 +197,12 @@ y_{1 j} \\
 y_{2 j} \\
 \vdots \\
 y_{i j}
-\end{array}\right]}_{\boldsymbol{y}_{j}}=\underbrace{\left[\begin{array}{c}
+\end{array}\right]}_{\mathbf{y}_{j}}=\underbrace{\left[\begin{array}{c}
 \beta_{1} \\
 \beta_{2} \\
 \vdots \\
 \beta_{i}
-\end{array}\right]}_{\boldsymbol{\beta}}+\underbrace{\left[\begin{array}{cc}
+\end{array}\right]}_{\mathbf{\beta}}+\underbrace{\left[\begin{array}{cc}
 \lambda_{11} & & 0 \\
 \lambda_{21} & & 0 \\
 \vdots & \cdots & \vdots \\
@@ -216,28 +216,28 @@ y_{i j}
 \eta_{2 j} \\
 \vdots \\
 \eta_{i j}
-\end{array}\right]}_{\boldsymbol{\eta}_j}+\underbrace{\left[\begin{array}{c}
+\end{array}\right]}_{\mathbf{\eta}_j}+\underbrace{\left[\begin{array}{c}
 \epsilon_{1 j} \\
 \epsilon_{2 j} \\
 \vdots \\
 \epsilon_{i j}
-\end{array}\right]}_{\boldsymbol{\epsilon}_j}
+\end{array}\right]}_{\mathbf{\epsilon}_j}
 $$
 
 Where
 
 $$
-\boldsymbol{\epsilon}_{j} \sim N_{I}(\mathbf{0}, \mathbf{\Theta})
+\mathbf{\epsilon}_{j} \sim N_{I}(\mathbf{0}, \mathbf{\Theta})
 $$
 
 $$
-\boldsymbol{\eta}_{j} \sim N_{K}(\mathbf{0}, \boldsymbol{\Psi}),
+\mathbf{\eta}_{j} \sim N_{K}(\mathbf{0}, \mathbf{\Psi}),
 $$
 
 And
 
 $$
-\boldsymbol{\Psi}=\mathrm{Cov}\begin{pmatrix}
+\mathbf{\Psi}=\mathrm{Cov}\begin{pmatrix}
 \eta_{1j} \\
 \eta_{2j} \\
 \vdots \\
@@ -268,22 +268,22 @@ $$
 \end{pmatrix}
 $$
 
-We can derive $\boldsymbol{\beta}$ by assuming the mean for each item of each construct is the same, $\beta_{ijk} = \mu_k$.
+We can derive $\mathbf{\beta}$ by assuming the mean for each item of each construct is the same, $\beta_{ijk} = \mu_k$.
 
 ```{r}
 items_per_construct <- c(3,3,3,3,4,4,4)
 beta <- rep(construct_means, items_per_construct)
 ```
 
-The covariance matrix is $\boldsymbol{\Psi}$, which we derived from the given correlation matrix.
+The covariance matrix is $\mathbf{\Psi}$, which we derived from the given correlation matrix.
 
 ```{r}
 psi <- cov_matrix
 ```
 
-For $\boldsymbol{\Theta}$ we need to determine the error of each item. Since we only have there reliability for each construct, we'll need to derive each $\theta_{ii}$, or the covariance for each item. We are given the reliability of each construct $R_{kk}$, which is an estimate of the correlation coefficient of each construct. The covariance $\epsilon_k$, then, for each construct is $(1 - R_{kk})^2$. The linear combination of the covariance of each item $x_i$ in construct $k$ is $\epsilon_k = \frac{\sum_1^ix_{i}}{N_i}$. If $x_1 = x_2 ...= x_i$, then $\epsilon_k = \frac{N_ix}{N_i} = x$. Therefore, each $\theta_{ii} = (1 - R_{kk})^2$ for each $i$ in each $k$.
+For $\mathbf{\Theta}$ we need to determine the error of each item. Since we only have there reliability for each construct, we'll need to derive each $\theta_{ii}$, or the covariance for each item. We are given the reliability of each construct $R_{kk}$, which is an estimate of the correlation coefficient of each construct. The covariance $\epsilon_k$, then, for each construct is $(1 - R_{kk})^2$. The linear combination of the covariance of each item $x_i$ in construct $k$ is $\epsilon_k = \frac{\sum_1^ix_{i}}{N_i}$. If $x_1 = x_2 ...= x_i$, then $\epsilon_k = \frac{N_ix}{N_i} = x$. Therefore, each $\theta_{ii} = (1 - R_{kk})^2$ for each $i$ in each $k$.
 
-So, for each construct we will use one minus its reliability for the covariance of its error term to construct $\boldsymbol{\Theta}$ .
+So, for each construct we will use one minus its reliability for the covariance of its error term to construct $\mathbf{\Theta}$ .
 
 ```{r}
 sigma_k <- (1 - reliabilities)^2 #construct error variance
@@ -294,7 +294,7 @@ theta <- sigma_k |> rep(items_per_construct) |> diag(sum(items_per_construct), s
 We know the average loading for each item on each construct, but we don't know what each item loading is exactly.
 :::
 
-Finally, we need $\boldsymbol{\Lambda}$. In measurement theory, the reliability $r_{11}$ is defined as $r_{11} = \frac{\sigma^2_t}{\sigma^2_x}$ where $t$ is the true factor score and $x$ is the measured score[@nunnally_psychometric_1994, eq. 6-9] . Therefore, $\sigma_t^2 = r_{11}\sigma_x^2$. $\sigma_x^2$ is represented by $\boldsymbol{\Psi}$, so $\boldsymbol{\Lambda}$ can be represented by the reliability for each construct $r_{kk}$
+Finally, we need $\mathbf{\Lambda}$. In measurement theory, the reliability $r_{11}$ is defined as $r_{11} = \frac{\sigma^2_t}{\sigma^2_x}$ where $t$ is the true factor score and $x$ is the measured score[@nunnally_psychometric_1994, eq. 6-9] . Therefore, $\sigma_t^2 = r_{11}\sigma_x^2$. $\sigma_x^2$ is represented by $\mathbf{\Psi}$, so $\mathbf{\Lambda}$ can be represented by the reliability for each construct $r_{kk}$
 
 ```{r}
 # Create a matrix filled with zeros with rows equal to the total number of items
