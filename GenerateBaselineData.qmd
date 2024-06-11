@@ -115,7 +115,9 @@ cfa_sim_model <- "
   pj4 ~ pj_int * 1
 "
 semPlotModel_lavaanModel(cfa_sim_model) |> 
-  semPaths(layout="tree2", rotation=2, nCharNodes=5, sizeMan2 = 2.5, mar = c(1,4,1,3), label.norm = "OOOOO", intAtSide = TRUE, levels = c(1,2,7,8), curvature = 2, residuals = FALSE)
+  semPaths(layout="tree2", rotation=2, nCharNodes=5, sizeMan2 = 2.5, mar = c(1,4,1,3), 
+           label.norm = "OOOOO", intAtSide = TRUE, levels = c(1,2,7,8), curvature = 2, 
+           residuals = FALSE)
 ```
 
 ## The Data
@@ -287,7 +289,9 @@ So, for each construct we will use one minus its reliability for the covariance 
 
 ```{r}
 sigma_k <- (1 - reliabilities)^2 #construct error variance
-theta <- sigma_k |> rep(items_per_construct) |> diag(sum(items_per_construct), sum(items_per_construct))
+theta <- sigma_k |> 
+  rep(items_per_construct) |> 
+  diag(sum(items_per_construct), sum(items_per_construct))
 ```
 
 ::: callout-note
@@ -330,7 +334,9 @@ Y <- Y |> round() # turn in to likert.  Should already be normally distributed
 Y[Y==0] <- 1 #capture those that end up just below 0.5 and just above 7.5
 Y[Y==8] <- 7
 
-item_names <- mapply(function(name, num) paste0(name, seq(num)), var_names, items_per_construct, SIMPLIFY = FALSE) |> unlist()
+item_names <- mapply(\(name, num) 
+                     paste0(name, seq(num)), var_names, items_per_construct, SIMPLIFY = FALSE) |>
+  unlist()
 
 cfa_data  <-  Y |> as.data.frame() |> setNames(item_names)
 cfa_data
