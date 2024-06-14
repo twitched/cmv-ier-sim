@@ -3,11 +3,17 @@ project:
 
 website:
   title: "CMV Simulation"
-  navbar:
-    left:
+  sidebar:
+    style: docked
+    search: false
+    contents:
       - href: index.qmd
         text: Home
-      - GenerateBaselineData.qmd
+      - href: GenerateBaselineData.qmd
+        text: Generate Baseline Data
+    tools:
+      - icon: github
+        href: https://github.com/twitched/cmv-ier-sim
       
 
 format:
