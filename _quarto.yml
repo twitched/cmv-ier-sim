@@ -29,3 +29,6 @@ format:
     link-citations: true
     code-fold: true
     code-tools: true
+    html-math-method: katex
+    repo-url: https://github.com/twitched/cmv-ier-sim
+    repo-text: "GitHub"
