@@ -21,3 +21,5 @@ format:
     monofont: "Fira Code"
     df-print: paged
     link-citations: true
+    code-fold: true
+    code-tools: true
