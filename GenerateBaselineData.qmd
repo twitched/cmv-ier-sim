@@ -13,6 +13,8 @@ bibliography: references.bib
 
 ```{r}
 #| label: setup
+#| echo: false
+
 library(tidyverse)
 library(lavaan)
 library(semPlot)
@@ -341,6 +343,16 @@ item_names <- mapply(\(name, num)
 cfa_data  <-  Y |> as.data.frame() |> setNames(item_names)
 cfa_data
 ```
+
+Save the simulated data to allow for later use.
+
+```{r}
+cfa_data |> readr::write_csv(file.path(getwd(), "_data", "baseline.csv"))
+```
+
+## Download the Data
+
+Click on the button to download the data
 
 ```{r}
 #| echo: false
