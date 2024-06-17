@@ -11,8 +11,10 @@ This is a set of pages that run through simulating and testing data for the CMV 
 
 ## Generate Baseline Data
 
-[Generate Baseline Data](GenerateBaselineData.qmd)
-
 In this simulation, we generate a data set with no CMV or IER. This is the baseline data set that we will use to compare to the other data sets.
 
+[Generate Baseline Data](GenerateBaselineData.qmd)
 
+## Investigate IER and CMV Interplay
+
+[IER CMV Interplay](IER-CMVInterplay.qmd)

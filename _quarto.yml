@@ -11,6 +11,8 @@ website:
         text: Home
       - href: GenerateBaselineData.qmd
         text: Generate Baseline Data
+      - href: IER-CMVInterplay.qmd
+        text: IER-CMV Interplay
     tools:
       - icon: github
         href: https://github.com/twitched/cmv-ier-sim
