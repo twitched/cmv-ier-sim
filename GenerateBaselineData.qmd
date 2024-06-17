@@ -230,7 +230,7 @@ $$
 $$
 
 $$
-\mathbf{\eta}_{j} \sim N_{K}(\mathbf{\beta}_k, \mathbf{\Psi}),
+\mathbf{\eta}_{j} \sim N_{K}(\mathbf{\beta}, \mathbf{\Psi}),
 $$
 Where $\mathbf{\beta}_k$ is the mean of each construct.
 
