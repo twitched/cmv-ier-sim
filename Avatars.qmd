@@ -1,6 +1,6 @@
 ---
 title: "IER Avatars"
-author: "Twitchell"
+author: "Ragland, Twitchell"
 date: today
 ---
 
