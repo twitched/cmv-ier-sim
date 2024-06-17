@@ -367,11 +367,19 @@ lavTestLRT(Model3_fit, Model2_fit)
 ```
 
 
-Export IER Scores to Excel...
+Export IER Scores
 
 ```{r}
 
-#library("writexl")
-#write_xlsx(IER_Scores,"C:/Users/eragland/OneDrive/ULM/Research IER CMV/IER Scores for Sim Data 02.06.24.xlsx")
+library(downloadthis)
+IER_Scores |>
+  download_this(
+    output_name = "IERScores",
+    output_extension = ".xlsx",
+    button_label = "Download data",
+    button_type = "warning",
+    has_icon = TRUE,
+    icon = "fa fa-save"
+  )
 
 ```
