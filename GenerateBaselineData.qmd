@@ -315,7 +315,7 @@ J <- 500
 eta <- MASS::mvrnorm(J, mu = construct_means, Sigma = psi)
 
 # generate error terms for each item for each subject
-epsilon <- MASS::mvrnorm(J, mu = rep(0, ncol(theta)),Sigma = theta)
+epsilon <- MASS::mvrnorm(J, mu = rep(0, ncol(theta)), Sigma = theta)
 
 
 Y <- tcrossprod(eta, lambda) + epsilon 
