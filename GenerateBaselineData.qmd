@@ -1,5 +1,7 @@
 ---
 title: "GenerateBaselineData"
+author: "Twitchell"
+date: today
 format:
   html:
     page-layout: full

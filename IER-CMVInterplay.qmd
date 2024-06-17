@@ -1,7 +1,7 @@
 ---
 title: "The Interplay of IER and CMV in Data"
-author: "Ragland"
-date: "2024-01-24"
+author: "Ragland, Twitchell"
+date: today
 output: html_document
 ---
 
