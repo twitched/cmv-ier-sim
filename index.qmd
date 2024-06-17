@@ -18,3 +18,7 @@ In this simulation, we generate a data set with no CMV or IER. This is the basel
 ## Investigate IER and CMV Interplay
 
 [IER CMV Interplay](IER-CMVInterplay.qmd)
+
+## Generate Data from IER Avatars
+
+[Generate Data from IER Avatars](Avatars.qmd)

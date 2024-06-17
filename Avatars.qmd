@@ -1,0 +1,39 @@
+---
+title: "IER Avatars"
+author: "Twitchell"
+date: today
+---
+
+To create simulated insufficient error response data, we will use avatars. Each avatar has a name and an IER pattern.
+
+## Avatar 1: Mallory
+
+Mallory is an accountant at a hotel management company. The HR manager at Mallory’s company is friends with a professor at a local university, so about once every year, Mallory and her coworkers are asked to complete surveys for research studies. As an incentive for participating in a survey when asked, if at least 50% of the company completes the survey, the office closes early the Friday after the survey closes. Most of the surveys ask about work environment and behaviors, including citizenship behaviors, organizational justice, workplace deviance, and job performance. When Mallory completed the first few surveys, she paid close attention to the survey items and answered thoughtfully and honestly, thinking the results of the survey might lead to improvements in the office (and a half-day off work). However, after about five years of taking these surveys, she realized changes weren’t coming, only the half-day off. At that point, her only motivation for participating in the survey was to make sure she did her part to get the survey participation rate up to the goal that was set for the survey. As a result, Mallory has stopped reading the questions in the survey altogether and just selects “neutral” for every item.
+
+### Comments
+
+This one seems pretty simple. It is a straightline responder for the entire survey.
+
+## Avatar 2: Darren
+
+Darren is an attorney and works for the same company as Mallory. He’s never been a fan of the surveys because frankly, he feels like he is way too busy for something as silly as academic research. However, everyone hounds him to complete the surveys when they come around because of the promise of a half-day off work if the participation rate for the survey is high enough. He’s worried that if he doesn’t appear to take the survey seriously, his responses won’t be recorded, rendering his time completing the survey completely wasted. So, to appear like he’s thoughtfully responding to the survey, he randomly selects responses to the survey items so that there’s no risk of his responses being scrapped.
+
+### Comments
+
+This one seems pretty simple, too. It is a random responder for the entire survey.
+
+## Avatar 3: Bart
+
+Bart is a financial analyst who lives and works in a large metropolitan area. He commutes to work by train every day, and the trip is about 45 minutes each way. His work is stressful and draining, so sometimes he completes surveys online to wind down after a long day. He gets paid to do it, but that isn’t even something he thinks about when selecting surveys to complete. Bart’s “payment” is the enjoyment he gets from completing surveys. He likes to be introspective, likening it to meditation, so completing surveys is fascinating to him. So, when Bart completes a survey, he gives it his full attention. Well, he gives it his full attention for as long as he can. Some surveys are just too long, and he gets fatigued by repetitive questions that seem to go on and on. When that happens, Bart tries to give his brain a break by skimming questions or randomly allowing himself to zone out while reading questions after he’s been in a survey for a while.
+
+### Comments
+
+This is the trickier one. Currently, our survey is too short to simulate Bart. Christie and I had talked about needing to add more variables to our simulation for this. However, Christie mentioned that they have always kept the scales short for our CMV studies because CMV is more likely to be detected that way. Are we going to be washing out the CMV possibility with a longer set of items? My question is—how does a longer list of short scales affect our ability to detect CMV? I’d assume in a similar way, right?
+
+## Avatar 4: Scarlett
+
+Scarlett is an office manager who spends most of her day at work filing paperwork and ordering office supplies. She has quite a bit of downtime at work, so she completes surveys to earn some extra cash. However, she has often had to rush through completing surveys due to being called into meetings last minute. Scarlett has read on blogs and message boards that researchers often use trap questions and consistency screening methods to catch participants who are rushing or careless, and those participants don’t get paid for their work. So, when she must rush through a survey (whether it’s halfway through a survey or for its entirety), she’s come up with her own system. First, she reads the first question on the page to decide how to answer the rest of the items. Since she doesn’t want to seem too consistent, she varies her answers for the rest of the page around her answer to the first item. Then, while answering the items on the rest of the page in a nonrandom pattern, she pays just enough attention to the survey items to spot catch questions such as, “Please mark STRONGLY AGREE for this item,” or “I am paid biweekly by gremlins,” so that she will answer those items correctly.
+
+### Comments
+
+For this avatar, we’d need the response to the first item on a page to be selected randomly. Then, each subsequent response is a random choice within a constrained range around the first response. For example, if “4” is the response for the first item, subsequent items on the page should be a random selection of 3, 4, or 5.
