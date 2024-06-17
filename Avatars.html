@@ -6,9 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Doug Twitchell">
+<meta name="author" content="Ragland, Twitchell">
+<meta name="dcterms.date" content="2024-06-17">
 
-<title>CMV-IER Simulation - CMV-IER Simulation Main</title>
+<title>CMV-IER Simulation - IER Avatars</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Home</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Avatars.html">IER Avatars</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -137,7 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -155,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Avatars.html" class="sidebar-item-text sidebar-link">
+  <a href="./Avatars.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">IER Avatars</span></a>
   </div>
 </li>
@@ -169,10 +170,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#cmv-ier-simulation" id="toc-cmv-ier-simulation" class="nav-link active" data-scroll-target="#cmv-ier-simulation">CMV-IER Simulation</a></li>
-  <li><a href="#generate-baseline-data" id="toc-generate-baseline-data" class="nav-link" data-scroll-target="#generate-baseline-data">Generate Baseline Data</a></li>
-  <li><a href="#investigate-ier-and-cmv-interplay" id="toc-investigate-ier-and-cmv-interplay" class="nav-link" data-scroll-target="#investigate-ier-and-cmv-interplay">Investigate IER and CMV Interplay</a></li>
-  <li><a href="#generate-data-from-ier-avatars" id="toc-generate-data-from-ier-avatars" class="nav-link" data-scroll-target="#generate-data-from-ier-avatars">Generate Data from IER Avatars</a></li>
+  <li><a href="#avatar-1-mallory" id="toc-avatar-1-mallory" class="nav-link active" data-scroll-target="#avatar-1-mallory">Avatar 1: Mallory</a>
+  <ul class="collapse">
+  <li><a href="#comments" id="toc-comments" class="nav-link" data-scroll-target="#comments">Comments</a></li>
+  </ul></li>
+  <li><a href="#avatar-2-darren" id="toc-avatar-2-darren" class="nav-link" data-scroll-target="#avatar-2-darren">Avatar 2: Darren</a>
+  <ul class="collapse">
+  <li><a href="#comments-1" id="toc-comments-1" class="nav-link" data-scroll-target="#comments-1">Comments</a></li>
+  </ul></li>
+  <li><a href="#avatar-3-bart" id="toc-avatar-3-bart" class="nav-link" data-scroll-target="#avatar-3-bart">Avatar 3: Bart</a>
+  <ul class="collapse">
+  <li><a href="#comments-2" id="toc-comments-2" class="nav-link" data-scroll-target="#comments-2">Comments</a></li>
+  </ul></li>
+  <li><a href="#avatar-4-scarlett" id="toc-avatar-4-scarlett" class="nav-link" data-scroll-target="#avatar-4-scarlett">Avatar 4: Scarlett</a>
+  <ul class="collapse">
+  <li><a href="#comments-3" id="toc-comments-3" class="nav-link" data-scroll-target="#comments-3">Comments</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -181,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">CMV-IER Simulation Main</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">IER Avatars</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -191,10 +204,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Doug Twitchell </p>
+             <p>Ragland, Twitchell </p>
           </div>
   </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 17, 2024</p>
+    </div>
+  </div>
   
     
   </div>
@@ -204,26 +223,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="cmv-ier-simulation" class="level2">
-<h2 class="anchored" data-anchor-id="cmv-ier-simulation">CMV-IER Simulation</h2>
-<p>This is a set of pages that run through simulating and testing data for the CMV IER project by Elizabeth Raglund, Christie Fuller, Marcia Simmering, and Doug Twitchell.</p>
+<p>To create simulated insufficient error response data, we will use avatars. Each avatar has a name and an IER pattern.</p>
+<section id="avatar-1-mallory" class="level2">
+<h2 class="anchored" data-anchor-id="avatar-1-mallory">Avatar 1: Mallory</h2>
+<p>Mallory is an accountant at a hotel management company. The HR manager at Mallory’s company is friends with a professor at a local university, so about once every year, Mallory and her coworkers are asked to complete surveys for research studies. As an incentive for participating in a survey when asked, if at least 50% of the company completes the survey, the office closes early the Friday after the survey closes. Most of the surveys ask about work environment and behaviors, including citizenship behaviors, organizational justice, workplace deviance, and job performance. When Mallory completed the first few surveys, she paid close attention to the survey items and answered thoughtfully and honestly, thinking the results of the survey might lead to improvements in the office (and a half-day off work). However, after about five years of taking these surveys, she realized changes weren’t coming, only the half-day off. At that point, her only motivation for participating in the survey was to make sure she did her part to get the survey participation rate up to the goal that was set for the survey. As a result, Mallory has stopped reading the questions in the survey altogether and just selects “neutral” for every item.</p>
+<section id="comments" class="level3">
+<h3 class="anchored" data-anchor-id="comments">Comments</h3>
+<p>This one seems pretty simple. It is a straightline responder for the entire survey.</p>
 </section>
-<section id="generate-baseline-data" class="level2">
-<h2 class="anchored" data-anchor-id="generate-baseline-data">Generate Baseline Data</h2>
-<p>In this simulation, we generate a data set with no CMV or IER. This is the baseline data set that we will use to compare to the other data sets.</p>
-<p><a href="./GenerateBaselineData.html">Generate Baseline Data</a></p>
 </section>
-<section id="investigate-ier-and-cmv-interplay" class="level2">
-<h2 class="anchored" data-anchor-id="investigate-ier-and-cmv-interplay">Investigate IER and CMV Interplay</h2>
-<p><a href="./IER-CMVInterplay.html">IER CMV Interplay</a></p>
+<section id="avatar-2-darren" class="level2">
+<h2 class="anchored" data-anchor-id="avatar-2-darren">Avatar 2: Darren</h2>
+<p>Darren is an attorney and works for the same company as Mallory. He’s never been a fan of the surveys because frankly, he feels like he is way too busy for something as silly as academic research. However, everyone hounds him to complete the surveys when they come around because of the promise of a half-day off work if the participation rate for the survey is high enough. He’s worried that if he doesn’t appear to take the survey seriously, his responses won’t be recorded, rendering his time completing the survey completely wasted. So, to appear like he’s thoughtfully responding to the survey, he randomly selects responses to the survey items so that there’s no risk of his responses being scrapped.</p>
+<section id="comments-1" class="level3">
+<h3 class="anchored" data-anchor-id="comments-1">Comments</h3>
+<p>This one seems pretty simple, too. It is a random responder for the entire survey.</p>
 </section>
-<section id="generate-data-from-ier-avatars" class="level2">
-<h2 class="anchored" data-anchor-id="generate-data-from-ier-avatars">Generate Data from IER Avatars</h2>
-<p><a href="./Avatars.html">Generate Data from IER Avatars</a></p>
+</section>
+<section id="avatar-3-bart" class="level2">
+<h2 class="anchored" data-anchor-id="avatar-3-bart">Avatar 3: Bart</h2>
+<p>Bart is a financial analyst who lives and works in a large metropolitan area. He commutes to work by train every day, and the trip is about 45 minutes each way. His work is stressful and draining, so sometimes he completes surveys online to wind down after a long day. He gets paid to do it, but that isn’t even something he thinks about when selecting surveys to complete. Bart’s “payment” is the enjoyment he gets from completing surveys. He likes to be introspective, likening it to meditation, so completing surveys is fascinating to him. So, when Bart completes a survey, he gives it his full attention. Well, he gives it his full attention for as long as he can. Some surveys are just too long, and he gets fatigued by repetitive questions that seem to go on and on. When that happens, Bart tries to give his brain a break by skimming questions or randomly allowing himself to zone out while reading questions after he’s been in a survey for a while.</p>
+<section id="comments-2" class="level3">
+<h3 class="anchored" data-anchor-id="comments-2">Comments</h3>
+<p>This is the trickier one. Currently, our survey is too short to simulate Bart. Christie and I had talked about needing to add more variables to our simulation for this. However, Christie mentioned that they have always kept the scales short for our CMV studies because CMV is more likely to be detected that way. Are we going to be washing out the CMV possibility with a longer set of items? My question is—how does a longer list of short scales affect our ability to detect CMV? I’d assume in a similar way, right?</p>
+</section>
+</section>
+<section id="avatar-4-scarlett" class="level2">
+<h2 class="anchored" data-anchor-id="avatar-4-scarlett">Avatar 4: Scarlett</h2>
+<p>Scarlett is an office manager who spends most of her day at work filing paperwork and ordering office supplies. She has quite a bit of downtime at work, so she completes surveys to earn some extra cash. However, she has often had to rush through completing surveys due to being called into meetings last minute. Scarlett has read on blogs and message boards that researchers often use trap questions and consistency screening methods to catch participants who are rushing or careless, and those participants don’t get paid for their work. So, when she must rush through a survey (whether it’s halfway through a survey or for its entirety), she’s come up with her own system. First, she reads the first question on the page to decide how to answer the rest of the items. Since she doesn’t want to seem too consistent, she varies her answers for the rest of the page around her answer to the first item. Then, while answering the items on the rest of the page in a nonrandom pattern, she pays just enough attention to the survey items to spot catch questions such as, “Please mark STRONGLY AGREE for this item,” or “I am paid biweekly by gremlins,” so that she will answer those items correctly.</p>
+<section id="comments-3" class="level3">
+<h3 class="anchored" data-anchor-id="comments-3">Comments</h3>
+<p>For this avatar, we’d need the response to the first item on a page to be selected randomly. Then, each subsequent response is a random choice within a constrained range around the first response. For example, if “4” is the response for the first item, subsequent items on the page should be a random selection of 3, 4, or 5.</p>
 
 
 <!-- -->
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -688,29 +723,44 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "CMV-IER Simulation Main"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Doug Twitchell"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">bibliography:</span><span class="co"> references.bib</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## CMV-IER Simulation</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>This is a set of pages that run through simulating and testing data for the CMV IER project by Elizabeth Raglund, Christie Fuller, Marcia Simmering, and Doug Twitchell.</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Generate Baseline Data</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>In this simulation, we generate a data set with no CMV or IER. This is the baseline data set that we will use to compare to the other data sets.</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Generate Baseline Data</span><span class="co">](GenerateBaselineData.qmd)</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Investigate IER and CMV Interplay</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">IER CMV Interplay</span><span class="co">](IER-CMVInterplay.qmd)</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Generate Data from IER Avatars</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Generate Data from IER Avatars</span><span class="co">](Avatars.qmd)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "IER Avatars"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Ragland, Twitchell"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>To create simulated insufficient error response data, we will use avatars. Each avatar has a name and an IER pattern.</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Avatar 1: Mallory</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>Mallory is an accountant at a hotel management company. The HR manager at Mallory’s company is friends with a professor at a local university, so about once every year, Mallory and her coworkers are asked to complete surveys for research studies. As an incentive for participating in a survey when asked, if at least 50% of the company completes the survey, the office closes early the Friday after the survey closes. Most of the surveys ask about work environment and behaviors, including citizenship behaviors, organizational justice, workplace deviance, and job performance. When Mallory completed the first few surveys, she paid close attention to the survey items and answered thoughtfully and honestly, thinking the results of the survey might lead to improvements in the office (and a half-day off work). However, after about five years of taking these surveys, she realized changes weren’t coming, only the half-day off. At that point, her only motivation for participating in the survey was to make sure she did her part to get the survey participation rate up to the goal that was set for the survey. As a result, Mallory has stopped reading the questions in the survey altogether and just selects “neutral” for every item.</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comments</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>This one seems pretty simple. It is a straightline responder for the entire survey.</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Avatar 2: Darren</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>Darren is an attorney and works for the same company as Mallory. He’s never been a fan of the surveys because frankly, he feels like he is way too busy for something as silly as academic research. However, everyone hounds him to complete the surveys when they come around because of the promise of a half-day off work if the participation rate for the survey is high enough. He’s worried that if he doesn’t appear to take the survey seriously, his responses won’t be recorded, rendering his time completing the survey completely wasted. So, to appear like he’s thoughtfully responding to the survey, he randomly selects responses to the survey items so that there’s no risk of his responses being scrapped.</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comments</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>This one seems pretty simple, too. It is a random responder for the entire survey.</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">## Avatar 3: Bart</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>Bart is a financial analyst who lives and works in a large metropolitan area. He commutes to work by train every day, and the trip is about 45 minutes each way. His work is stressful and draining, so sometimes he completes surveys online to wind down after a long day. He gets paid to do it, but that isn’t even something he thinks about when selecting surveys to complete. Bart’s “payment” is the enjoyment he gets from completing surveys. He likes to be introspective, likening it to meditation, so completing surveys is fascinating to him. So, when Bart completes a survey, he gives it his full attention. Well, he gives it his full attention for as long as he can. Some surveys are just too long, and he gets fatigued by repetitive questions that seem to go on and on. When that happens, Bart tries to give his brain a break by skimming questions or randomly allowing himself to zone out while reading questions after he’s been in a survey for a while.</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comments</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>This is the trickier one. Currently, our survey is too short to simulate Bart. Christie and I had talked about needing to add more variables to our simulation for this. However, Christie mentioned that they have always kept the scales short for our CMV studies because CMV is more likely to be detected that way. Are we going to be washing out the CMV possibility with a longer set of items? My question is—how does a longer list of short scales affect our ability to detect CMV? I’d assume in a similar way, right?</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## Avatar 4: Scarlett</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>Scarlett is an office manager who spends most of her day at work filing paperwork and ordering office supplies. She has quite a bit of downtime at work, so she completes surveys to earn some extra cash. However, she has often had to rush through completing surveys due to being called into meetings last minute. Scarlett has read on blogs and message boards that researchers often use trap questions and consistency screening methods to catch participants who are rushing or careless, and those participants don’t get paid for their work. So, when she must rush through a survey (whether it’s halfway through a survey or for its entirety), she’s come up with her own system. First, she reads the first question on the page to decide how to answer the rest of the items. Since she doesn’t want to seem too consistent, she varies her answers for the rest of the page around her answer to the first item. Then, while answering the items on the rest of the page in a nonrandom pattern, she pays just enough attention to the survey items to spot catch questions such as, “Please mark STRONGLY AGREE for this item,” or “I am paid biweekly by gremlins,” so that she will answer those items correctly.</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comments</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>For this avatar, we’d need the response to the first item on a page to be selected randomly. Then, each subsequent response is a random choice within a constrained range around the first response. For example, if “4” is the response for the first item, subsequent items on the page should be a random selection of 3, 4, or 5.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ragland, Twitchell">
+<meta name="dcterms.date" content="2024-06-17">
+
+<title>CMV-IER Simulation - The Interplay of IER and CMV in Data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/font-awesome-5.13.0/js/script.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./IER-CMVInterplay.html">IER-CMV Interplay</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">CMV-IER Simulation</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/twitched/cmv-ier-sim" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./GenerateBaselineData.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generate Baseline Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./IER-CMVInterplay.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">IER-CMV Interplay</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Avatars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IER Avatars</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#insufficient-effort-responding-detection" id="toc-insufficient-effort-responding-detection" class="nav-link active" data-scroll-target="#insufficient-effort-responding-detection">Insufficient Effort Responding Detection</a></li>
+  <li><a href="#exploratory-factor-analysis-of-ier-indices" id="toc-exploratory-factor-analysis-of-ier-indices" class="nav-link" data-scroll-target="#exploratory-factor-analysis-of-ier-indices">Exploratory Factor Analysis of IER Indices</a></li>
+  <li><a href="#directly-measured-latent-method-factor-technique-for-handling-ier" id="toc-directly-measured-latent-method-factor-technique-for-handling-ier" class="nav-link" data-scroll-target="#directly-measured-latent-method-factor-technique-for-handling-ier">Directly Measured Latent Method Factor Technique for Handling IER</a>
+  <ul class="collapse">
+  <li><a href="#step-one-prepare-the-rstudio-environment" id="toc-step-one-prepare-the-rstudio-environment" class="nav-link" data-scroll-target="#step-one-prepare-the-rstudio-environment">Step One: Prepare the RStudio Environment</a></li>
+  <li><a href="#step-two-model-specification" id="toc-step-two-model-specification" class="nav-link" data-scroll-target="#step-two-model-specification">Step Two: Model Specification</a>
+  <ul class="collapse">
+  <li><a href="#baseline-model" id="toc-baseline-model" class="nav-link" data-scroll-target="#baseline-model">Baseline Model</a></li>
+  <li><a href="#model-1" id="toc-model-1" class="nav-link" data-scroll-target="#model-1">Model 1</a></li>
+  <li><a href="#model-2" id="toc-model-2" class="nav-link" data-scroll-target="#model-2">Model 2</a></li>
+  <li><a href="#model-3" id="toc-model-3" class="nav-link" data-scroll-target="#model-3">Model 3</a></li>
+  </ul></li>
+  <li><a href="#step-three-compare-the-models" id="toc-step-three-compare-the-models" class="nav-link" data-scroll-target="#step-three-compare-the-models">Step Three: Compare the models</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">The Interplay of IER and CMV in Data</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ragland, Twitchell </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 17, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="insufficient-effort-responding-detection" class="level1">
+<h1>Insufficient Effort Responding Detection</h1>
+<p>List of all the libraries to use for the analysis</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(foreign)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(careless)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: carData
+
+Attaching package: 'car'
+
+The following object is masked from 'package:dplyr':
+
+    recode
+
+The following object is masked from 'package:purrr':
+
+    some</code></pre>
+</div>
+</div>
+<p>Call the dataset</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>IER_Sim_Data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(<span class="fu">getwd</span>(), <span class="st">"_data"</span>, <span class="st">"baseline.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 500 Columns: 24
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+dbl (24): ssr1, ssr2, ssr3, ri1, ri2, ri3, wom1, wom2, wom3, sat1, sat2, sat...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<p>Calculate the even-odd consistency score for the personality variables.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">0</span>, <span class="at">nrow =</span> <span class="dv">500</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>EO_score <span class="ot">&lt;-</span> <span class="fu">evenodd</span>(IER_Sim_Data, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in evenodd(IER_Sim_Data, c(3, 3, 3, 3, 4, 4, 4)): Computation of even-odd has changed for consistency of interpretation
+          with other indices. This change occurred in version 1.2.0. A higher
+          score now indicates a greater likelihood of careless responding. If
+          you have previously written code to cut score based on the output of
+          this function, you should revise that code accordingly.</code></pre>
+</div>
+</div>
+<p>Now calculate the psychometric synonym scores for ALL of the personality/behavior variables.</p>
+<p>First, I create a dataset for the variables. Then, I determine how many item pairs have a correlation greater than 0.60.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>psychsyn_cor <span class="ot">&lt;-</span> <span class="fu">psychsyn_critval</span>(IER_Sim_Data)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(psychsyn_cor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["var1"],"name":[1],"type":["fct"],"align":["left"]},{"label":["var2"],"name":[2],"type":["fct"],"align":["left"]},{"label":["cor"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"sat3","2":"sat1","3":"0.9725142","_rn_":"228"},{"1":"sat2","2":"sat1","3":"0.9669579","_rn_":"227"},{"1":"dj4","2":"dj1","3":"0.9636250","_rn_":"304"},{"1":"dj4","2":"dj2","3":"0.9634330","_rn_":"328"},{"1":"sat3","2":"sat2","3":"0.9626658","_rn_":"252"},{"1":"dj3","2":"dj1","3":"0.9626591","_rn_":"303"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(psychsyn_cor<span class="sc">$</span>cor <span class="sc">&gt;</span> .<span class="dv">60</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 55</code></pre>
+</div>
+</div>
+<p>If there are enough pairs, proceed with calculating individual scores. (there were 49)</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>psychsyn_score <span class="ot">&lt;-</span> <span class="fu">psychsyn</span>(IER_Sim_Data, <span class="at">critval =</span> .<span class="dv">60</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Since positive correlations indicate participants are responding consistently (i.e.&nbsp;carefully), multiply these scores by -1 so that higher scores reflect IER.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>psychsyn_Index <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">*</span>(IER_Scores<span class="sc">$</span>psychsyn_score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Now calculate the psychometric antonym scores for ALL of the personality/behavior variables.</p>
+<p>First, I determine how many item pairs have a correlation less than -0.60.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>psychant_cor <span class="ot">&lt;-</span> <span class="fu">psychsyn_critval</span>(IER_Sim_Data)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(psychant_cor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["var1"],"name":[1],"type":["fct"],"align":["left"]},{"label":["var2"],"name":[2],"type":["fct"],"align":["left"]},{"label":["cor"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"sat3","2":"sat1","3":"0.9725142","_rn_":"228"},{"1":"sat2","2":"sat1","3":"0.9669579","_rn_":"227"},{"1":"dj4","2":"dj1","3":"0.9636250","_rn_":"304"},{"1":"dj4","2":"dj2","3":"0.9634330","_rn_":"328"},{"1":"sat3","2":"sat2","3":"0.9626658","_rn_":"252"},{"1":"dj3","2":"dj1","3":"0.9626591","_rn_":"303"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(psychant_cor<span class="sc">$</span>cor <span class="sc">&lt;</span> <span class="sc">-</span>.<span class="dv">60</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p>If there are enough pairs, proceed with calculating individual scores. There were 0 in this dataset.</p>
+<p>Next, calculate the IRV index for the personality variables.</p>
+<p>The intra-individual response variability (IRV) is similiar in spirit to the Longstring index. It is defined as the “standard deviation of responses across a set of consecutive item responses for an individual” (Dunn et al.&nbsp;2018).</p>
+<p>Since all the items are positively worded, I am calculating this over the whole survey and then splitting the survey into four sections.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>irv_scores <span class="ot">&lt;-</span> <span class="fu">irv</span>(IER_Sim_Data, <span class="at">split =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Calculate the long string index for the personality variables.For each observation, the length of the maximum uninterrupted string of identical responses is returned.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>careless_long<span class="ot">&lt;-</span><span class="fu">longstring</span>(IER_Sim_Data,<span class="at">avg=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Now I have to clean up all the NA values in the pyschometric synonym and psychometric antonym indices. NA values index indicate that there was no variance within any of the pairs. Since no variance indicates extreme consistency, and these indices are meant to catch inconsistent respondents. I assign a value of -1 to these respondents because they were responding “carefully,” which really means consistently with these indices.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>missing_rows <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">complete.cases</span>(IER_Scores<span class="sc">$</span>psychsyn_Index)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>psychsyn_Index[missing_rows] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>missing_rows <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">complete.cases</span>(IER_Scores<span class="sc">$</span>EO_score)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>EO_score[missing_rows] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Compute Mahalanobis D Index</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>mahalscore <span class="ot">&lt;-</span> <span class="fu">mahad</span>(IER_Sim_Data, <span class="at">plot =</span> <span class="cn">FALSE</span>, <span class="at">flag =</span> <span class="cn">FALSE</span>, <span class="at">confidence =</span> <span class="fl">0.95</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The below code converts the IER scores to z-scores.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>IER_Sim_Data<span class="sc">$</span>ZLongstring_Index <span class="ot">&lt;-</span> (IER_Scores<span class="sc">$</span>careless_long<span class="sc">-</span><span class="fu">mean</span>(IER_Scores<span class="sc">$</span>careless_long))<span class="sc">/</span><span class="fu">sd</span>(IER_Scores<span class="sc">$</span>careless_long)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>IER_Sim_Data<span class="sc">$</span>ZIRVTotal_Index <span class="ot">&lt;-</span> (IER_Scores<span class="sc">$</span>irv_scores<span class="sc">-</span><span class="fu">mean</span>(IER_Scores<span class="sc">$</span>irv_scores))<span class="sc">/</span><span class="fu">sd</span>(IER_Scores<span class="sc">$</span>irv_scores)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>IER_Sim_Data<span class="sc">$</span>ZEO_score <span class="ot">&lt;-</span> (IER_Scores<span class="sc">$</span>EO_score<span class="sc">-</span><span class="fu">mean</span>(IER_Scores<span class="sc">$</span>EO_score))<span class="sc">/</span><span class="fu">sd</span>(IER_Scores<span class="sc">$</span>EO_score)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>IER_Sim_Data<span class="sc">$</span>Zpsychsyn_score <span class="ot">&lt;-</span> (IER_Scores<span class="sc">$</span>psychsyn_Index<span class="sc">-</span><span class="fu">mean</span>(<span class="fu">na.omit</span>(IER_Scores<span class="sc">$</span>psychsyn_Index)))<span class="sc">/</span><span class="fu">sd</span>(<span class="fu">na.omit</span>(IER_Scores<span class="sc">$</span>psychsyn_Index))</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>IER_Sim_Data<span class="sc">$</span>Zmahal <span class="ot">&lt;-</span> (IER_Scores<span class="sc">$</span>mahalscore<span class="sc">-</span><span class="fu">mean</span>(<span class="fu">na.omit</span>(IER_Scores<span class="sc">$</span>mahalscore)))<span class="sc">/</span><span class="fu">sd</span>(<span class="fu">na.omit</span>(IER_Scores<span class="sc">$</span>mahalscore))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>At this point, we have calculated the scores for all of the IER indices and can move forward the the analyses.</p>
+</section>
+<section id="exploratory-factor-analysis-of-ier-indices" class="level1">
+<h1>Exploratory Factor Analysis of IER Indices</h1>
+<p>To examine the factor structure of the measured IER variable, conduct an EFA on the IER indices. This analysis will be used to determine which IER indices to retain for the directly measured latent factor analysis.</p>
+<p>Additionally, it will provide guidance for modeling the IER variable as a control variable. If you find a single factor solution, you may average the standardized indices into an overall IER score if the directly measured latent factor analysis indicates you need to control for IER. If the factor analysis results in a multi-factor solution, only average index scores which load onto the same factor.</p>
+<p>Following previous research, several decision rules are recommended, including:</p>
+<p>Kaiser criterion Scree test Parallel Analysis (Hayton et al.,2004), and Velicer’s (1976) MAP test.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EFA.dimensions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>**************************************************************************************************
+EFA.dimensions 0.1.8.4
+
+Please contact Brian O'Connor at brian.oconnor@ubc.ca if you have questions or suggestions.
+**************************************************************************************************</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">RAWPAR</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">factormodel=</span><span class="st">"PCA"</span>,<span class="at">Ndataset=</span><span class="dv">1000</span>,<span class="at">percentile=</span><span class="dv">95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+
+PARALLEL ANALYSIS</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Randomization method: generated data</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Type of correlations specified for the real data eigenvalues: Pearson</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Type of correlations specified for the random data eigenvalues: pearson</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Extraction Method: Principal Components</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Variables = 3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Cases = 500</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Ndatasets = 1000</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Percentile = 95</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Compare the Real Data eigenvalues below to the corresponding</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>random data Mean and Percentile eigenvalues</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Root   Real Data    Mean   Percentile
+      1       1.182   1.070        1.123
+      2       0.960   1.001        1.029
+      3       0.858   0.929        0.973</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+The number of factors according to the parallel analysis = 1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">RAWPAR</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">factormodel=</span><span class="st">"PAF"</span>,<span class="at">Ndataset=</span><span class="dv">1000</span>,<span class="at">percentile=</span><span class="dv">95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+
+PARALLEL ANALYSIS</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Randomization method: generated data</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Type of correlations specified for the real data eigenvalues: Pearson</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Type of correlations specified for the random data eigenvalues: pearson</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Extraction Method: Common Factor Analysis</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Variables = 3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Cases = 500</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Ndatasets = 1000</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Percentile = 95</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Compare the Real Data eigenvalues below to the corresponding</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>random data Mean and Percentile eigenvalues</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Root   Real Data     Mean   Percentile
+      1       0.202    0.076        0.142
+      2      -0.031    0.001        0.031
+      3      -0.119   -0.064       -0.023</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+The number of factors according to the parallel analysis = 1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">MAP</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+
+MINIMUM AVERAGE PARTIAL (MAP) TEST</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Number of cases = 500</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Number of variables = 3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Specified kind of correlations for this analysis: Pearson</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+
+Total Variance Explained (Initial Eigenvalues):</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Eigenvalues    Proportion of Variance    Cumulative Prop. Variance
+Factor 1           1.18                      0.39                         0.39
+Factor 2           0.96                      0.32                         0.71
+Factor 3           0.86                      0.29                         1.00</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Velicer's Average Squared Correlations</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   root   Avg.Corr.Sq.   Avg.Corr.power4
+      0        0.00918           0.00015
+      1        0.25902           0.08375
+      2        1.00000           1.00000</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+The smallest average squared correlation is 0.00918</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+The smallest average 4rth power correlation is 0.00015</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+The number of components according to the original (1976) MAP Test is = 0</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+The number of components according to the revised (2000) MAP Test is = 0</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SCREE_PLOT</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Scree Plot:</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Specified kind of correlations for this analysis: Pearson</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+
+Total Variance Explained (Initial Eigenvalues):</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="IER-CMVInterplay_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Eigenvalues    Proportion of Variance    Cumulative Prop. Variance
+Factor 1           1.18                      0.39                         0.39
+Factor 2           0.96                      0.32                         0.71
+Factor 3           0.86                      0.29                         1.00</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">EMPKC</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">corkind=</span><span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+
+EMPIRICAL KAISER CRITERION</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Kind of correlations analyzed: Pearson</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Nfactors    Eigenvalue    Reference Values
+           1         1.182               1.161
+           2         0.960               1.068
+           3         0.858               1.000</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+The number of factors according to the Empirical Kaiser Criterion = 1</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">EFA</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">extraction=</span><span class="st">'paf'</span>,<span class="at">corkind=</span><span class="st">'pearson'</span>,<span class="at">Nfactors=</span><span class="cn">NULL</span>,<span class="at">Ncases=</span><span class="cn">NULL</span>,<span class="at">iterpaf=</span><span class="dv">100</span>, <span class="at">rotation=</span><span class="st">'oblimin'</span>,<span class="at">verbose=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+
+
+Exploratory Factor Analysis</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+The specified kind of factor extraction method for this analysis: paf</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+The specified kind of correlations for this analysis: Pearson</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Nfactors was not specified and so the EMPKC test was conducted to determine</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>the number of factors to extract: Nfactors = 1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Communalities:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  Initial Extraction
+ZLongstring_Index    0.01       0.03
+Zpsychsyn_score      0.02       0.14
+ZEO_score            0.02       0.14</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+
+Total Variance Explained (Initial Eigenvalues):</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Eigenvalues    Proportion of Variance    Cumulative Prop. Variance
+Factor 1           1.18                      0.39                         0.39
+Factor 2           0.96                      0.32                         0.71
+Factor 3           0.86                      0.29                         1.00</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Ratio of the 1st to the 2nd initial eigenvalues = 1.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+
+Chi square = 0   df = 0    p = NA</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+
+Model Fit Coefficients:</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+RMSR = 0</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+GFI = 1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+CAF = 0.5</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+RMSEA = Inf</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+TLI = -Inf</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+CFI = 1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+MFI = 1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+BIC = 0</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+AIC = 0</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+CAIC = 0</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+SABIC = 18.243</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+
+Unrotated Loadings:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    Factor 1
+ZLongstring_Index       0.16
+Zpsychsyn_score        -0.38
+ZEO_score              -0.38</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+
+Total Variance Explained (Unrotated Sums of Squared Loadings):</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Sums of Squared Loadings    Proportion of Variance
+Factor 1                        0.31                       0.1
+            Cumulative Prop. Variance
+Factor 1                          0.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+No rotation because there is only one factor</code></pre>
+</div>
+</div>
+</section>
+<section id="directly-measured-latent-method-factor-technique-for-handling-ier" class="level1">
+<h1>Directly Measured Latent Method Factor Technique for Handling IER</h1>
+<p>We conceptualize IER as a response bias that can influence survey responses. Additionally, we consider the indices produced by the various IER detection methods in the previous section measures of IER.</p>
+<p>Thus, the following section presents a demonstration of the directly measured latent method factor technique as a remedy for IER.</p>
+<section id="step-one-prepare-the-rstudio-environment" class="level2">
+<h2 class="anchored" data-anchor-id="step-one-prepare-the-rstudio-environment">Step One: Prepare the RStudio Environment</h2>
+<p>The below code calls the libraries necessary for the technique.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaanPlot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="step-two-model-specification" class="level2">
+<h2 class="anchored" data-anchor-id="step-two-model-specification">Step Two: Model Specification</h2>
+<p>The lavaan model syntax is used to describe models to be estimated. The syntax defines models using various formula types. The formula types which are used in the technique are below.</p>
+<p><strong>Latent Variable Definition:</strong></p>
+<p><code>latent variable =~ indicator1 + indicator2 + indicator3</code></p>
+<p><strong>Variances and Covariances:</strong></p>
+<p><code>variable1 ~~ variable2</code></p>
+<p><strong>Regression:</strong></p>
+<p><code>variable1 ~~ variable2 + variable3 + variable4</code></p>
+<p>By default, the lavaan syntax will always fix the factor loading of a latent variable's first indicator to 1. Add the argument <code>std.lv = TRUE</code> to the function call to force this factor loading to be free.</p>
+<section id="baseline-model" class="level3">
+<h3 class="anchored" data-anchor-id="baseline-model">Baseline Model</h3>
+<p>First, you must establish a baseline model that will be used in subsequent models and test. The baseline model is a confirmatory factor analysis (CFA) model of the substantive variables and IER variables. Estimates of the unstandardized factor loadings and error variances for the IER variables are retained from this model to use as fixed parameters in subsequent models (Williams, 2016). Additionally, the factor correlations between the substantive variables are recorded to be used in a later model.</p>
+<p>The code to specify the baseline for this example is as follows:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>BaselineModel <span class="ot">&lt;-</span> <span class="st">'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="st">        fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="st">        fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a><span class="st">        fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb108-5"><a href="#cb108-5" aria-hidden="true" tabindex="-1"></a><span class="st">        fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb108-6"><a href="#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="st">        fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb108-7"><a href="#cb108-7" aria-hidden="true" tabindex="-1"></a><span class="st">        fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb108-8"><a href="#cb108-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-9"><a href="#cb108-9" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER1 =~ ZLongstring_Index</span></span>
+<span id="cb108-10"><a href="#cb108-10" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER2=~ Zpsychsyn_score</span></span>
+<span id="cb108-11"><a href="#cb108-11" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER3=~ Zmahal'</span></span>
+<span id="cb108-12"><a href="#cb108-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-13"><a href="#cb108-13" aria-hidden="true" tabindex="-1"></a>BaselineModel_fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(BaselineModel, <span class="at">data=</span>IER_Sim_Data, <span class="at">std.lv=</span><span class="cn">TRUE</span>)</span>
+<span id="cb108-14"><a href="#cb108-14" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(BaselineModel_fit, <span class="fu">c</span>(<span class="st">"chisq"</span>, <span class="st">"df"</span>, <span class="st">"cfi"</span>, <span class="st">"rmsea"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  chisq      df     cfi   rmsea 
+232.488 257.000   1.000   0.000 </code></pre>
+</div>
+</div>
+<p>The summary function calls a summary of the fitted model. The factor loadings are found in the “Latent Variables” section of the summary output, and the unstandardized error variances are found in the “Variances” section of the output. The code to view the summary output is as follows:</p>
+</section>
+<section id="model-1" class="level3">
+<h3 class="anchored" data-anchor-id="model-1">Model 1</h3>
+<p>The first model to examine is a structural model without IER effects which allows for correlations among the substantive latent variables with an orthogonal IER variable. The IER variable’s indicators are the standardized IER indices retained in the exploratory factor analysis.</p>
+<p>The IER variable is assumed to be orthogonal, as IER behavior should not be correlated with the substantive variables.</p>
+<p>The code to specify the Model 1 for this example is as follows:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>Model1 <span class="ot">&lt;-</span> <span class="st">'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="st">        fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a><span class="st">        fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="st">        fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a><span class="st">        fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb110-6"><a href="#cb110-6" aria-hidden="true" tabindex="-1"></a><span class="st">        fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb110-7"><a href="#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="st">        fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb110-8"><a href="#cb110-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-9"><a href="#cb110-9" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER1 =~ ZLongstring_Index</span></span>
+<span id="cb110-10"><a href="#cb110-10" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER2=~ Zpsychsyn_score</span></span>
+<span id="cb110-11"><a href="#cb110-11" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER3=~ Zmahal</span></span>
+<span id="cb110-12"><a href="#cb110-12" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb110-13"><a href="#cb110-13" aria-hidden="true" tabindex="-1"></a><span class="st">        ZLongstring_Index ~~ 0*ZLongstring_Index</span></span>
+<span id="cb110-14"><a href="#cb110-14" aria-hidden="true" tabindex="-1"></a><span class="st">        Zpsychsyn_score ~~ 0*Zpsychsyn_score</span></span>
+<span id="cb110-15"><a href="#cb110-15" aria-hidden="true" tabindex="-1"></a><span class="st">        Zmahal ~~ 0*Zmahal</span></span>
+<span id="cb110-16"><a href="#cb110-16" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb110-17"><a href="#cb110-17" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb110-18"><a href="#cb110-18" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb110-19"><a href="#cb110-19" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj'</span></span>
+<span id="cb110-20"><a href="#cb110-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-21"><a href="#cb110-21" aria-hidden="true" tabindex="-1"></a>Model1_fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(Model1, <span class="at">data=</span>IER_Sim_Data, <span class="at">std.lv=</span><span class="cn">TRUE</span>)</span>
+<span id="cb110-22"><a href="#cb110-22" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(Model1_fit, <span class="fu">c</span>(<span class="st">"chisq"</span>, <span class="st">"df"</span>, <span class="st">"cfi"</span>, <span class="st">"rmsea"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  chisq      df     cfi   rmsea 
+662.195 278.000   0.982   0.053 </code></pre>
+</div>
+</div>
+<p>Record the substantive factor correlations estimated in this model to use in subsequent models. This can be done by sifting through the lavaan summary output or by utilizing code to extract the estimates from the summary.</p>
+<p>The summary function calls a summary of the fitted model. The factor loadings are found in the “Latent Variables” section of the summary output, and the unstandardized error variances are found in the “Variances” section of the output. The code to view the summary output is as follows:</p>
+</section>
+<section id="model-2" class="level3">
+<h3 class="anchored" data-anchor-id="model-2">Model 2</h3>
+<p>Model 2 is a saturated structural model with IER effects. With this model, the impact of the IER latent variable is allowed to be different for each of the indicators of the substantive constructs. This is done so that the subsequent test of the presence of IER can be conducted without making any assumptions about the specific nature of these effects.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>Model2 <span class="ot">&lt;-</span><span class="st">'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="st">        fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a><span class="st">        fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="st">        fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb112-5"><a href="#cb112-5" aria-hidden="true" tabindex="-1"></a><span class="st">        fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb112-6"><a href="#cb112-6" aria-hidden="true" tabindex="-1"></a><span class="st">        fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb112-7"><a href="#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="st">        fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb112-8"><a href="#cb112-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-9"><a href="#cb112-9" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER1 =~ ZLongstring_Index + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb112-10"><a href="#cb112-10" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER2=~ Zpsychsyn_score + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb112-11"><a href="#cb112-11" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER3=~ Zmahal + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb112-12"><a href="#cb112-12" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb112-13"><a href="#cb112-13" aria-hidden="true" tabindex="-1"></a><span class="st">        ZLongstring_Index ~~ 0*ZLongstring_Index</span></span>
+<span id="cb112-14"><a href="#cb112-14" aria-hidden="true" tabindex="-1"></a><span class="st">        Zpsychsyn_score ~~ 0*Zpsychsyn_score</span></span>
+<span id="cb112-15"><a href="#cb112-15" aria-hidden="true" tabindex="-1"></a><span class="st">        Zmahal ~~ 0*Zmahal</span></span>
+<span id="cb112-16"><a href="#cb112-16" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb112-17"><a href="#cb112-17" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb112-18"><a href="#cb112-18" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb112-19"><a href="#cb112-19" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj'</span></span>
+<span id="cb112-20"><a href="#cb112-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-21"><a href="#cb112-21" aria-hidden="true" tabindex="-1"></a>Model2_fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(Model2, <span class="at">data=</span>IER_Sim_Data, <span class="at">std.lv=</span><span class="cn">TRUE</span>)</span>
+<span id="cb112-22"><a href="#cb112-22" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(Model2_fit, <span class="fu">c</span>(<span class="st">"chisq"</span>, <span class="st">"df"</span>, <span class="st">"cfi"</span>, <span class="st">"rmsea"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  chisq      df     cfi   rmsea 
+180.373 209.000   1.000   0.000 </code></pre>
+</div>
+</div>
+</section>
+<section id="model-3" class="level3">
+<h3 class="anchored" data-anchor-id="model-3">Model 3</h3>
+<p>Model 3 is identical to Model 2, except that the substantive factor correlations are constrained to their unstandardized estimates from Model 1.</p>
+<p>Model 3 is a restricted saturated structural model with IER effects; the term restricted indicates that the values of the substantively important parameters have been restricted to be equal to the estimates from Model 1. The examination of Model 3 provides a direct statistical test of the impact of IER effects.</p>
+<p>The code to specify Model 3 for this example is as follows:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>Model3 <span class="ot">&lt;-</span> <span class="st">'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="st">        fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a><span class="st">        fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a><span class="st">        fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb114-5"><a href="#cb114-5" aria-hidden="true" tabindex="-1"></a><span class="st">        fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb114-6"><a href="#cb114-6" aria-hidden="true" tabindex="-1"></a><span class="st">        fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb114-7"><a href="#cb114-7" aria-hidden="true" tabindex="-1"></a><span class="st">        fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb114-8"><a href="#cb114-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-9"><a href="#cb114-9" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER1 =~ ZLongstring_Index + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb114-10"><a href="#cb114-10" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER2=~ Zpsychsyn_score + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb114-11"><a href="#cb114-11" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER3=~ Zmahal + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb114-12"><a href="#cb114-12" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb114-13"><a href="#cb114-13" aria-hidden="true" tabindex="-1"></a><span class="st">        ZLongstring_Index ~~ 0*ZLongstring_Index</span></span>
+<span id="cb114-14"><a href="#cb114-14" aria-hidden="true" tabindex="-1"></a><span class="st">        Zpsychsyn_score ~~ 0*Zpsychsyn_score</span></span>
+<span id="cb114-15"><a href="#cb114-15" aria-hidden="true" tabindex="-1"></a><span class="st">        Zmahal ~~ 0*Zmahal</span></span>
+<span id="cb114-16"><a href="#cb114-16" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb114-17"><a href="#cb114-17" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb114-18"><a href="#cb114-18" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb114-19"><a href="#cb114-19" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb114-20"><a href="#cb114-20" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb114-21"><a href="#cb114-21" aria-hidden="true" tabindex="-1"></a><span class="st">        fssr ~~ 0.382*fri + 0.936*fwom + 0.311*fsat + 0.805*fdj + 0.602*fij + 0.461*fpj</span></span>
+<span id="cb114-22"><a href="#cb114-22" aria-hidden="true" tabindex="-1"></a><span class="st">        fri ~~ 0.319*fwom + 0.782*fsat + 0.506*fdj + 0.493*fij + 0.547*fpj</span></span>
+<span id="cb114-23"><a href="#cb114-23" aria-hidden="true" tabindex="-1"></a><span class="st">        fwom ~~ 0.260*fsat + 0.692*fdj + 0.655*fij + 0.416*fpj</span></span>
+<span id="cb114-24"><a href="#cb114-24" aria-hidden="true" tabindex="-1"></a><span class="st">        fsat ~~ 0.478*fdj + 0.575*fij + 0.689*fpj</span></span>
+<span id="cb114-25"><a href="#cb114-25" aria-hidden="true" tabindex="-1"></a><span class="st">        fdj ~~ 0.639*fij + 0.586*fpj</span></span>
+<span id="cb114-26"><a href="#cb114-26" aria-hidden="true" tabindex="-1"></a><span class="st">        fij ~~ 0.597*fpj'</span></span>
+<span id="cb114-27"><a href="#cb114-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-28"><a href="#cb114-28" aria-hidden="true" tabindex="-1"></a>Model3_fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(Model3, <span class="at">data=</span>IER_Sim_Data, <span class="at">std.lv=</span><span class="cn">TRUE</span>)</span>
+<span id="cb114-29"><a href="#cb114-29" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(Model3_fit, <span class="fu">c</span>(<span class="st">"chisq"</span>, <span class="st">"df"</span>, <span class="st">"cfi"</span>, <span class="st">"rmsea"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  chisq      df     cfi   rmsea 
+808.536 230.000   0.973   0.071 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="step-three-compare-the-models" class="level2">
+<h2 class="anchored" data-anchor-id="step-three-compare-the-models">Step Three: Compare the models</h2>
+<p>First, a comparison of Model 1 and Model 2 tests the hypothesis that that there are no method effects due to IER.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(Model1_fit, Model2_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Chisq"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Chisq diff"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["RMSEA"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Df diff"],"name":[7],"type":["int"],"align":["right"]},{"label":["Pr(>Chisq)"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"209","2":"17718.37","3":"18316.85","4":"180.3734","5":"NA","6":"NA","7":"NA","8":"NA","_rn_":"Model2_fit"},{"1":"278","2":"18062.19","3":"18369.86","4":"662.1945","5":"481.8212","6":"0.1093884","7":"69","8":"3.372093e-63","_rn_":"Model1_fit"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Next, a comparison of Model 2 and Model 3 tests whether the substantive variable correlations are significantly biased by IER effects.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(Model3_fit, Model2_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Chisq"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Chisq diff"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["RMSEA"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Df diff"],"name":[7],"type":["int"],"align":["right"]},{"label":["Pr(>Chisq)"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"209","2":"17718.37","3":"18316.85","4":"180.3734","5":"NA","6":"NA","7":"NA","8":"NA","_rn_":"Model2_fit"},{"1":"230","2":"18304.54","3":"18814.50","4":"808.5359","5":"628.1625","6":"0.2404683","7":"21","8":"1.892814e-119","_rn_":"Model3_fit"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Export IER Scores</p>
+<div class="cell">
+<div class="cell-output-display">
+<button class="btn btn-warning" onclick="fetch('data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,UEsDBBQAAAAIAAAAIQA4nYbYPgEAAAcEAAATAAAAW0NvbnRlbnRfVHlwZXNdLnhtbK2Ty27DIBBF9/0KxLYyJF1UVRUniz6WbRbpB1AYxygYEDNJk78vtpNIrdI8lG6MzNy55w6C0WTdOLaChDb4kg/FgDPwOhjr5yX/mL0WD5whKW+UCx5KvgHkk/HNaLaJgCw3eyx5TRQfpURdQ6NQhAg+V6qQGkX5N81lVHqh5iDvBoN7qYMn8FRQ68HHo2eo1NIRe1nn7T5IAoecPfXCllVyFaOzWlGuy5U3vyjFliByZ6fB2ka8zQIuDxLayt+Abd97PplkDbCpSvSmmqySJuhpChFl1ovjLgdihqqyGrLHssktAtpABkwRsyUksrDPfJStQ4LL4bszarvPJK6dRNo4wKtHxZhAGawBqHGiNz1BpnyfoP8Or+Z3NieAXyEtPkNY/Pew7SoaZf0Z/E6Msluun/pnkL3/Lofs3vH4G1BLAwQUAAAACAAAACEA8p9J2ukAAABLAgAACwAAAF9yZWxzLy5yZWxzrZLBTsMwDEDvfEXk+5puSAihpbsgpN0mND7AJG4btY2jxIPu74mQQAyNaQeOceznZ8vrzTyN6o1S9hwMLKsaFAXLzofOwMv+aXEPKgsGhyMHMnCkDJvmZv1MI0qpyb2PWRVIyAZ6kfigdbY9TZgrjhTKT8tpQinP1OmIdsCO9Kqu73T6yYDmhKm2zkDauiWo/THSNWxuW2/pke1hoiBnWvzKKGRMHYmBedTvnIZX5qEqUNDnXVbXu/w9p55I0KGgtpxoEVOpTuLLWr91HNtdCefPjEtCt/+5HJqFgiN3WQlj/DLSJzfQfABQSwMEFAAAAAgAAAAhAOVEG6PVAAAALAIAABoAAAB4bC9fcmVscy93b3JrYm9vay54bWwucmVsc62Rz4oCMQyH7z5FyX0nMwoiYsfLsuBV9AFKJ/MHZ9rSZHedt7couiuIePAUfgn58kFW6+PQqx+K3HmnochyUOSsrzrXaNjvvj4WoFiMq0zvHWkYiWFdTlZb6o2kHW67wCpBHGtoRcISkW1Lg+HMB3JpUvs4GEkxNhiMPZiGcJrnc4z/GVDeMdWm0hA3VQFqNwZ6he3rurP06e33QE4enMBfHw/cEkmCmtiQaLi1GM+lyBIV8LHM9J0yknbpT+QcL82nDrN3OrCMfXroTeKSr+fx7snlCVBLAwQUAAAACAAAACEAaA/xcZN1AACu4AEAGAAAAHhsL3dvcmtzaGVldHMvc2hlZXQxLnhtbIy9W5N1t3El+D6/QsF3H+F+ccjq6CoUY/ppJrpn5rWDLX22GC2RDpK2u//9rLVrA8hCHuBIdNDSrjxZhbOBxMrbyj/8p//1t7/+7t+//fLrjz//9E/f2Yf57nfffvrTz3/+8ad/+afv/t//5/t/KN/97tfffvjpzz/89eefvv3Td//726/f/ac//h9/+I+ff/mfv/7l27fffgcFP/36T9/95bff/vUff//7X//0l29/++HXx8//+u0n/OSff/7lbz/8hv/5y7/8/td//eXbD3++PvS3v/7eGZN+/7cffvzpu08N//jL36Pj53/+5x//9K39/Kd/+9u3n377VPLLt7/+8Bv+/F//8uO//vrdH//w5x/xM67nd798++d/+u4/23/8Phr73e//+Ifrd/9/P377j1/Ff//dbz/8j//27a/f/vTbtz/jG/jud1za//j55//JH/4XPDL86O/VZ7+//qz/+5ff/fnbP//wb3/97b/+/B//57cf/+Uvv0FJHL+t/fDbD3/8wy8//8fvfrmU/3r9+0//9utvP//tUwMf/PEPf+LP//MQwNMff/rrjz99+2+//YKf/ohf+tsfP/6v//7rn37+5dsffv8b/iA++/2f7k++nT/5r7/+7z/95df//dP28+9/5+f/y09//va/nny+nT//4y///vmrf33y2Y/zZ//0A17wt19//e/YgP/y5OPfnz/+tx/+8sNfnyz793gn48W48Qb43/79j/9gHrUkY6uJ0cca4x9+/+/y2/6UMg8bS/DB5eSs8SGWr2LvQ9lZrnV11ZVkrQuu5miyd1/FPj7Flr/l+8+nLjx8KDWEXKM31dch9WWhfizUj4X6mF0uyZdsa0h2Waq//zbna0zQHJIpsSx/xPvQdhRrXVnO1eDb8MmZUK1bvo+PT7G0LPTzacgPl3yoKQbjbYr5+ULDWGgYC7XRlBQd1htzdmFZaOgLdRl/WwgheR/T+n28D3VnudbVFbxM45z3tRZr0rrUT7G8LPXzabCPWC02Ar7IYK0tz5cax1LjWGoK3Lu+4NutKdVlqfH+27yLMZmcssXW8W5d6lB3lmtdXc3ZVHwr+Fq8L3F5fx/x6fb9fOrtIxWHr6lm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').then(res => res.blob()).then(blob => {
+      const downloadURL = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none'; // Hide the link
+      document.body.appendChild(a);
+      a.href = downloadURL;
+      a.download = 'IERScores.xlsx';
+      a.click();
+      window.URL.revokeObjectURL(downloadURL);
+      document.body.removeChild(a);
+      return false;
+    });" has_icon="TRUE"><i class="fa fa-save"></i> Download data</button>
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/twitched\.github\.io\/cmv-ier-sim\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb118" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "The Interplay of IER and CMV in Data"</span></span>
+<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Ragland, Twitchell"</span></span>
+<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
+<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_document</span></span>
+<span id="cb118-6"><a href="#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb118-7"><a href="#cb118-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-8"><a href="#cb118-8" aria-hidden="true" tabindex="-1"></a><span class="fu"># Insufficient Effort Responding Detection</span></span>
+<span id="cb118-9"><a href="#cb118-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-10"><a href="#cb118-10" aria-hidden="true" tabindex="-1"></a>List of all the libraries to use for the analysis</span>
+<span id="cb118-11"><a href="#cb118-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-12"><a href="#cb118-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Libraries}</span></span>
+<span id="cb118-13"><a href="#cb118-13" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb118-14"><a href="#cb118-14" aria-hidden="true" tabindex="-1"></a><span class="in">library(foreign)</span></span>
+<span id="cb118-15"><a href="#cb118-15" aria-hidden="true" tabindex="-1"></a><span class="in">library(careless)</span></span>
+<span id="cb118-16"><a href="#cb118-16" aria-hidden="true" tabindex="-1"></a><span class="in">library(haven)</span></span>
+<span id="cb118-17"><a href="#cb118-17" aria-hidden="true" tabindex="-1"></a><span class="in">library(readxl)</span></span>
+<span id="cb118-18"><a href="#cb118-18" aria-hidden="true" tabindex="-1"></a><span class="in">library(car)</span></span>
+<span id="cb118-19"><a href="#cb118-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-20"><a href="#cb118-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-21"><a href="#cb118-21" aria-hidden="true" tabindex="-1"></a>Call the dataset</span>
+<span id="cb118-22"><a href="#cb118-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-23"><a href="#cb118-23" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Call dataset}</span></span>
+<span id="cb118-24"><a href="#cb118-24" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Sim_Data &lt;- readr::read_csv(file.path(getwd(), "_data", "baseline.csv"))</span></span>
+<span id="cb118-25"><a href="#cb118-25" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-26"><a href="#cb118-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-27"><a href="#cb118-27" aria-hidden="true" tabindex="-1"></a>Calculate the even-odd consistency score for the personality variables.</span>
+<span id="cb118-28"><a href="#cb118-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-29"><a href="#cb118-29" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Even-Odd Consistency score calculation}</span></span>
+<span id="cb118-30"><a href="#cb118-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-31"><a href="#cb118-31" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Scores&lt;- data.frame(matrix(ncol = 0, nrow = 500))</span></span>
+<span id="cb118-32"><a href="#cb118-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-33"><a href="#cb118-33" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Scores$EO_score &lt;- evenodd(IER_Sim_Data, c(3, 3, 3, 3, 4, 4, 4))</span></span>
+<span id="cb118-34"><a href="#cb118-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-35"><a href="#cb118-35" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-36"><a href="#cb118-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-37"><a href="#cb118-37" aria-hidden="true" tabindex="-1"></a>Now calculate the psychometric synonym scores for ALL of the personality/behavior variables.</span>
+<span id="cb118-38"><a href="#cb118-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-39"><a href="#cb118-39" aria-hidden="true" tabindex="-1"></a>First, I create a dataset for the variables. Then, I determine how many item pairs have a correlation greater than 0.60.</span>
+<span id="cb118-40"><a href="#cb118-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-41"><a href="#cb118-41" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Psychometric Synonym index check}</span></span>
+<span id="cb118-42"><a href="#cb118-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-43"><a href="#cb118-43" aria-hidden="true" tabindex="-1"></a><span class="in">psychsyn_cor &lt;- psychsyn_critval(IER_Sim_Data)</span></span>
+<span id="cb118-44"><a href="#cb118-44" aria-hidden="true" tabindex="-1"></a><span class="in">head(psychsyn_cor)</span></span>
+<span id="cb118-45"><a href="#cb118-45" aria-hidden="true" tabindex="-1"></a><span class="in">sum(psychsyn_cor$cor &gt; .60, na.rm = TRUE)</span></span>
+<span id="cb118-46"><a href="#cb118-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-47"><a href="#cb118-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-48"><a href="#cb118-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-49"><a href="#cb118-49" aria-hidden="true" tabindex="-1"></a>If there are enough pairs, proceed with calculating individual scores. (there were 49)</span>
+<span id="cb118-50"><a href="#cb118-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-51"><a href="#cb118-51" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Psychometric Synonym score calculation}</span></span>
+<span id="cb118-52"><a href="#cb118-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-53"><a href="#cb118-53" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Scores$psychsyn_score &lt;- psychsyn(IER_Sim_Data, critval = .60)</span></span>
+<span id="cb118-54"><a href="#cb118-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-55"><a href="#cb118-55" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-56"><a href="#cb118-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-57"><a href="#cb118-57" aria-hidden="true" tabindex="-1"></a>Since positive correlations indicate participants are responding consistently (i.e. carefully), multiply these scores by -1 so that higher scores reflect IER.</span>
+<span id="cb118-58"><a href="#cb118-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-59"><a href="#cb118-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Psychometric Synonym index calculation}</span></span>
+<span id="cb118-60"><a href="#cb118-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-61"><a href="#cb118-61" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Scores$psychsyn_Index &lt;- -1 *(IER_Scores$psychsyn_score)</span></span>
+<span id="cb118-62"><a href="#cb118-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-63"><a href="#cb118-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-64"><a href="#cb118-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-65"><a href="#cb118-65" aria-hidden="true" tabindex="-1"></a>Now calculate the psychometric antonym scores for ALL of the personality/behavior variables.</span>
+<span id="cb118-66"><a href="#cb118-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-67"><a href="#cb118-67" aria-hidden="true" tabindex="-1"></a>First, I determine how many item pairs have a correlation less than -0.60.</span>
+<span id="cb118-68"><a href="#cb118-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-69"><a href="#cb118-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Psychometric Antonym index check}</span></span>
+<span id="cb118-70"><a href="#cb118-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-71"><a href="#cb118-71" aria-hidden="true" tabindex="-1"></a><span class="in">psychant_cor &lt;- psychsyn_critval(IER_Sim_Data)</span></span>
+<span id="cb118-72"><a href="#cb118-72" aria-hidden="true" tabindex="-1"></a><span class="in">head(psychant_cor)</span></span>
+<span id="cb118-73"><a href="#cb118-73" aria-hidden="true" tabindex="-1"></a><span class="in">sum(psychant_cor$cor &lt; -.60, na.rm = TRUE)</span></span>
+<span id="cb118-74"><a href="#cb118-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-75"><a href="#cb118-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-76"><a href="#cb118-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-77"><a href="#cb118-77" aria-hidden="true" tabindex="-1"></a>If there are enough pairs, proceed with calculating individual scores. There were 0 in this dataset.</span>
+<span id="cb118-78"><a href="#cb118-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-79"><a href="#cb118-79" aria-hidden="true" tabindex="-1"></a>Next, calculate the IRV index for the personality variables.</span>
+<span id="cb118-80"><a href="#cb118-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-81"><a href="#cb118-81" aria-hidden="true" tabindex="-1"></a>The intra-individual response variability (IRV) is similiar in spirit to the Longstring index. It is defined as the “standard deviation of responses across a set of consecutive item responses for an individual” (Dunn et al. 2018).</span>
+<span id="cb118-82"><a href="#cb118-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-83"><a href="#cb118-83" aria-hidden="true" tabindex="-1"></a>Since all the items are positively worded, I am calculating this over the whole survey and then splitting the survey into four sections.</span>
+<span id="cb118-84"><a href="#cb118-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-87"><a href="#cb118-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb118-88"><a href="#cb118-88" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>irv_scores <span class="ot">&lt;-</span> <span class="fu">irv</span>(IER_Sim_Data, <span class="at">split =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb118-89"><a href="#cb118-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-90"><a href="#cb118-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-91"><a href="#cb118-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-92"><a href="#cb118-92" aria-hidden="true" tabindex="-1"></a>Calculate the long string index for the personality variables.For each observation, the length of the maximum uninterrupted string of identical responses is returned.</span>
+<span id="cb118-93"><a href="#cb118-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-96"><a href="#cb118-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb118-97"><a href="#cb118-97" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>careless_long<span class="ot">&lt;-</span><span class="fu">longstring</span>(IER_Sim_Data,<span class="at">avg=</span><span class="cn">FALSE</span>)</span>
+<span id="cb118-98"><a href="#cb118-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-99"><a href="#cb118-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-100"><a href="#cb118-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-101"><a href="#cb118-101" aria-hidden="true" tabindex="-1"></a>Now I have to clean up all the NA values in the pyschometric synonym and psychometric antonym indices. NA values index indicate that there was no variance within any of the pairs. Since no variance indicates extreme consistency, and these indices are meant to catch inconsistent respondents. I assign a value of -1 to these respondents because they were responding "carefully," which really means consistently with these indices.</span>
+<span id="cb118-102"><a href="#cb118-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-105"><a href="#cb118-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb118-106"><a href="#cb118-106" aria-hidden="true" tabindex="-1"></a>missing_rows <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">complete.cases</span>(IER_Scores<span class="sc">$</span>psychsyn_Index)</span>
+<span id="cb118-107"><a href="#cb118-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-108"><a href="#cb118-108" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>psychsyn_Index[missing_rows] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb118-109"><a href="#cb118-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-110"><a href="#cb118-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-111"><a href="#cb118-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-114"><a href="#cb118-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb118-115"><a href="#cb118-115" aria-hidden="true" tabindex="-1"></a>missing_rows <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">complete.cases</span>(IER_Scores<span class="sc">$</span>EO_score)</span>
+<span id="cb118-116"><a href="#cb118-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-117"><a href="#cb118-117" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>EO_score[missing_rows] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb118-118"><a href="#cb118-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-119"><a href="#cb118-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-120"><a href="#cb118-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-121"><a href="#cb118-121" aria-hidden="true" tabindex="-1"></a>Compute Mahalanobis D Index</span>
+<span id="cb118-122"><a href="#cb118-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-123"><a href="#cb118-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Mahalanobis D for survey}</span></span>
+<span id="cb118-124"><a href="#cb118-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-125"><a href="#cb118-125" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Scores$mahalscore &lt;- mahad(IER_Sim_Data, plot = FALSE, flag = FALSE, confidence = 0.95, na.rm = TRUE)</span></span>
+<span id="cb118-126"><a href="#cb118-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-127"><a href="#cb118-127" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-128"><a href="#cb118-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-129"><a href="#cb118-129" aria-hidden="true" tabindex="-1"></a>The below code converts the IER scores to z-scores.</span>
+<span id="cb118-130"><a href="#cb118-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-131"><a href="#cb118-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Convert IER Scores to Z-Scores}</span></span>
+<span id="cb118-132"><a href="#cb118-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-133"><a href="#cb118-133" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Sim_Data$ZLongstring_Index &lt;- (IER_Scores$careless_long-mean(IER_Scores$careless_long))/sd(IER_Scores$careless_long)</span></span>
+<span id="cb118-134"><a href="#cb118-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-135"><a href="#cb118-135" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Sim_Data$ZIRVTotal_Index &lt;- (IER_Scores$irv_scores-mean(IER_Scores$irv_scores))/sd(IER_Scores$irv_scores)</span></span>
+<span id="cb118-136"><a href="#cb118-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-137"><a href="#cb118-137" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Sim_Data$ZEO_score &lt;- (IER_Scores$EO_score-mean(IER_Scores$EO_score))/sd(IER_Scores$EO_score)</span></span>
+<span id="cb118-138"><a href="#cb118-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-139"><a href="#cb118-139" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Sim_Data$Zpsychsyn_score &lt;- (IER_Scores$psychsyn_Index-mean(na.omit(IER_Scores$psychsyn_Index)))/sd(na.omit(IER_Scores$psychsyn_Index))</span></span>
+<span id="cb118-140"><a href="#cb118-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-141"><a href="#cb118-141" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Sim_Data$Zmahal &lt;- (IER_Scores$mahalscore-mean(na.omit(IER_Scores$mahalscore)))/sd(na.omit(IER_Scores$mahalscore))</span></span>
+<span id="cb118-142"><a href="#cb118-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-143"><a href="#cb118-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-144"><a href="#cb118-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-145"><a href="#cb118-145" aria-hidden="true" tabindex="-1"></a>At this point, we have calculated the scores for all of the IER indices and can move forward the the analyses. </span>
+<span id="cb118-146"><a href="#cb118-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-147"><a href="#cb118-147" aria-hidden="true" tabindex="-1"></a><span class="fu"># Exploratory Factor Analysis of IER Indices</span></span>
+<span id="cb118-148"><a href="#cb118-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-149"><a href="#cb118-149" aria-hidden="true" tabindex="-1"></a>To examine the factor structure of the measured IER variable, conduct an EFA on the IER indices. This analysis will be used to determine which IER indices to retain for the directly measured latent factor analysis. </span>
+<span id="cb118-150"><a href="#cb118-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-151"><a href="#cb118-151" aria-hidden="true" tabindex="-1"></a>Additionally, it will provide guidance for modeling the IER variable as a control variable. If you find a single factor solution, you may average the standardized indices into an overall IER score if the directly measured latent factor analysis indicates you need to control for IER. If the factor analysis results in a multi-factor solution, only average index scores which load onto the same factor.</span>
+<span id="cb118-152"><a href="#cb118-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-153"><a href="#cb118-153" aria-hidden="true" tabindex="-1"></a>Following previous research, several decision rules are recommended, including:</span>
+<span id="cb118-154"><a href="#cb118-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-155"><a href="#cb118-155" aria-hidden="true" tabindex="-1"></a>Kaiser criterion</span>
+<span id="cb118-156"><a href="#cb118-156" aria-hidden="true" tabindex="-1"></a>Scree test</span>
+<span id="cb118-157"><a href="#cb118-157" aria-hidden="true" tabindex="-1"></a>Parallel Analysis (Hayton et al.,2004), and </span>
+<span id="cb118-158"><a href="#cb118-158" aria-hidden="true" tabindex="-1"></a>Velicer’s (1976) MAP test.</span>
+<span id="cb118-159"><a href="#cb118-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-162"><a href="#cb118-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb118-163"><a href="#cb118-163" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EFA.dimensions)</span>
+<span id="cb118-164"><a href="#cb118-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-165"><a href="#cb118-165" aria-hidden="true" tabindex="-1"></a><span class="fu">RAWPAR</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">factormodel=</span><span class="st">"PCA"</span>,<span class="at">Ndataset=</span><span class="dv">1000</span>,<span class="at">percentile=</span><span class="dv">95</span>)</span>
+<span id="cb118-166"><a href="#cb118-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-167"><a href="#cb118-167" aria-hidden="true" tabindex="-1"></a><span class="fu">RAWPAR</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">factormodel=</span><span class="st">"PAF"</span>,<span class="at">Ndataset=</span><span class="dv">1000</span>,<span class="at">percentile=</span><span class="dv">95</span>)</span>
+<span id="cb118-168"><a href="#cb118-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-169"><a href="#cb118-169" aria-hidden="true" tabindex="-1"></a><span class="fu">MAP</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)))</span>
+<span id="cb118-170"><a href="#cb118-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-171"><a href="#cb118-171" aria-hidden="true" tabindex="-1"></a><span class="fu">SCREE_PLOT</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)))</span>
+<span id="cb118-172"><a href="#cb118-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-173"><a href="#cb118-173" aria-hidden="true" tabindex="-1"></a><span class="fu">EMPKC</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">corkind=</span><span class="st">"pearson"</span>)</span>
+<span id="cb118-174"><a href="#cb118-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-175"><a href="#cb118-175" aria-hidden="true" tabindex="-1"></a><span class="fu">EFA</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">extraction=</span><span class="st">'paf'</span>,<span class="at">corkind=</span><span class="st">'pearson'</span>,<span class="at">Nfactors=</span><span class="cn">NULL</span>,<span class="at">Ncases=</span><span class="cn">NULL</span>,<span class="at">iterpaf=</span><span class="dv">100</span>, <span class="at">rotation=</span><span class="st">'oblimin'</span>,<span class="at">verbose=</span><span class="cn">TRUE</span>)</span>
+<span id="cb118-176"><a href="#cb118-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-177"><a href="#cb118-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-178"><a href="#cb118-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-179"><a href="#cb118-179" aria-hidden="true" tabindex="-1"></a><span class="fu"># Directly Measured Latent Method Factor Technique for Handling IER</span></span>
+<span id="cb118-180"><a href="#cb118-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-181"><a href="#cb118-181" aria-hidden="true" tabindex="-1"></a>We conceptualize IER as a response bias that can influence survey responses. Additionally, we consider the indices produced by the various IER detection methods in the previous section measures of IER.</span>
+<span id="cb118-182"><a href="#cb118-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-183"><a href="#cb118-183" aria-hidden="true" tabindex="-1"></a>Thus, the following section presents a demonstration of the directly measured latent method factor technique as a remedy for IER.</span>
+<span id="cb118-184"><a href="#cb118-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-185"><a href="#cb118-185" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step One: Prepare the RStudio Environment</span></span>
+<span id="cb118-186"><a href="#cb118-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-187"><a href="#cb118-187" aria-hidden="true" tabindex="-1"></a>The below code calls the libraries necessary for the technique.</span>
+<span id="cb118-188"><a href="#cb118-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-189"><a href="#cb118-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Lavaan Libraries, message=FALSE, warning=FALSE}</span></span>
+<span id="cb118-190"><a href="#cb118-190" aria-hidden="true" tabindex="-1"></a><span class="in">library(haven)</span></span>
+<span id="cb118-191"><a href="#cb118-191" aria-hidden="true" tabindex="-1"></a><span class="in">library(lavaan)</span></span>
+<span id="cb118-192"><a href="#cb118-192" aria-hidden="true" tabindex="-1"></a><span class="in">library(lavaanPlot)</span></span>
+<span id="cb118-193"><a href="#cb118-193" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-194"><a href="#cb118-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-195"><a href="#cb118-195" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step Two: Model Specification</span></span>
+<span id="cb118-196"><a href="#cb118-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-197"><a href="#cb118-197" aria-hidden="true" tabindex="-1"></a>The lavaan model syntax is used to describe models to be estimated. The syntax defines models using various formula types. The formula types which are used in the technique are below.</span>
+<span id="cb118-198"><a href="#cb118-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-199"><a href="#cb118-199" aria-hidden="true" tabindex="-1"></a>**Latent Variable Definition:**</span>
+<span id="cb118-200"><a href="#cb118-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-201"><a href="#cb118-201" aria-hidden="true" tabindex="-1"></a><span class="in">`latent variable =~ indicator1 + indicator2 + indicator3`</span></span>
+<span id="cb118-202"><a href="#cb118-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-203"><a href="#cb118-203" aria-hidden="true" tabindex="-1"></a>**Variances and Covariances:**</span>
+<span id="cb118-204"><a href="#cb118-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-205"><a href="#cb118-205" aria-hidden="true" tabindex="-1"></a><span class="in">`variable1 ~~ variable2`</span></span>
+<span id="cb118-206"><a href="#cb118-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-207"><a href="#cb118-207" aria-hidden="true" tabindex="-1"></a>**Regression:**</span>
+<span id="cb118-208"><a href="#cb118-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-209"><a href="#cb118-209" aria-hidden="true" tabindex="-1"></a><span class="in">`variable1 ~~ variable2 + variable3 + variable4`</span></span>
+<span id="cb118-210"><a href="#cb118-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-211"><a href="#cb118-211" aria-hidden="true" tabindex="-1"></a>By default, the lavaan syntax will always fix the factor loading of a latent variable\'s first indicator to 1. Add the argument <span class="in">`std.lv = TRUE`</span> to the function call to force this factor loading to be free.</span>
+<span id="cb118-212"><a href="#cb118-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-213"><a href="#cb118-213" aria-hidden="true" tabindex="-1"></a><span class="fu">### Baseline Model</span></span>
+<span id="cb118-214"><a href="#cb118-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-215"><a href="#cb118-215" aria-hidden="true" tabindex="-1"></a>First, you must establish a baseline model that will be used in subsequent models and test. The baseline model is a confirmatory factor analysis (CFA) model of the substantive variables and IER variables. Estimates of the unstandardized factor loadings and error variances for the IER variables are retained from this model to use as fixed parameters in subsequent models (Williams, 2016). Additionally, the factor correlations between the substantive variables are recorded to be used in a later model.</span>
+<span id="cb118-216"><a href="#cb118-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-217"><a href="#cb118-217" aria-hidden="true" tabindex="-1"></a>The code to specify the baseline for this example is as follows:</span>
+<span id="cb118-218"><a href="#cb118-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-219"><a href="#cb118-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Specify Baseline Model}</span></span>
+<span id="cb118-220"><a href="#cb118-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-221"><a href="#cb118-221" aria-hidden="true" tabindex="-1"></a><span class="in">BaselineModel &lt;- 'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb118-222"><a href="#cb118-222" aria-hidden="true" tabindex="-1"></a><span class="in">        fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb118-223"><a href="#cb118-223" aria-hidden="true" tabindex="-1"></a><span class="in">        fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb118-224"><a href="#cb118-224" aria-hidden="true" tabindex="-1"></a><span class="in">        fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb118-225"><a href="#cb118-225" aria-hidden="true" tabindex="-1"></a><span class="in">        fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb118-226"><a href="#cb118-226" aria-hidden="true" tabindex="-1"></a><span class="in">        fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb118-227"><a href="#cb118-227" aria-hidden="true" tabindex="-1"></a><span class="in">        fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb118-228"><a href="#cb118-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-229"><a href="#cb118-229" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER1 =~ ZLongstring_Index</span></span>
+<span id="cb118-230"><a href="#cb118-230" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER2=~ Zpsychsyn_score</span></span>
+<span id="cb118-231"><a href="#cb118-231" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER3=~ Zmahal'</span></span>
+<span id="cb118-232"><a href="#cb118-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-233"><a href="#cb118-233" aria-hidden="true" tabindex="-1"></a><span class="in">BaselineModel_fit &lt;- cfa(BaselineModel, data=IER_Sim_Data, std.lv=TRUE)</span></span>
+<span id="cb118-234"><a href="#cb118-234" aria-hidden="true" tabindex="-1"></a><span class="in">fitMeasures(BaselineModel_fit, c("chisq", "df", "cfi", "rmsea"))</span></span>
+<span id="cb118-235"><a href="#cb118-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-236"><a href="#cb118-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-237"><a href="#cb118-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-238"><a href="#cb118-238" aria-hidden="true" tabindex="-1"></a>The summary function calls a summary of the fitted model. The factor loadings are found in the "Latent Variables" section of the summary output, and the unstandardized error variances are found in the "Variances" section of the output. The code to view the summary output is as follows:</span>
+<span id="cb118-239"><a href="#cb118-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-240"><a href="#cb118-240" aria-hidden="true" tabindex="-1"></a><span class="in">```{r include=FALSE}</span></span>
+<span id="cb118-241"><a href="#cb118-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-242"><a href="#cb118-242" aria-hidden="true" tabindex="-1"></a><span class="in">summary(BaselineModel_fit)</span></span>
+<span id="cb118-243"><a href="#cb118-243" aria-hidden="true" tabindex="-1"></a><span class="in">inspect(BaselineModel_fit,what="est")$lambda</span></span>
+<span id="cb118-244"><a href="#cb118-244" aria-hidden="true" tabindex="-1"></a><span class="in">inspect(BaselineModel_fit,what="est")$theta</span></span>
+<span id="cb118-245"><a href="#cb118-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-246"><a href="#cb118-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-247"><a href="#cb118-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-248"><a href="#cb118-248" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model 1</span></span>
+<span id="cb118-249"><a href="#cb118-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-250"><a href="#cb118-250" aria-hidden="true" tabindex="-1"></a>The first model to examine is a structural model without IER effects which allows for correlations among the substantive latent variables with an orthogonal IER variable. The IER variable's indicators are the standardized IER indices retained in the exploratory factor analysis.</span>
+<span id="cb118-251"><a href="#cb118-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-252"><a href="#cb118-252" aria-hidden="true" tabindex="-1"></a>The IER variable is assumed to be orthogonal, as IER behavior should not be correlated with the substantive variables.</span>
+<span id="cb118-253"><a href="#cb118-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-254"><a href="#cb118-254" aria-hidden="true" tabindex="-1"></a>The code to specify the Model 1 for this example is as follows:</span>
+<span id="cb118-255"><a href="#cb118-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-256"><a href="#cb118-256" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Specify Model 1}</span></span>
+<span id="cb118-257"><a href="#cb118-257" aria-hidden="true" tabindex="-1"></a><span class="in">Model1 &lt;- 'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb118-258"><a href="#cb118-258" aria-hidden="true" tabindex="-1"></a><span class="in">        fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb118-259"><a href="#cb118-259" aria-hidden="true" tabindex="-1"></a><span class="in">        fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb118-260"><a href="#cb118-260" aria-hidden="true" tabindex="-1"></a><span class="in">        fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb118-261"><a href="#cb118-261" aria-hidden="true" tabindex="-1"></a><span class="in">        fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb118-262"><a href="#cb118-262" aria-hidden="true" tabindex="-1"></a><span class="in">        fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb118-263"><a href="#cb118-263" aria-hidden="true" tabindex="-1"></a><span class="in">        fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb118-264"><a href="#cb118-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-265"><a href="#cb118-265" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER1 =~ ZLongstring_Index</span></span>
+<span id="cb118-266"><a href="#cb118-266" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER2=~ Zpsychsyn_score</span></span>
+<span id="cb118-267"><a href="#cb118-267" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER3=~ Zmahal</span></span>
+<span id="cb118-268"><a href="#cb118-268" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb118-269"><a href="#cb118-269" aria-hidden="true" tabindex="-1"></a><span class="in">        ZLongstring_Index ~~ 0*ZLongstring_Index</span></span>
+<span id="cb118-270"><a href="#cb118-270" aria-hidden="true" tabindex="-1"></a><span class="in">        Zpsychsyn_score ~~ 0*Zpsychsyn_score</span></span>
+<span id="cb118-271"><a href="#cb118-271" aria-hidden="true" tabindex="-1"></a><span class="in">        Zmahal ~~ 0*Zmahal</span></span>
+<span id="cb118-272"><a href="#cb118-272" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb118-273"><a href="#cb118-273" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb118-274"><a href="#cb118-274" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb118-275"><a href="#cb118-275" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj'</span></span>
+<span id="cb118-276"><a href="#cb118-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-277"><a href="#cb118-277" aria-hidden="true" tabindex="-1"></a><span class="in">Model1_fit &lt;- cfa(Model1, data=IER_Sim_Data, std.lv=TRUE)</span></span>
+<span id="cb118-278"><a href="#cb118-278" aria-hidden="true" tabindex="-1"></a><span class="in">fitMeasures(Model1_fit, c("chisq", "df", "cfi", "rmsea"))</span></span>
+<span id="cb118-279"><a href="#cb118-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-280"><a href="#cb118-280" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-281"><a href="#cb118-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-282"><a href="#cb118-282" aria-hidden="true" tabindex="-1"></a>Record the substantive factor correlations estimated in this model to use in subsequent models. This can be done by sifting through the lavaan summary output or by utilizing code to extract the estimates from the summary.</span>
+<span id="cb118-283"><a href="#cb118-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-284"><a href="#cb118-284" aria-hidden="true" tabindex="-1"></a>The summary function calls a summary of the fitted model. The factor loadings are found in the "Latent Variables" section of the summary output, and the unstandardized error variances are found in the "Variances" section of the output. The code to view the summary output is as follows:</span>
+<span id="cb118-285"><a href="#cb118-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-286"><a href="#cb118-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r include=FALSE}</span></span>
+<span id="cb118-287"><a href="#cb118-287" aria-hidden="true" tabindex="-1"></a><span class="in">summary(Model1_fit)</span></span>
+<span id="cb118-288"><a href="#cb118-288" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-289"><a href="#cb118-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-290"><a href="#cb118-290" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model 2</span></span>
+<span id="cb118-291"><a href="#cb118-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-292"><a href="#cb118-292" aria-hidden="true" tabindex="-1"></a>Model 2 is a saturated structural model with IER effects. With this model, the impact of the IER latent variable is allowed to be different for each of the indicators of the substantive constructs. This is done so that the subsequent test of the presence of IER can be conducted without making any assumptions about the specific nature of these effects.</span>
+<span id="cb118-293"><a href="#cb118-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-294"><a href="#cb118-294" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Specify Model 2}</span></span>
+<span id="cb118-295"><a href="#cb118-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-296"><a href="#cb118-296" aria-hidden="true" tabindex="-1"></a><span class="in">Model2 &lt;-'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb118-297"><a href="#cb118-297" aria-hidden="true" tabindex="-1"></a><span class="in">        fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb118-298"><a href="#cb118-298" aria-hidden="true" tabindex="-1"></a><span class="in">        fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb118-299"><a href="#cb118-299" aria-hidden="true" tabindex="-1"></a><span class="in">        fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb118-300"><a href="#cb118-300" aria-hidden="true" tabindex="-1"></a><span class="in">        fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb118-301"><a href="#cb118-301" aria-hidden="true" tabindex="-1"></a><span class="in">        fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb118-302"><a href="#cb118-302" aria-hidden="true" tabindex="-1"></a><span class="in">        fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb118-303"><a href="#cb118-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-304"><a href="#cb118-304" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER1 =~ ZLongstring_Index + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb118-305"><a href="#cb118-305" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER2=~ Zpsychsyn_score + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb118-306"><a href="#cb118-306" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER3=~ Zmahal + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb118-307"><a href="#cb118-307" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb118-308"><a href="#cb118-308" aria-hidden="true" tabindex="-1"></a><span class="in">        ZLongstring_Index ~~ 0*ZLongstring_Index</span></span>
+<span id="cb118-309"><a href="#cb118-309" aria-hidden="true" tabindex="-1"></a><span class="in">        Zpsychsyn_score ~~ 0*Zpsychsyn_score</span></span>
+<span id="cb118-310"><a href="#cb118-310" aria-hidden="true" tabindex="-1"></a><span class="in">        Zmahal ~~ 0*Zmahal</span></span>
+<span id="cb118-311"><a href="#cb118-311" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb118-312"><a href="#cb118-312" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb118-313"><a href="#cb118-313" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb118-314"><a href="#cb118-314" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj'</span></span>
+<span id="cb118-315"><a href="#cb118-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-316"><a href="#cb118-316" aria-hidden="true" tabindex="-1"></a><span class="in">Model2_fit &lt;- cfa(Model2, data=IER_Sim_Data, std.lv=TRUE)</span></span>
+<span id="cb118-317"><a href="#cb118-317" aria-hidden="true" tabindex="-1"></a><span class="in">fitMeasures(Model2_fit, c("chisq", "df", "cfi", "rmsea"))</span></span>
+<span id="cb118-318"><a href="#cb118-318" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-319"><a href="#cb118-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-320"><a href="#cb118-320" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model 3</span></span>
+<span id="cb118-321"><a href="#cb118-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-322"><a href="#cb118-322" aria-hidden="true" tabindex="-1"></a>Model 3 is identical to Model 2, except that the substantive factor correlations are constrained to their unstandardized estimates from Model 1.</span>
+<span id="cb118-323"><a href="#cb118-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-324"><a href="#cb118-324" aria-hidden="true" tabindex="-1"></a>Model 3 is a restricted saturated structural model with IER effects; the term restricted indicates that the values of the substantively important parameters have been restricted to be equal to the estimates from Model 1. The examination of Model 3 provides a direct statistical test of the impact of IER effects.</span>
+<span id="cb118-325"><a href="#cb118-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-326"><a href="#cb118-326" aria-hidden="true" tabindex="-1"></a>The code to specify Model 3 for this example is as follows:</span>
+<span id="cb118-327"><a href="#cb118-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-328"><a href="#cb118-328" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Specify Model 3}</span></span>
+<span id="cb118-329"><a href="#cb118-329" aria-hidden="true" tabindex="-1"></a><span class="in">Model3 &lt;- 'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb118-330"><a href="#cb118-330" aria-hidden="true" tabindex="-1"></a><span class="in">        fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb118-331"><a href="#cb118-331" aria-hidden="true" tabindex="-1"></a><span class="in">        fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb118-332"><a href="#cb118-332" aria-hidden="true" tabindex="-1"></a><span class="in">        fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb118-333"><a href="#cb118-333" aria-hidden="true" tabindex="-1"></a><span class="in">        fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb118-334"><a href="#cb118-334" aria-hidden="true" tabindex="-1"></a><span class="in">        fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb118-335"><a href="#cb118-335" aria-hidden="true" tabindex="-1"></a><span class="in">        fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb118-336"><a href="#cb118-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-337"><a href="#cb118-337" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER1 =~ ZLongstring_Index + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb118-338"><a href="#cb118-338" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER2=~ Zpsychsyn_score + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb118-339"><a href="#cb118-339" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER3=~ Zmahal + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb118-340"><a href="#cb118-340" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb118-341"><a href="#cb118-341" aria-hidden="true" tabindex="-1"></a><span class="in">        ZLongstring_Index ~~ 0*ZLongstring_Index</span></span>
+<span id="cb118-342"><a href="#cb118-342" aria-hidden="true" tabindex="-1"></a><span class="in">        Zpsychsyn_score ~~ 0*Zpsychsyn_score</span></span>
+<span id="cb118-343"><a href="#cb118-343" aria-hidden="true" tabindex="-1"></a><span class="in">        Zmahal ~~ 0*Zmahal</span></span>
+<span id="cb118-344"><a href="#cb118-344" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb118-345"><a href="#cb118-345" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb118-346"><a href="#cb118-346" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb118-347"><a href="#cb118-347" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb118-348"><a href="#cb118-348" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb118-349"><a href="#cb118-349" aria-hidden="true" tabindex="-1"></a><span class="in">        fssr ~~ 0.382*fri + 0.936*fwom + 0.311*fsat + 0.805*fdj + 0.602*fij + 0.461*fpj</span></span>
+<span id="cb118-350"><a href="#cb118-350" aria-hidden="true" tabindex="-1"></a><span class="in">        fri ~~ 0.319*fwom + 0.782*fsat + 0.506*fdj + 0.493*fij + 0.547*fpj</span></span>
+<span id="cb118-351"><a href="#cb118-351" aria-hidden="true" tabindex="-1"></a><span class="in">        fwom ~~ 0.260*fsat + 0.692*fdj + 0.655*fij + 0.416*fpj</span></span>
+<span id="cb118-352"><a href="#cb118-352" aria-hidden="true" tabindex="-1"></a><span class="in">        fsat ~~ 0.478*fdj + 0.575*fij + 0.689*fpj</span></span>
+<span id="cb118-353"><a href="#cb118-353" aria-hidden="true" tabindex="-1"></a><span class="in">        fdj ~~ 0.639*fij + 0.586*fpj</span></span>
+<span id="cb118-354"><a href="#cb118-354" aria-hidden="true" tabindex="-1"></a><span class="in">        fij ~~ 0.597*fpj'</span></span>
+<span id="cb118-355"><a href="#cb118-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-356"><a href="#cb118-356" aria-hidden="true" tabindex="-1"></a><span class="in">Model3_fit &lt;- cfa(Model3, data=IER_Sim_Data, std.lv=TRUE)</span></span>
+<span id="cb118-357"><a href="#cb118-357" aria-hidden="true" tabindex="-1"></a><span class="in">fitMeasures(Model3_fit, c("chisq", "df", "cfi", "rmsea"))</span></span>
+<span id="cb118-358"><a href="#cb118-358" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-359"><a href="#cb118-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-360"><a href="#cb118-360" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step Three: Compare the models</span></span>
+<span id="cb118-361"><a href="#cb118-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-362"><a href="#cb118-362" aria-hidden="true" tabindex="-1"></a>First, a comparison of Model 1 and Model 2 tests the hypothesis that that there are no method effects due to IER.</span>
+<span id="cb118-363"><a href="#cb118-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-366"><a href="#cb118-366" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb118-367"><a href="#cb118-367" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(Model1_fit, Model2_fit)</span>
+<span id="cb118-368"><a href="#cb118-368" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-369"><a href="#cb118-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-370"><a href="#cb118-370" aria-hidden="true" tabindex="-1"></a>Next, a comparison of Model 2 and Model 3 tests whether the substantive variable correlations are significantly biased by IER effects.</span>
+<span id="cb118-371"><a href="#cb118-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-374"><a href="#cb118-374" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb118-375"><a href="#cb118-375" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(Model3_fit, Model2_fit)</span>
+<span id="cb118-376"><a href="#cb118-376" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb118-377"><a href="#cb118-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-378"><a href="#cb118-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-379"><a href="#cb118-379" aria-hidden="true" tabindex="-1"></a>Export IER Scores</span>
+<span id="cb118-380"><a href="#cb118-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-383"><a href="#cb118-383" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb118-384"><a href="#cb118-384" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb118-385"><a href="#cb118-385" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(downloadthis)</span>
+<span id="cb118-386"><a href="#cb118-386" aria-hidden="true" tabindex="-1"></a>IER_Scores <span class="sc">|&gt;</span></span>
+<span id="cb118-387"><a href="#cb118-387" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download_this</span>(</span>
+<span id="cb118-388"><a href="#cb118-388" aria-hidden="true" tabindex="-1"></a>    <span class="at">output_name =</span> <span class="st">"IERScores"</span>,</span>
+<span id="cb118-389"><a href="#cb118-389" aria-hidden="true" tabindex="-1"></a>    <span class="at">output_extension =</span> <span class="st">".xlsx"</span>,</span>
+<span id="cb118-390"><a href="#cb118-390" aria-hidden="true" tabindex="-1"></a>    <span class="at">button_label =</span> <span class="st">"Download data"</span>,</span>
+<span id="cb118-391"><a href="#cb118-391" aria-hidden="true" tabindex="-1"></a>    <span class="at">button_type =</span> <span class="st">"warning"</span>,</span>
+<span id="cb118-392"><a href="#cb118-392" aria-hidden="true" tabindex="-1"></a>    <span class="at">has_icon =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb118-393"><a href="#cb118-393" aria-hidden="true" tabindex="-1"></a>    <span class="at">icon =</span> <span class="st">"fa fa-save"</span></span>
+<span id="cb118-394"><a href="#cb118-394" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb118-395"><a href="#cb118-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-396"><a href="#cb118-396" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

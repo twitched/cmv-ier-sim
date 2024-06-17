@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://twitched.github.io/cmv-ier-sim/SimpleCMVSimulation.html</loc>
-    <lastmod>2023-11-17T23:48:43.292Z</lastmod>
-  </url>
-  <url>
-    <loc>https://twitched.github.io/cmv-ier-sim/index.html</loc>
-    <lastmod>2023-11-17T23:48:34.357Z</lastmod>
-  </url>
-  <url>
-    <loc>https://twitched.github.io/cmv-ier-sim/CMVSimulation.html</loc>
-    <lastmod>2023-11-17T23:48:30.357Z</lastmod>
-  </url>
-  <url>
-    <loc>https://twitched.github.io/cmv-ier-sim/SimpleGriddedCMVSimulation.html</loc>
-    <lastmod>2023-11-17T23:48:24.817Z</lastmod>
-  </url>
-  <url>
-    <loc>https://twitched.github.io/cmv-ier-sim/GenerateBaselineData.html</loc>
-    <lastmod>2023-11-17T23:48:34.034Z</lastmod>
+    <loc>https://twitched.github.io/cmv-ier-sim/Avatars.html</loc>
+    <lastmod>2024-06-17T23:28:59.085Z</lastmod>
   </url>
   <url>
     <loc>https://twitched.github.io/cmv-ier-sim/CMVSimulation2.html</loc>
-    <lastmod>2023-11-17T23:48:39.205Z</lastmod>
+    <lastmod>2023-11-17T23:35:16.181Z</lastmod>
+  </url>
+  <url>
+    <loc>https://twitched.github.io/cmv-ier-sim/index.html</loc>
+    <lastmod>2024-06-17T23:36:58.001Z</lastmod>
+  </url>
+  <url>
+    <loc>https://twitched.github.io/cmv-ier-sim/SimpleGriddedCMVSimulation.html</loc>
+    <lastmod>2023-11-17T23:35:16.182Z</lastmod>
+  </url>
+  <url>
+    <loc>https://twitched.github.io/cmv-ier-sim/IER-CMVInterplay.html</loc>
+    <lastmod>2024-06-17T23:16:40.194Z</lastmod>
+  </url>
+  <url>
+    <loc>https://twitched.github.io/cmv-ier-sim/GenerateBaselineData.html</loc>
+    <lastmod>2024-06-17T23:11:40.678Z</lastmod>
+  </url>
+  <url>
+    <loc>https://twitched.github.io/cmv-ier-sim/CMVSimulationWithLavaan.html</loc>
+    <lastmod>2024-06-06T21:44:53.755Z</lastmod>
+  </url>
+  <url>
+    <loc>https://twitched.github.io/cmv-ier-sim/SimpleCMVSimulation.html</loc>
+    <lastmod>2024-06-04T20:15:46.135Z</lastmod>
   </url>
 </urlset>
