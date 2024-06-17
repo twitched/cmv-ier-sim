@@ -1,13 +1,13 @@
 ---
-title: "CMV Simulation Main"
+title: "CMV-IER Simulation Main"
 author: "Doug Twitchell"
 format: html
 bibliography: references.bib
 ---
 
-## CMV Simulation
+## CMV-IER Simulation
 
-This is a set of pages that run through simulating and testing data for the CMV IER project by Doug Twitchell, Elizabeth Raglund, Christie Fuller, and Marcia Simmering.
+This is a set of pages that run through simulating and testing data for the CMV IER project by Elizabeth Raglund, Christie Fuller, Marcia Simmering, and Doug Twitchell.
 
 ## Generate Baseline Data
 

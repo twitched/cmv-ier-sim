@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  title: "CMV Simulation"
+  title: "CMV-IER Simulation"
   sidebar:
     style: docked
     search: false
@@ -13,6 +13,8 @@ website:
         text: Generate Baseline Data
       - href: IER-CMVInterplay.qmd
         text: IER-CMV Interplay
+      - href: Avatars.qmd
+        text: IER Avatars
     tools:
       - icon: github
         href: https://github.com/twitched/cmv-ier-sim
