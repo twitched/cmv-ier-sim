@@ -42,7 +42,7 @@ First, I create a dataset for the variables. Then, I determine how many item pai
 
 psychsyn_cor <- psychsyn_critval(IER_Sim_Data)
 head(psychsyn_cor)
-sum(psychsyn_cor$Freq > .60, na.rm = TRUE)
+sum(psychsyn_cor$cor > .60, na.rm = TRUE)
 
 ```
 
@@ -70,7 +70,7 @@ First, I determine how many item pairs have a correlation less than -0.60.
 
 psychant_cor <- psychsyn_critval(IER_Sim_Data)
 head(psychant_cor)
-sum(psychant_cor$Freq < -.60, na.rm = TRUE)
+sum(psychant_cor$cor < -.60, na.rm = TRUE)
 
 ```
 
