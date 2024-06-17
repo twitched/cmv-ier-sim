@@ -370,7 +370,7 @@ lavTestLRT(Model3_fit, Model2_fit)
 Export IER Scores
 
 ```{r}
-
+#| echo: false
 library(downloadthis)
 IER_Scores |>
   download_this(
