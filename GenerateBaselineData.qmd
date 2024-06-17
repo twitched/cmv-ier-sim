@@ -333,8 +333,8 @@ epsilon <- MASS::mvrnorm(J, mu = rep(0, ncol(theta)),Sigma = theta)
 Y <- beta + tcrossprod(eta, lambda) + epsilon 
 
 Y <- Y |> round() # turn in to likert.  Should already be normally distributed
-Y[Y==0] <- 1 #capture those that end up just below 0.5 and just above 7.5
-Y[Y==8] <- 7
+Y[Y <= 0] <- 1 #capture those that end up just below 0.5 and just above 7.5
+Y[Y >= 8] <- 7
 
 item_names <- mapply(\(name, num) 
                      paste0(name, seq(num)), var_names, items_per_construct, SIMPLIFY = FALSE) |>
@@ -342,6 +342,17 @@ item_names <- mapply(\(name, num)
 
 cfa_data  <-  Y |> as.data.frame() |> setNames(item_names)
 cfa_data
+```
+
+Plot each variable to check if it is reasonable
+
+```{r}
+cfa_data |> 
+  pivot_longer(cols = everything()) |> 
+  ggplot(aes(value)) +
+  geom_histogram(bins = 7) +
+  scale_x_continuous(breaks = seq(1, 7, 1)) +
+  facet_wrap(~name, scales = "free")
 ```
 
 Save the simulated data to allow for later use.
