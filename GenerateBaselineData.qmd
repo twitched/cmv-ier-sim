@@ -171,17 +171,15 @@ cov_matrix
 
 ## Simulating New Data
 
-To simulate data we need all of the right-side components of the following [@ji_bayesian_2022]:
+To simulate data we need all of the right-side components of the following:
 
 $$
-\mathbf{y_j}=\mathbf{\beta} + \mathbf{\Lambda}\mathbf\eta_{j} + \mathbf{\epsilon_{j}}
+\mathbf{y_j}=\mathbf{\Lambda}\mathbf\eta_{j} + \mathbf{\epsilon_{j}}
 $$
 
 The notation is as follows:
 
 -   $y_{ij}$ is the response of person $j\,(j=1,...,J)$ on item $i\,(i=1,...,I)$.
-
--   $\beta_i$ is the intercept for item $i$ or the mean
 
 -   $\eta_{jk}$ is the $k$th common factor for person $j$.
 
@@ -202,11 +200,6 @@ y_{2 j} \\
 \vdots \\
 y_{i j}
 \end{array}\right]}_{\mathbf{y}_{j}}=\underbrace{\left[\begin{array}{c}
-\beta_{1} \\
-\beta_{2} \\
-\vdots \\
-\beta_{i}
-\end{array}\right]}_{\mathbf{\beta}}+\underbrace{\left[\begin{array}{cc}
 \lambda_{11} & & 0 \\
 \lambda_{21} & & 0 \\
 \vdots & \cdots & \vdots \\
@@ -235,8 +228,9 @@ $$
 $$
 
 $$
-\mathbf{\eta}_{j} \sim N_{K}(\mathbf{0}, \mathbf{\Psi}),
+\mathbf{\eta}_{j} \sim N_{K}(\mathbf{\beta}_k, \mathbf{\Psi}),
 $$
+Where $\mathbf{\beta}_k$ is the mean of each construct.
 
 And
 
@@ -271,13 +265,6 @@ $$
 0 & 0 & \cdots & \theta_{ii}
 \end{pmatrix}
 $$
-
-We can derive $\mathbf{\beta}$ by assuming the mean for each item of each construct is the same, $\beta_{ijk} = \mu_k$.
-
-```{r}
-items_per_construct <- c(3,3,3,3,4,4,4)
-beta <- rep(construct_means, items_per_construct)
-```
 
 The covariance matrix is $\mathbf{\Psi}$, which we derived from the given correlation matrix.
 
@@ -324,13 +311,13 @@ We can now use all of the components to generate a data set
 J <- 500
 
 # generate random factor scores for each construct on each subject
-eta <- MASS::mvrnorm(J, mu = rep(0, nrow(psi)), Sigma = psi)
+eta <- MASS::mvrnorm(J, mu = construct_means, Sigma = psi)
 
 # generate error terms for each item for each subject
 epsilon <- MASS::mvrnorm(J, mu = rep(0, ncol(theta)),Sigma = theta)
 
 
-Y <- beta + tcrossprod(eta, lambda) + epsilon 
+Y <- tcrossprod(eta, lambda) + epsilon 
 
 Y <- Y |> round() # turn in to likert.  Should already be normally distributed
 Y[Y <= 0] <- 1 #capture those that end up just below 0.5 and just above 7.5
@@ -347,12 +334,13 @@ cfa_data
 Plot each variable to check if it is reasonable
 
 ```{r}
+#| warning: false
 cfa_data |> 
   pivot_longer(cols = everything()) |> 
   ggplot(aes(value)) +
-  geom_histogram(bins = 7) +
-  scale_x_continuous(breaks = seq(1, 7, 1)) +
-  facet_wrap(~name, scales = "free")
+  geom_histogram(binwidth = .5) +
+  scale_x_continuous(breaks = seq(1, 7, 1), limits = c(0.5, 7.5)) +
+  facet_wrap(vars(name))
 ```
 
 Save the simulated data to allow for later use.
