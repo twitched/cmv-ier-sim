@@ -29,7 +29,7 @@ format:
     monofont: "Fira Code"
     df-print: paged
     link-citations: true
-    code-fold: true
+    code-fold: show
     code-tools: true
     html-math-method: katex
     repo-url: https://github.com/twitched/cmv-ier-sim
