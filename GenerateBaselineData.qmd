@@ -277,6 +277,7 @@ For $\mathbf{\Theta}$ we need to determine the error of each item. Since we only
 So, for each construct we will use one minus its reliability for the covariance of its error term to construct $\mathbf{\Theta}$ .
 
 ```{r}
+items_per_construct <- c(3, 3, 3, 3, 4, 4, 4)
 sigma_k <- (1 - reliabilities)^2 #construct error variance
 theta <- sigma_k |> 
   rep(items_per_construct) |> 
