@@ -292,6 +292,8 @@ We know the average loading for each item on each construct, but we don't know w
 In measurement theory, the reliability $r_{11}$ is defined as $r_{11} = \frac{\sigma^2_t}{\sigma^2_x}$ where $t$ is the true factor score and $x$ is the measured score[@nunnally_psychometric_1994, eq. 6-9] . Therefore, $\sigma_t^2 = r_{11}\sigma_x^2$. $\sigma_x^2$ is represented by $\mathbf{\Psi}$, so $\mathbf{\Lambda}$ can be represented by the reliability for each construct $r_{kk}$
 :::
 
+For now, we will make all factors have a loading of 1 and crossloadings of 0.
+
 ```{r}
 # Create a matrix filled with zeros with rows equal to the total number of items
 # and columns equal to the number of factors
