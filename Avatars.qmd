@@ -15,9 +15,15 @@ set.seed(1337)
 
 #show all of the columns as histograms
 histograms <- function(data) {
-  data |> 
-  pivot_longer(cols = everything()) |> 
-  ggplot(aes(value)) +
+  data <- data |> 
+  pivot_longer(cols = everything())
+  
+  #ensure measure names retain their order
+  data$name <- as.character(data$name)
+  data$name <- factor(data$name, levels=unique(data$name))
+  
+  #plot
+  ggplot(data, aes(value)) +
   geom_histogram(binwidth = .5) +
   scale_x_continuous(breaks = seq(1, 7, 1), limits = c(0.5, 7.5)) +
   facet_wrap(vars(name))
@@ -78,6 +84,7 @@ mallories(5, sim_data)
 #| label: MalloryGraph
 #| warning: false
 
+# Note: the histograms function is defined in the setup block of this page
 mallories(1, sim_data) |> histograms()
 
 ```
@@ -159,10 +166,6 @@ bart(slice_sample(sim_data, n = 10))
 
 ### Graph
 
-::: {.callout-warning}
-Not sure why, but the histograms are out of order, though they are still grouped by construct.
-:::
-
 ```{r}
 #| label: BartGraph
 #| warning: false
@@ -241,10 +244,6 @@ scarlett(10, page_table)
 
 ```
 ### Graph
-
-::: {.callout-warning}
-Not sure why, but the histograms are out of order, though they are still grouped by construct.
-:::
 
 ```{r}
 #| label: ScarlettGraph
