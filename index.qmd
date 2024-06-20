@@ -22,3 +22,10 @@ In this simulation, we generate a data set with no CMV or IER. This is the basel
 ## Generate Data from IER Avatars
 
 [Generate Data from IER Avatars](Avatars.qmd)
+
+## Analyze each Avatar
+
+[Mallory](MalloryAnalysis.qmd)  
+[Darren](DarrenAnalysis.qmd)  
+[Bart](BartAnalysis.qmd)  
+[Scarlett](ScarlettAnalysis.qmd)  

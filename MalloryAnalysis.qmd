@@ -1,0 +1,399 @@
+---
+title: "Mallory Analysis"
+author: "Ragland, Twitchell"
+date: today
+---
+
+# Insufficient Effort Responding Detection (Mallory Analysis)
+
+::: {.callout-warning}
+I couldn't get any of the analyses to work on Mallory. Some of the functions just don't work when someone answers the same thing for every question.
+:::
+
+List of all the libraries to use for the analysis
+
+```{r Libraries}
+library(tidyverse)
+library(foreign)
+library(careless)
+library(haven)
+library(readxl)
+library(car)
+```
+
+Call the dataset
+
+```{r Call dataset}
+example_data <- readr::read_csv(file.path(getwd(), "_data", "baseline.csv"))
+mallory <- function(example_data) {example_data[1,] |> mutate(across(everything(), ~4))}
+mallories <- function(num_rows, example_data) {replicate(num_rows, mallory(example_data), simplify = FALSE) |> bind_rows()}
+IER_Sim_Data <- mallories(500, example_data)
+```
+
+Calculate the even-odd consistency score for the personality variables.
+
+```{r Even-Odd Consistency score calculation}
+
+IER_Scores<- data.frame(matrix(ncol = 0, nrow = 500))
+
+IER_Scores$EO_score <- evenodd(IER_Sim_Data, c(3, 3, 3, 3, 4, 4, 4))
+
+```
+
+Now calculate the psychometric synonym scores for ALL of the personality/behavior variables.
+
+First, I create a dataset for the variables. Then, I determine how many item pairs have a correlation greater than 0.60.
+
+```{r Psychometric Synonym index check}
+
+psychsyn_cor <- psychsyn_critval(IER_Sim_Data)
+head(psychsyn_cor)
+sum(psychsyn_cor$cor > .60, na.rm = TRUE)
+
+```
+
+If there are enough pairs, proceed with calculating individual scores. 
+
+```{r Psychometric Synonym score calculation}
+#| eval: false
+
+IER_Scores$psychsyn_score <- psychsyn(IER_Sim_Data, critval = .60)
+
+```
+
+Since positive correlations indicate participants are responding consistently (i.e. carefully), multiply these scores by -1 so that higher scores reflect IER.
+
+```{r Psychometric Synonym index calculation}
+#| eval: false
+
+IER_Scores$psychsyn_Index <- -1 *(IER_Scores$psychsyn_score)
+
+```
+
+Now calculate the psychometric antonym scores for ALL of the personality/behavior variables.
+
+First, I determine how many item pairs have a correlation less than -0.60.
+
+```{r Psychometric Antonym index check}
+
+psychant_cor <- psychsyn_critval(IER_Sim_Data)
+head(psychant_cor)
+sum(psychant_cor$cor < -.60, na.rm = TRUE)
+
+```
+
+If there are enough pairs, proceed with calculating individual scores. There were 0 in this dataset.
+
+Next, calculate the IRV index for the personality variables.
+
+The intra-individual response variability (IRV) is similiar in spirit to the Longstring index. It is defined as the “standard deviation of responses across a set of consecutive item responses for an individual” (Dunn et al. 2018).
+
+Since all the items are positively worded, I am calculating this over the whole survey and then splitting the survey into four sections.
+
+```{r}
+
+IER_Scores$irv_scores <- irv(IER_Sim_Data, split = FALSE)
+
+```
+
+Calculate the long string index for the personality variables.For each observation, the length of the maximum uninterrupted string of identical responses is returned.
+
+```{r}
+
+IER_Scores$careless_long<-longstring(IER_Sim_Data,avg=FALSE)
+
+```
+
+Now I have to clean up all the NA values in the pyschometric synonym and psychometric antonym indices. NA values index indicate that there was no variance within any of the pairs. Since no variance indicates extreme consistency, and these indices are meant to catch inconsistent respondents. I assign a value of -1 to these respondents because they were responding "carefully," which really means consistently with these indices.
+
+```{r}
+#| eval: false
+missing_rows <- !complete.cases(IER_Scores$psychsyn_Index)
+
+IER_Scores$psychsyn_Index[missing_rows] <- -1
+
+```
+
+```{r}
+
+missing_rows <- !complete.cases(IER_Scores$EO_score)
+
+IER_Scores$EO_score[missing_rows] <- -1
+
+```
+
+Compute Mahalanobis D Index
+
+```{r Mahalanobis D for survey}
+#| eval: false
+IER_Scores$mahalscore <- mahad(IER_Sim_Data, plot = FALSE, flag = FALSE, confidence = 0.95, na.rm = TRUE)
+
+```
+
+The below code converts the IER scores to z-scores.
+
+```{r Convert IER Scores to Z-Scores}
+#| eval: false
+IER_Sim_Data$ZLongstring_Index <- (IER_Scores$careless_long-mean(IER_Scores$careless_long))/sd(IER_Scores$careless_long)
+
+IER_Sim_Data$ZIRVTotal_Index <- (IER_Scores$irv_scores-mean(IER_Scores$irv_scores))/sd(IER_Scores$irv_scores)
+
+IER_Sim_Data$ZEO_score <- (IER_Scores$EO_score-mean(IER_Scores$EO_score))/sd(IER_Scores$EO_score)
+
+IER_Sim_Data$Zpsychsyn_score <- (IER_Scores$psychsyn_Index-mean(na.omit(IER_Scores$psychsyn_Index)))/sd(na.omit(IER_Scores$psychsyn_Index))
+
+IER_Sim_Data$Zmahal <- (IER_Scores$mahalscore-mean(na.omit(IER_Scores$mahalscore)))/sd(na.omit(IER_Scores$mahalscore))
+
+```
+
+At this point, we have calculated the scores for all of the IER indices and can move forward the the analyses. 
+
+# Exploratory Factor Analysis of IER Indices
+
+To examine the factor structure of the measured IER variable, conduct an EFA on the IER indices. This analysis will be used to determine which IER indices to retain for the directly measured latent factor analysis. 
+
+Additionally, it will provide guidance for modeling the IER variable as a control variable. If you find a single factor solution, you may average the standardized indices into an overall IER score if the directly measured latent factor analysis indicates you need to control for IER. If the factor analysis results in a multi-factor solution, only average index scores which load onto the same factor.
+
+Following previous research, several decision rules are recommended, including:
+  
+  Kaiser criterion
+Scree test
+Parallel Analysis (Hayton et al.,2004), and 
+Velicer’s (1976) MAP test.
+
+```{r}
+#| eval: false
+library(EFA.dimensions)
+
+RAWPAR(subset(IER_Sim_Data, select = c(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),factormodel="PCA",Ndataset=1000,percentile=95)
+
+RAWPAR(subset(IER_Sim_Data, select = c(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),factormodel="PAF",Ndataset=1000,percentile=95)
+
+MAP(subset(IER_Sim_Data, select = c(ZLongstring_Index, Zpsychsyn_score, ZEO_score)))
+
+SCREE_PLOT(subset(IER_Sim_Data, select = c(ZLongstring_Index, Zpsychsyn_score, ZEO_score)))
+
+EMPKC(subset(IER_Sim_Data, select = c(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),corkind="pearson")
+
+EFA(subset(IER_Sim_Data, select = c(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),extraction='paf',corkind='pearson',Nfactors=NULL,Ncases=NULL,iterpaf=100, rotation='oblimin',verbose=TRUE)
+
+```
+
+# Directly Measured Latent Method Factor Technique for Handling IER
+
+We conceptualize IER as a response bias that can influence survey responses. Additionally, we consider the indices produced by the various IER detection methods in the previous section measures of IER.
+
+Thus, the following section presents a demonstration of the directly measured latent method factor technique as a remedy for IER.
+
+## Step One: Prepare the RStudio Environment
+
+The below code calls the libraries necessary for the technique.
+
+```{r Lavaan Libraries, message=FALSE, warning=FALSE}
+library(haven)
+library(lavaan)
+library(lavaanPlot)
+```
+
+## Step Two: Model Specification
+
+The lavaan model syntax is used to describe models to be estimated. The syntax defines models using various formula types. The formula types which are used in the technique are below.
+
+**Latent Variable Definition:**
+  
+  `latent variable =~ indicator1 + indicator2 + indicator3`
+
+**Variances and Covariances:**
+  
+  `variable1 ~~ variable2`
+
+**Regression:**
+  
+  `variable1 ~~ variable2 + variable3 + variable4`
+
+By default, the lavaan syntax will always fix the factor loading of a latent variable\'s first indicator to 1. Add the argument `std.lv = TRUE` to the function call to force this factor loading to be free.
+
+### Baseline Model
+
+First, you must establish a baseline model that will be used in subsequent models and test. The baseline model is a confirmatory factor analysis (CFA) model of the substantive variables and IER variables. Estimates of the unstandardized factor loadings and error variances for the IER variables are retained from this model to use as fixed parameters in subsequent models (Williams, 2016). Additionally, the factor correlations between the substantive variables are recorded to be used in a later model.
+
+The code to specify the baseline for this example is as follows:
+
+```{r Specify Baseline Model}
+#| eval: false
+BaselineModel <- 'fssr =~ ssr1 + ssr2 + ssr3
+fri =~ ri1 + ri2 + ri3
+fwom =~ wom1 + wom2 + wom3
+fsat =~ sat1 + sat2 + sat3
+fdj =~ dj1 + dj2 + dj3
+fij =~ ij1 + ij2 + ij3 + ij4
+fpj =~ pj1 + pj2 + pj3 + pj4
+
+fIER1 =~ ZLongstring_Index
+fIER2=~ Zpsychsyn_score
+fIER3=~ Zmahal'
+
+BaselineModel_fit <- cfa(BaselineModel, data=IER_Sim_Data, std.lv=TRUE)
+fitMeasures(BaselineModel_fit, c("chisq", "df", "cfi", "rmsea"))
+
+```
+
+The summary function calls a summary of the fitted model. The factor loadings are found in the "Latent Variables" section of the summary output, and the unstandardized error variances are found in the "Variances" section of the output. The code to view the summary output is as follows:
+
+```{r include=FALSE}
+#| eval: false
+summary(BaselineModel_fit)
+inspect(BaselineModel_fit,what="est")$lambda
+inspect(BaselineModel_fit,what="est")$theta
+
+```
+
+### Model 1
+
+The first model to examine is a structural model without IER effects which allows for correlations among the substantive latent variables with an orthogonal IER variable. The IER variable's indicators are the standardized IER indices retained in the exploratory factor analysis.
+
+The IER variable is assumed to be orthogonal, as IER behavior should not be correlated with the substantive variables.
+
+The code to specify the Model 1 for this example is as follows:
+  
+```{r Specify Model 1}
+#| eval: false
+Model1 <- 'fssr =~ ssr1 + ssr2 + ssr3
+        fri =~ ri1 + ri2 + ri3
+        fwom =~ wom1 + wom2 + wom3
+        fsat =~ sat1 + sat2 + sat3
+        fdj =~ dj1 + dj2 + dj3
+        fij =~ ij1 + ij2 + ij3 + ij4
+        fpj =~ pj1 + pj2 + pj3 + pj4
+
+        fIER1 =~ ZLongstring_Index
+        fIER2=~ Zpsychsyn_score
+        fIER3=~ Zmahal
+        
+        ZLongstring_Index ~~ 0*ZLongstring_Index
+        Zpsychsyn_score ~~ 0*Zpsychsyn_score
+        Zmahal ~~ 0*Zmahal
+        
+        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj
+        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj
+        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj'
+
+Model1_fit <- cfa(Model1, data=IER_Sim_Data, std.lv=TRUE)
+fitMeasures(Model1_fit, c("chisq", "df", "cfi", "rmsea"))
+
+```
+
+Record the substantive factor correlations estimated in this model to use in subsequent models. This can be done by sifting through the lavaan summary output or by utilizing code to extract the estimates from the summary.
+
+The summary function calls a summary of the fitted model. The factor loadings are found in the "Latent Variables" section of the summary output, and the unstandardized error variances are found in the "Variances" section of the output. The code to view the summary output is as follows:
+  
+```{r include=FALSE}
+#| eval: false
+summary(Model1_fit)
+```
+
+### Model 2
+
+Model 2 is a saturated structural model with IER effects. With this model, the impact of the IER latent variable is allowed to be different for each of the indicators of the substantive constructs. This is done so that the subsequent test of the presence of IER can be conducted without making any assumptions about the specific nature of these effects.
+
+```{r Specify Model 2}
+#| eval: false
+Model2 <-'fssr =~ ssr1 + ssr2 + ssr3
+        fri =~ ri1 + ri2 + ri3
+        fwom =~ wom1 + wom2 + wom3
+        fsat =~ sat1 + sat2 + sat3
+        fdj =~ dj1 + dj2 + dj3
+        fij =~ ij1 + ij2 + ij3 + ij4
+        fpj =~ pj1 + pj2 + pj3 + pj4
+
+        fIER1 =~ ZLongstring_Index + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4
+        fIER2=~ Zpsychsyn_score + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4
+        fIER3=~ Zmahal + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4
+        
+        ZLongstring_Index ~~ 0*ZLongstring_Index
+        Zpsychsyn_score ~~ 0*Zpsychsyn_score
+        Zmahal ~~ 0*Zmahal
+        
+        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj
+        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj
+        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj'
+
+Model2_fit <- cfa(Model2, data=IER_Sim_Data, std.lv=TRUE)
+fitMeasures(Model2_fit, c("chisq", "df", "cfi", "rmsea"))
+```
+
+### Model 3
+
+Model 3 is identical to Model 2, except that the substantive factor correlations are constrained to their unstandardized estimates from Model 1.
+
+Model 3 is a restricted saturated structural model with IER effects; the term restricted indicates that the values of the substantively important parameters have been restricted to be equal to the estimates from Model 1. The examination of Model 3 provides a direct statistical test of the impact of IER effects.
+
+The code to specify Model 3 for this example is as follows:
+  
+```{r Specify Model 3}
+#| eval: false
+Model3 <- 'fssr =~ ssr1 + ssr2 + ssr3
+        fri =~ ri1 + ri2 + ri3
+        fwom =~ wom1 + wom2 + wom3
+        fsat =~ sat1 + sat2 + sat3
+        fdj =~ dj1 + dj2 + dj3
+        fij =~ ij1 + ij2 + ij3 + ij4
+        fpj =~ pj1 + pj2 + pj3 + pj4
+
+        fIER1 =~ ZLongstring_Index + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4
+        fIER2=~ Zpsychsyn_score + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4
+        fIER3=~ Zmahal + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4
+        
+        ZLongstring_Index ~~ 0*ZLongstring_Index
+        Zpsychsyn_score ~~ 0*Zpsychsyn_score
+        Zmahal ~~ 0*Zmahal
+        
+        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj
+        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj
+        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj
+        
+        fssr ~~ 0.382*fri + 0.936*fwom + 0.311*fsat + 0.805*fdj + 0.602*fij + 0.461*fpj
+        fri ~~ 0.319*fwom + 0.782*fsat + 0.506*fdj + 0.493*fij + 0.547*fpj
+        fwom ~~ 0.260*fsat + 0.692*fdj + 0.655*fij + 0.416*fpj
+        fsat ~~ 0.478*fdj + 0.575*fij + 0.689*fpj
+        fdj ~~ 0.639*fij + 0.586*fpj
+        fij ~~ 0.597*fpj'
+
+Model3_fit <- cfa(Model3, data=IER_Sim_Data, std.lv=TRUE)
+fitMeasures(Model3_fit, c("chisq", "df", "cfi", "rmsea"))
+```
+
+## Step Three: Compare the models
+
+First, a comparison of Model 1 and Model 2 tests the hypothesis that that there are no method effects due to IER.
+
+```{r}
+#| eval: false
+lavTestLRT(Model1_fit, Model2_fit)
+```
+
+Next, a comparison of Model 2 and Model 3 tests whether the substantive variable correlations are significantly biased by IER effects.
+
+```{r}
+#| eval: false
+lavTestLRT(Model3_fit, Model2_fit)
+```
+
+
+Export IER Scores
+
+```{r}
+#| eval: false
+#| echo: false
+library(downloadthis)
+IER_Scores |>
+  download_this(
+    output_name = "IERScores",
+    output_extension = ".xlsx",
+    button_label = "Download data",
+    button_type = "warning",
+    has_icon = TRUE,
+    icon = "fa fa-save"
+  )
+
+```

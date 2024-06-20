@@ -15,6 +15,16 @@ website:
         text: IER-CMV Interplay
       - href: Avatars.qmd
         text: IER Avatars
+      - section: "Analyses"
+        contents:
+          - href: MalloryAnalysis.qmd
+            text: Mallory
+          - href: DarrenAnalysis.qmd
+            text: Darren
+          - href: BartAnalysis.qmd
+            text: Bart
+          - href: ScarlettAnalysis.qmd
+            text: Scarlett
     tools:
       - icon: github
         href: https://github.com/twitched/cmv-ier-sim
