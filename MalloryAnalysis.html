@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ragland, Twitchell">
+<meta name="dcterms.date" content="2024-06-19">
+
+<title>CMV-IER Simulation - Mallory Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./MalloryAnalysis.html">Analyses</a></li><li class="breadcrumb-item"><a href="./MalloryAnalysis.html">Mallory</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">CMV-IER Simulation</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/twitched/cmv-ier-sim" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./GenerateBaselineData.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generate Baseline Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./IER-CMVInterplay.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IER-CMV Interplay</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Avatars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IER Avatars</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Analyses</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./MalloryAnalysis.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Mallory</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./DarrenAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Darren</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./BartAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bart</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ScarlettAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scarlett</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#insufficient-effort-responding-detection-mallory-analysis" id="toc-insufficient-effort-responding-detection-mallory-analysis" class="nav-link active" data-scroll-target="#insufficient-effort-responding-detection-mallory-analysis">Insufficient Effort Responding Detection (Mallory Analysis)</a></li>
+  <li><a href="#exploratory-factor-analysis-of-ier-indices" id="toc-exploratory-factor-analysis-of-ier-indices" class="nav-link" data-scroll-target="#exploratory-factor-analysis-of-ier-indices">Exploratory Factor Analysis of IER Indices</a></li>
+  <li><a href="#directly-measured-latent-method-factor-technique-for-handling-ier" id="toc-directly-measured-latent-method-factor-technique-for-handling-ier" class="nav-link" data-scroll-target="#directly-measured-latent-method-factor-technique-for-handling-ier">Directly Measured Latent Method Factor Technique for Handling IER</a>
+  <ul class="collapse">
+  <li><a href="#step-one-prepare-the-rstudio-environment" id="toc-step-one-prepare-the-rstudio-environment" class="nav-link" data-scroll-target="#step-one-prepare-the-rstudio-environment">Step One: Prepare the RStudio Environment</a></li>
+  <li><a href="#step-two-model-specification" id="toc-step-two-model-specification" class="nav-link" data-scroll-target="#step-two-model-specification">Step Two: Model Specification</a>
+  <ul class="collapse">
+  <li><a href="#baseline-model" id="toc-baseline-model" class="nav-link" data-scroll-target="#baseline-model">Baseline Model</a></li>
+  <li><a href="#model-1" id="toc-model-1" class="nav-link" data-scroll-target="#model-1">Model 1</a></li>
+  <li><a href="#model-2" id="toc-model-2" class="nav-link" data-scroll-target="#model-2">Model 2</a></li>
+  <li><a href="#model-3" id="toc-model-3" class="nav-link" data-scroll-target="#model-3">Model 3</a></li>
+  </ul></li>
+  <li><a href="#step-three-compare-the-models" id="toc-step-three-compare-the-models" class="nav-link" data-scroll-target="#step-three-compare-the-models">Step Three: Compare the models</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./MalloryAnalysis.html">Analyses</a></li><li class="breadcrumb-item"><a href="./MalloryAnalysis.html">Mallory</a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Mallory Analysis</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ragland, Twitchell </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 19, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="insufficient-effort-responding-detection-mallory-analysis" class="level1">
+<h1>Insufficient Effort Responding Detection (Mallory Analysis)</h1>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I couldn’t get any of the analyses to work on Mallory. Some of the functions just don’t work when someone answers the same thing for every question.</p>
+</div>
+</div>
+<p>List of all the libraries to use for the analysis</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(foreign)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(careless)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: carData
+
+Attaching package: 'car'
+
+The following object is masked from 'package:dplyr':
+
+    recode
+
+The following object is masked from 'package:purrr':
+
+    some</code></pre>
+</div>
+</div>
+<p>Call the dataset</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>example_data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(<span class="fu">getwd</span>(), <span class="st">"_data"</span>, <span class="st">"baseline.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 500 Columns: 24
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+dbl (24): ssr1, ssr2, ssr3, ri1, ri2, ri3, wom1, wom2, wom3, sat1, sat2, sat...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mallory <span class="ot">&lt;-</span> <span class="cf">function</span>(example_data) {example_data[<span class="dv">1</span>,] <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span><span class="dv">4</span>))}</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mallories <span class="ot">&lt;-</span> <span class="cf">function</span>(num_rows, example_data) {<span class="fu">replicate</span>(num_rows, <span class="fu">mallory</span>(example_data), <span class="at">simplify =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">bind_rows</span>()}</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>IER_Sim_Data <span class="ot">&lt;-</span> <span class="fu">mallories</span>(<span class="dv">500</span>, example_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Calculate the even-odd consistency score for the personality variables.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">0</span>, <span class="at">nrow =</span> <span class="dv">500</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>EO_score <span class="ot">&lt;-</span> <span class="fu">evenodd</span>(IER_Sim_Data, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in evenodd(IER_Sim_Data, c(3, 3, 3, 3, 4, 4, 4)): Computation of even-odd has changed for consistency of interpretation
+          with other indices. This change occurred in version 1.2.0. A higher
+          score now indicates a greater likelihood of careless responding. If
+          you have previously written code to cut score based on the output of
+          this function, you should revise that code accordingly.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: One or more observations have zero variance in even and/or odd values. 
+This results in NA values for these observations.
+Including more factors may alleviate this issue.</code></pre>
+</div>
+</div>
+<p>Now calculate the psychometric synonym scores for ALL of the personality/behavior variables.</p>
+<p>First, I create a dataset for the variables. Then, I determine how many item pairs have a correlation greater than 0.60.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>psychsyn_cor <span class="ot">&lt;-</span> <span class="fu">psychsyn_critval</span>(IER_Sim_Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in stats::cor(x, use = "pairwise.complete.obs"): the standard deviation
+is zero</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(psychsyn_cor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["var1"],"name":[1],"type":["fct"],"align":["left"]},{"label":["var2"],"name":[2],"type":["fct"],"align":["left"]},{"label":["cor"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"ssr1","2":"ssr1","3":"NA","_rn_":"1"},{"1":"ssr2","2":"ssr1","3":"NA","_rn_":"2"},{"1":"ssr3","2":"ssr1","3":"NA","_rn_":"3"},{"1":"ri1","2":"ssr1","3":"NA","_rn_":"4"},{"1":"ri2","2":"ssr1","3":"NA","_rn_":"5"},{"1":"ri3","2":"ssr1","3":"NA","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(psychsyn_cor<span class="sc">$</span>cor <span class="sc">&gt;</span> .<span class="dv">60</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p>If there are enough pairs, proceed with calculating individual scores.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>psychsyn_score <span class="ot">&lt;-</span> <span class="fu">psychsyn</span>(IER_Sim_Data, <span class="at">critval =</span> .<span class="dv">60</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Since positive correlations indicate participants are responding consistently (i.e.&nbsp;carefully), multiply these scores by -1 so that higher scores reflect IER.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>psychsyn_Index <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">*</span>(IER_Scores<span class="sc">$</span>psychsyn_score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Now calculate the psychometric antonym scores for ALL of the personality/behavior variables.</p>
+<p>First, I determine how many item pairs have a correlation less than -0.60.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>psychant_cor <span class="ot">&lt;-</span> <span class="fu">psychsyn_critval</span>(IER_Sim_Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in stats::cor(x, use = "pairwise.complete.obs"): the standard deviation
+is zero</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(psychant_cor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["var1"],"name":[1],"type":["fct"],"align":["left"]},{"label":["var2"],"name":[2],"type":["fct"],"align":["left"]},{"label":["cor"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"ssr1","2":"ssr1","3":"NA","_rn_":"1"},{"1":"ssr2","2":"ssr1","3":"NA","_rn_":"2"},{"1":"ssr3","2":"ssr1","3":"NA","_rn_":"3"},{"1":"ri1","2":"ssr1","3":"NA","_rn_":"4"},{"1":"ri2","2":"ssr1","3":"NA","_rn_":"5"},{"1":"ri3","2":"ssr1","3":"NA","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(psychant_cor<span class="sc">$</span>cor <span class="sc">&lt;</span> <span class="sc">-</span>.<span class="dv">60</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p>If there are enough pairs, proceed with calculating individual scores. There were 0 in this dataset.</p>
+<p>Next, calculate the IRV index for the personality variables.</p>
+<p>The intra-individual response variability (IRV) is similiar in spirit to the Longstring index. It is defined as the “standard deviation of responses across a set of consecutive item responses for an individual” (Dunn et al.&nbsp;2018).</p>
+<p>Since all the items are positively worded, I am calculating this over the whole survey and then splitting the survey into four sections.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>irv_scores <span class="ot">&lt;-</span> <span class="fu">irv</span>(IER_Sim_Data, <span class="at">split =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Calculate the long string index for the personality variables.For each observation, the length of the maximum uninterrupted string of identical responses is returned.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>careless_long<span class="ot">&lt;-</span><span class="fu">longstring</span>(IER_Sim_Data,<span class="at">avg=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Now I have to clean up all the NA values in the pyschometric synonym and psychometric antonym indices. NA values index indicate that there was no variance within any of the pairs. Since no variance indicates extreme consistency, and these indices are meant to catch inconsistent respondents. I assign a value of -1 to these respondents because they were responding “carefully,” which really means consistently with these indices.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>missing_rows <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">complete.cases</span>(IER_Scores<span class="sc">$</span>psychsyn_Index)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>psychsyn_Index[missing_rows] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>missing_rows <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">complete.cases</span>(IER_Scores<span class="sc">$</span>EO_score)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>EO_score[missing_rows] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Compute Mahalanobis D Index</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>mahalscore <span class="ot">&lt;-</span> <span class="fu">mahad</span>(IER_Sim_Data, <span class="at">plot =</span> <span class="cn">FALSE</span>, <span class="at">flag =</span> <span class="cn">FALSE</span>, <span class="at">confidence =</span> <span class="fl">0.95</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The below code converts the IER scores to z-scores.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>IER_Sim_Data<span class="sc">$</span>ZLongstring_Index <span class="ot">&lt;-</span> (IER_Scores<span class="sc">$</span>careless_long<span class="sc">-</span><span class="fu">mean</span>(IER_Scores<span class="sc">$</span>careless_long))<span class="sc">/</span><span class="fu">sd</span>(IER_Scores<span class="sc">$</span>careless_long)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>IER_Sim_Data<span class="sc">$</span>ZIRVTotal_Index <span class="ot">&lt;-</span> (IER_Scores<span class="sc">$</span>irv_scores<span class="sc">-</span><span class="fu">mean</span>(IER_Scores<span class="sc">$</span>irv_scores))<span class="sc">/</span><span class="fu">sd</span>(IER_Scores<span class="sc">$</span>irv_scores)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>IER_Sim_Data<span class="sc">$</span>ZEO_score <span class="ot">&lt;-</span> (IER_Scores<span class="sc">$</span>EO_score<span class="sc">-</span><span class="fu">mean</span>(IER_Scores<span class="sc">$</span>EO_score))<span class="sc">/</span><span class="fu">sd</span>(IER_Scores<span class="sc">$</span>EO_score)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>IER_Sim_Data<span class="sc">$</span>Zpsychsyn_score <span class="ot">&lt;-</span> (IER_Scores<span class="sc">$</span>psychsyn_Index<span class="sc">-</span><span class="fu">mean</span>(<span class="fu">na.omit</span>(IER_Scores<span class="sc">$</span>psychsyn_Index)))<span class="sc">/</span><span class="fu">sd</span>(<span class="fu">na.omit</span>(IER_Scores<span class="sc">$</span>psychsyn_Index))</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>IER_Sim_Data<span class="sc">$</span>Zmahal <span class="ot">&lt;-</span> (IER_Scores<span class="sc">$</span>mahalscore<span class="sc">-</span><span class="fu">mean</span>(<span class="fu">na.omit</span>(IER_Scores<span class="sc">$</span>mahalscore)))<span class="sc">/</span><span class="fu">sd</span>(<span class="fu">na.omit</span>(IER_Scores<span class="sc">$</span>mahalscore))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>At this point, we have calculated the scores for all of the IER indices and can move forward the the analyses.</p>
+</section>
+<section id="exploratory-factor-analysis-of-ier-indices" class="level1">
+<h1>Exploratory Factor Analysis of IER Indices</h1>
+<p>To examine the factor structure of the measured IER variable, conduct an EFA on the IER indices. This analysis will be used to determine which IER indices to retain for the directly measured latent factor analysis.</p>
+<p>Additionally, it will provide guidance for modeling the IER variable as a control variable. If you find a single factor solution, you may average the standardized indices into an overall IER score if the directly measured latent factor analysis indicates you need to control for IER. If the factor analysis results in a multi-factor solution, only average index scores which load onto the same factor.</p>
+<p>Following previous research, several decision rules are recommended, including:</p>
+<p>Kaiser criterion Scree test Parallel Analysis (Hayton et al.,2004), and Velicer’s (1976) MAP test.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EFA.dimensions)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">RAWPAR</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">factormodel=</span><span class="st">"PCA"</span>,<span class="at">Ndataset=</span><span class="dv">1000</span>,<span class="at">percentile=</span><span class="dv">95</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">RAWPAR</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">factormodel=</span><span class="st">"PAF"</span>,<span class="at">Ndataset=</span><span class="dv">1000</span>,<span class="at">percentile=</span><span class="dv">95</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="fu">MAP</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)))</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">SCREE_PLOT</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)))</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="fu">EMPKC</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">corkind=</span><span class="st">"pearson"</span>)</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="fu">EFA</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">extraction=</span><span class="st">'paf'</span>,<span class="at">corkind=</span><span class="st">'pearson'</span>,<span class="at">Nfactors=</span><span class="cn">NULL</span>,<span class="at">Ncases=</span><span class="cn">NULL</span>,<span class="at">iterpaf=</span><span class="dv">100</span>, <span class="at">rotation=</span><span class="st">'oblimin'</span>,<span class="at">verbose=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="directly-measured-latent-method-factor-technique-for-handling-ier" class="level1">
+<h1>Directly Measured Latent Method Factor Technique for Handling IER</h1>
+<p>We conceptualize IER as a response bias that can influence survey responses. Additionally, we consider the indices produced by the various IER detection methods in the previous section measures of IER.</p>
+<p>Thus, the following section presents a demonstration of the directly measured latent method factor technique as a remedy for IER.</p>
+<section id="step-one-prepare-the-rstudio-environment" class="level2">
+<h2 class="anchored" data-anchor-id="step-one-prepare-the-rstudio-environment">Step One: Prepare the RStudio Environment</h2>
+<p>The below code calls the libraries necessary for the technique.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaanPlot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="step-two-model-specification" class="level2">
+<h2 class="anchored" data-anchor-id="step-two-model-specification">Step Two: Model Specification</h2>
+<p>The lavaan model syntax is used to describe models to be estimated. The syntax defines models using various formula types. The formula types which are used in the technique are below.</p>
+<p><strong>Latent Variable Definition:</strong></p>
+<p><code>latent variable =~ indicator1 + indicator2 + indicator3</code></p>
+<p><strong>Variances and Covariances:</strong></p>
+<p><code>variable1 ~~ variable2</code></p>
+<p><strong>Regression:</strong></p>
+<p><code>variable1 ~~ variable2 + variable3 + variable4</code></p>
+<p>By default, the lavaan syntax will always fix the factor loading of a latent variable's first indicator to 1. Add the argument <code>std.lv = TRUE</code> to the function call to force this factor loading to be free.</p>
+<section id="baseline-model" class="level3">
+<h3 class="anchored" data-anchor-id="baseline-model">Baseline Model</h3>
+<p>First, you must establish a baseline model that will be used in subsequent models and test. The baseline model is a confirmatory factor analysis (CFA) model of the substantive variables and IER variables. Estimates of the unstandardized factor loadings and error variances for the IER variables are retained from this model to use as fixed parameters in subsequent models (Williams, 2016). Additionally, the factor correlations between the substantive variables are recorded to be used in a later model.</p>
+<p>The code to specify the baseline for this example is as follows:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>BaselineModel <span class="ot">&lt;-</span> <span class="st">'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="st">fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="st">fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="st">fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="st">fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="st">fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="st">fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="st">fIER1 =~ ZLongstring_Index</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="st">fIER2=~ Zpsychsyn_score</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="st">fIER3=~ Zmahal'</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>BaselineModel_fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(BaselineModel, <span class="at">data=</span>IER_Sim_Data, <span class="at">std.lv=</span><span class="cn">TRUE</span>)</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(BaselineModel_fit, <span class="fu">c</span>(<span class="st">"chisq"</span>, <span class="st">"df"</span>, <span class="st">"cfi"</span>, <span class="st">"rmsea"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The summary function calls a summary of the fitted model. The factor loadings are found in the “Latent Variables” section of the summary output, and the unstandardized error variances are found in the “Variances” section of the output. The code to view the summary output is as follows:</p>
+</section>
+<section id="model-1" class="level3">
+<h3 class="anchored" data-anchor-id="model-1">Model 1</h3>
+<p>The first model to examine is a structural model without IER effects which allows for correlations among the substantive latent variables with an orthogonal IER variable. The IER variable’s indicators are the standardized IER indices retained in the exploratory factor analysis.</p>
+<p>The IER variable is assumed to be orthogonal, as IER behavior should not be correlated with the substantive variables.</p>
+<p>The code to specify the Model 1 for this example is as follows:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>Model1 <span class="ot">&lt;-</span> <span class="st">'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="st">        fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="st">        fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="st">        fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="st">        fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="st">        fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="st">        fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER1 =~ ZLongstring_Index</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER2=~ Zpsychsyn_score</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER3=~ Zmahal</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="st">        ZLongstring_Index ~~ 0*ZLongstring_Index</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="st">        Zpsychsyn_score ~~ 0*Zpsychsyn_score</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="st">        Zmahal ~~ 0*Zmahal</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj'</span></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>Model1_fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(Model1, <span class="at">data=</span>IER_Sim_Data, <span class="at">std.lv=</span><span class="cn">TRUE</span>)</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(Model1_fit, <span class="fu">c</span>(<span class="st">"chisq"</span>, <span class="st">"df"</span>, <span class="st">"cfi"</span>, <span class="st">"rmsea"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Record the substantive factor correlations estimated in this model to use in subsequent models. This can be done by sifting through the lavaan summary output or by utilizing code to extract the estimates from the summary.</p>
+<p>The summary function calls a summary of the fitted model. The factor loadings are found in the “Latent Variables” section of the summary output, and the unstandardized error variances are found in the “Variances” section of the output. The code to view the summary output is as follows:</p>
+</section>
+<section id="model-2" class="level3">
+<h3 class="anchored" data-anchor-id="model-2">Model 2</h3>
+<p>Model 2 is a saturated structural model with IER effects. With this model, the impact of the IER latent variable is allowed to be different for each of the indicators of the substantive constructs. This is done so that the subsequent test of the presence of IER can be conducted without making any assumptions about the specific nature of these effects.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Model2 <span class="ot">&lt;-</span><span class="st">'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="st">        fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="st">        fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="st">        fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="st">        fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="st">        fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="st">        fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER1 =~ ZLongstring_Index + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER2=~ Zpsychsyn_score + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER3=~ Zmahal + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="st">        ZLongstring_Index ~~ 0*ZLongstring_Index</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="st">        Zpsychsyn_score ~~ 0*Zpsychsyn_score</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="st">        Zmahal ~~ 0*Zmahal</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj'</span></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>Model2_fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(Model2, <span class="at">data=</span>IER_Sim_Data, <span class="at">std.lv=</span><span class="cn">TRUE</span>)</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(Model2_fit, <span class="fu">c</span>(<span class="st">"chisq"</span>, <span class="st">"df"</span>, <span class="st">"cfi"</span>, <span class="st">"rmsea"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="model-3" class="level3">
+<h3 class="anchored" data-anchor-id="model-3">Model 3</h3>
+<p>Model 3 is identical to Model 2, except that the substantive factor correlations are constrained to their unstandardized estimates from Model 1.</p>
+<p>Model 3 is a restricted saturated structural model with IER effects; the term restricted indicates that the values of the substantively important parameters have been restricted to be equal to the estimates from Model 1. The examination of Model 3 provides a direct statistical test of the impact of IER effects.</p>
+<p>The code to specify Model 3 for this example is as follows:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>Model3 <span class="ot">&lt;-</span> <span class="st">'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="st">        fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="st">        fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="st">        fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="st">        fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="st">        fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="st">        fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER1 =~ ZLongstring_Index + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER2=~ Zpsychsyn_score + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER3=~ Zmahal + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="st">        ZLongstring_Index ~~ 0*ZLongstring_Index</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="st">        Zpsychsyn_score ~~ 0*Zpsychsyn_score</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="st">        Zmahal ~~ 0*Zmahal</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a><span class="st">        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="st">        fssr ~~ 0.382*fri + 0.936*fwom + 0.311*fsat + 0.805*fdj + 0.602*fij + 0.461*fpj</span></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a><span class="st">        fri ~~ 0.319*fwom + 0.782*fsat + 0.506*fdj + 0.493*fij + 0.547*fpj</span></span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a><span class="st">        fwom ~~ 0.260*fsat + 0.692*fdj + 0.655*fij + 0.416*fpj</span></span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a><span class="st">        fsat ~~ 0.478*fdj + 0.575*fij + 0.689*fpj</span></span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a><span class="st">        fdj ~~ 0.639*fij + 0.586*fpj</span></span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a><span class="st">        fij ~~ 0.597*fpj'</span></span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>Model3_fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(Model3, <span class="at">data=</span>IER_Sim_Data, <span class="at">std.lv=</span><span class="cn">TRUE</span>)</span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(Model3_fit, <span class="fu">c</span>(<span class="st">"chisq"</span>, <span class="st">"df"</span>, <span class="st">"cfi"</span>, <span class="st">"rmsea"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="step-three-compare-the-models" class="level2">
+<h2 class="anchored" data-anchor-id="step-three-compare-the-models">Step Three: Compare the models</h2>
+<p>First, a comparison of Model 1 and Model 2 tests the hypothesis that that there are no method effects due to IER.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(Model1_fit, Model2_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Next, a comparison of Model 2 and Model 3 tests whether the substantive variable correlations are significantly biased by IER effects.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(Model3_fit, Model2_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Export IER Scores</p>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/twitched\.github\.io\/cmv-ier-sim\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb37" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Mallory Analysis"</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Ragland, Twitchell"</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu"># Insufficient Effort Responding Detection (Mallory Analysis)</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>I couldn't get any of the analyses to work on Mallory. Some of the functions just don't work when someone answers the same thing for every question.</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>List of all the libraries to use for the analysis</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Libraries}</span></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="in">library(foreign)</span></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="in">library(careless)</span></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="in">library(haven)</span></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="in">library(readxl)</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a><span class="in">library(car)</span></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>Call the dataset</span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Call dataset}</span></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a><span class="in">example_data &lt;- readr::read_csv(file.path(getwd(), "_data", "baseline.csv"))</span></span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a><span class="in">mallory &lt;- function(example_data) {example_data[1,] |&gt; mutate(across(everything(), ~4))}</span></span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a><span class="in">mallories &lt;- function(num_rows, example_data) {replicate(num_rows, mallory(example_data), simplify = FALSE) |&gt; bind_rows()}</span></span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Sim_Data &lt;- mallories(500, example_data)</span></span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a>Calculate the even-odd consistency score for the personality variables.</span>
+<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Even-Odd Consistency score calculation}</span></span>
+<span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-37"><a href="#cb37-37" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Scores&lt;- data.frame(matrix(ncol = 0, nrow = 500))</span></span>
+<span id="cb37-38"><a href="#cb37-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-39"><a href="#cb37-39" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Scores$EO_score &lt;- evenodd(IER_Sim_Data, c(3, 3, 3, 3, 4, 4, 4))</span></span>
+<span id="cb37-40"><a href="#cb37-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-41"><a href="#cb37-41" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-42"><a href="#cb37-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-43"><a href="#cb37-43" aria-hidden="true" tabindex="-1"></a>Now calculate the psychometric synonym scores for ALL of the personality/behavior variables.</span>
+<span id="cb37-44"><a href="#cb37-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-45"><a href="#cb37-45" aria-hidden="true" tabindex="-1"></a>First, I create a dataset for the variables. Then, I determine how many item pairs have a correlation greater than 0.60.</span>
+<span id="cb37-46"><a href="#cb37-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-47"><a href="#cb37-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Psychometric Synonym index check}</span></span>
+<span id="cb37-48"><a href="#cb37-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-49"><a href="#cb37-49" aria-hidden="true" tabindex="-1"></a><span class="in">psychsyn_cor &lt;- psychsyn_critval(IER_Sim_Data)</span></span>
+<span id="cb37-50"><a href="#cb37-50" aria-hidden="true" tabindex="-1"></a><span class="in">head(psychsyn_cor)</span></span>
+<span id="cb37-51"><a href="#cb37-51" aria-hidden="true" tabindex="-1"></a><span class="in">sum(psychsyn_cor$cor &gt; .60, na.rm = TRUE)</span></span>
+<span id="cb37-52"><a href="#cb37-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-53"><a href="#cb37-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-54"><a href="#cb37-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-55"><a href="#cb37-55" aria-hidden="true" tabindex="-1"></a>If there are enough pairs, proceed with calculating individual scores. </span>
+<span id="cb37-56"><a href="#cb37-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-57"><a href="#cb37-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Psychometric Synonym score calculation}</span></span>
+<span id="cb37-58"><a href="#cb37-58" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb37-59"><a href="#cb37-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-60"><a href="#cb37-60" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Scores$psychsyn_score &lt;- psychsyn(IER_Sim_Data, critval = .60)</span></span>
+<span id="cb37-61"><a href="#cb37-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-62"><a href="#cb37-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-63"><a href="#cb37-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-64"><a href="#cb37-64" aria-hidden="true" tabindex="-1"></a>Since positive correlations indicate participants are responding consistently (i.e. carefully), multiply these scores by -1 so that higher scores reflect IER.</span>
+<span id="cb37-65"><a href="#cb37-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-66"><a href="#cb37-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Psychometric Synonym index calculation}</span></span>
+<span id="cb37-67"><a href="#cb37-67" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb37-68"><a href="#cb37-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-69"><a href="#cb37-69" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Scores$psychsyn_Index &lt;- -1 *(IER_Scores$psychsyn_score)</span></span>
+<span id="cb37-70"><a href="#cb37-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-71"><a href="#cb37-71" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-72"><a href="#cb37-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-73"><a href="#cb37-73" aria-hidden="true" tabindex="-1"></a>Now calculate the psychometric antonym scores for ALL of the personality/behavior variables.</span>
+<span id="cb37-74"><a href="#cb37-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-75"><a href="#cb37-75" aria-hidden="true" tabindex="-1"></a>First, I determine how many item pairs have a correlation less than -0.60.</span>
+<span id="cb37-76"><a href="#cb37-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-77"><a href="#cb37-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Psychometric Antonym index check}</span></span>
+<span id="cb37-78"><a href="#cb37-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-79"><a href="#cb37-79" aria-hidden="true" tabindex="-1"></a><span class="in">psychant_cor &lt;- psychsyn_critval(IER_Sim_Data)</span></span>
+<span id="cb37-80"><a href="#cb37-80" aria-hidden="true" tabindex="-1"></a><span class="in">head(psychant_cor)</span></span>
+<span id="cb37-81"><a href="#cb37-81" aria-hidden="true" tabindex="-1"></a><span class="in">sum(psychant_cor$cor &lt; -.60, na.rm = TRUE)</span></span>
+<span id="cb37-82"><a href="#cb37-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-83"><a href="#cb37-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-84"><a href="#cb37-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-85"><a href="#cb37-85" aria-hidden="true" tabindex="-1"></a>If there are enough pairs, proceed with calculating individual scores. There were 0 in this dataset.</span>
+<span id="cb37-86"><a href="#cb37-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-87"><a href="#cb37-87" aria-hidden="true" tabindex="-1"></a>Next, calculate the IRV index for the personality variables.</span>
+<span id="cb37-88"><a href="#cb37-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-89"><a href="#cb37-89" aria-hidden="true" tabindex="-1"></a>The intra-individual response variability (IRV) is similiar in spirit to the Longstring index. It is defined as the “standard deviation of responses across a set of consecutive item responses for an individual” (Dunn et al. 2018).</span>
+<span id="cb37-90"><a href="#cb37-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-91"><a href="#cb37-91" aria-hidden="true" tabindex="-1"></a>Since all the items are positively worded, I am calculating this over the whole survey and then splitting the survey into four sections.</span>
+<span id="cb37-92"><a href="#cb37-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-95"><a href="#cb37-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-96"><a href="#cb37-96" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>irv_scores <span class="ot">&lt;-</span> <span class="fu">irv</span>(IER_Sim_Data, <span class="at">split =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb37-97"><a href="#cb37-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-98"><a href="#cb37-98" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-99"><a href="#cb37-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-100"><a href="#cb37-100" aria-hidden="true" tabindex="-1"></a>Calculate the long string index for the personality variables.For each observation, the length of the maximum uninterrupted string of identical responses is returned.</span>
+<span id="cb37-101"><a href="#cb37-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-104"><a href="#cb37-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-105"><a href="#cb37-105" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>careless_long<span class="ot">&lt;-</span><span class="fu">longstring</span>(IER_Sim_Data,<span class="at">avg=</span><span class="cn">FALSE</span>)</span>
+<span id="cb37-106"><a href="#cb37-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-107"><a href="#cb37-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-108"><a href="#cb37-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-109"><a href="#cb37-109" aria-hidden="true" tabindex="-1"></a>Now I have to clean up all the NA values in the pyschometric synonym and psychometric antonym indices. NA values index indicate that there was no variance within any of the pairs. Since no variance indicates extreme consistency, and these indices are meant to catch inconsistent respondents. I assign a value of -1 to these respondents because they were responding "carefully," which really means consistently with these indices.</span>
+<span id="cb37-110"><a href="#cb37-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-113"><a href="#cb37-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-114"><a href="#cb37-114" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb37-115"><a href="#cb37-115" aria-hidden="true" tabindex="-1"></a>missing_rows <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">complete.cases</span>(IER_Scores<span class="sc">$</span>psychsyn_Index)</span>
+<span id="cb37-116"><a href="#cb37-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-117"><a href="#cb37-117" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>psychsyn_Index[missing_rows] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb37-118"><a href="#cb37-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-119"><a href="#cb37-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-120"><a href="#cb37-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-123"><a href="#cb37-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-124"><a href="#cb37-124" aria-hidden="true" tabindex="-1"></a>missing_rows <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">complete.cases</span>(IER_Scores<span class="sc">$</span>EO_score)</span>
+<span id="cb37-125"><a href="#cb37-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-126"><a href="#cb37-126" aria-hidden="true" tabindex="-1"></a>IER_Scores<span class="sc">$</span>EO_score[missing_rows] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb37-127"><a href="#cb37-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-128"><a href="#cb37-128" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-129"><a href="#cb37-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-130"><a href="#cb37-130" aria-hidden="true" tabindex="-1"></a>Compute Mahalanobis D Index</span>
+<span id="cb37-131"><a href="#cb37-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-132"><a href="#cb37-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Mahalanobis D for survey}</span></span>
+<span id="cb37-133"><a href="#cb37-133" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb37-134"><a href="#cb37-134" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Scores$mahalscore &lt;- mahad(IER_Sim_Data, plot = FALSE, flag = FALSE, confidence = 0.95, na.rm = TRUE)</span></span>
+<span id="cb37-135"><a href="#cb37-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-136"><a href="#cb37-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-137"><a href="#cb37-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-138"><a href="#cb37-138" aria-hidden="true" tabindex="-1"></a>The below code converts the IER scores to z-scores.</span>
+<span id="cb37-139"><a href="#cb37-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-140"><a href="#cb37-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Convert IER Scores to Z-Scores}</span></span>
+<span id="cb37-141"><a href="#cb37-141" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb37-142"><a href="#cb37-142" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Sim_Data$ZLongstring_Index &lt;- (IER_Scores$careless_long-mean(IER_Scores$careless_long))/sd(IER_Scores$careless_long)</span></span>
+<span id="cb37-143"><a href="#cb37-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-144"><a href="#cb37-144" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Sim_Data$ZIRVTotal_Index &lt;- (IER_Scores$irv_scores-mean(IER_Scores$irv_scores))/sd(IER_Scores$irv_scores)</span></span>
+<span id="cb37-145"><a href="#cb37-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-146"><a href="#cb37-146" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Sim_Data$ZEO_score &lt;- (IER_Scores$EO_score-mean(IER_Scores$EO_score))/sd(IER_Scores$EO_score)</span></span>
+<span id="cb37-147"><a href="#cb37-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-148"><a href="#cb37-148" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Sim_Data$Zpsychsyn_score &lt;- (IER_Scores$psychsyn_Index-mean(na.omit(IER_Scores$psychsyn_Index)))/sd(na.omit(IER_Scores$psychsyn_Index))</span></span>
+<span id="cb37-149"><a href="#cb37-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-150"><a href="#cb37-150" aria-hidden="true" tabindex="-1"></a><span class="in">IER_Sim_Data$Zmahal &lt;- (IER_Scores$mahalscore-mean(na.omit(IER_Scores$mahalscore)))/sd(na.omit(IER_Scores$mahalscore))</span></span>
+<span id="cb37-151"><a href="#cb37-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-152"><a href="#cb37-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-153"><a href="#cb37-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-154"><a href="#cb37-154" aria-hidden="true" tabindex="-1"></a>At this point, we have calculated the scores for all of the IER indices and can move forward the the analyses. </span>
+<span id="cb37-155"><a href="#cb37-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-156"><a href="#cb37-156" aria-hidden="true" tabindex="-1"></a><span class="fu"># Exploratory Factor Analysis of IER Indices</span></span>
+<span id="cb37-157"><a href="#cb37-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-158"><a href="#cb37-158" aria-hidden="true" tabindex="-1"></a>To examine the factor structure of the measured IER variable, conduct an EFA on the IER indices. This analysis will be used to determine which IER indices to retain for the directly measured latent factor analysis. </span>
+<span id="cb37-159"><a href="#cb37-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-160"><a href="#cb37-160" aria-hidden="true" tabindex="-1"></a>Additionally, it will provide guidance for modeling the IER variable as a control variable. If you find a single factor solution, you may average the standardized indices into an overall IER score if the directly measured latent factor analysis indicates you need to control for IER. If the factor analysis results in a multi-factor solution, only average index scores which load onto the same factor.</span>
+<span id="cb37-161"><a href="#cb37-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-162"><a href="#cb37-162" aria-hidden="true" tabindex="-1"></a>Following previous research, several decision rules are recommended, including:</span>
+<span id="cb37-163"><a href="#cb37-163" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-164"><a href="#cb37-164" aria-hidden="true" tabindex="-1"></a>  Kaiser criterion</span>
+<span id="cb37-165"><a href="#cb37-165" aria-hidden="true" tabindex="-1"></a>Scree test</span>
+<span id="cb37-166"><a href="#cb37-166" aria-hidden="true" tabindex="-1"></a>Parallel Analysis (Hayton et al.,2004), and </span>
+<span id="cb37-167"><a href="#cb37-167" aria-hidden="true" tabindex="-1"></a>Velicer’s (1976) MAP test.</span>
+<span id="cb37-168"><a href="#cb37-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-171"><a href="#cb37-171" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-172"><a href="#cb37-172" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb37-173"><a href="#cb37-173" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EFA.dimensions)</span>
+<span id="cb37-174"><a href="#cb37-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-175"><a href="#cb37-175" aria-hidden="true" tabindex="-1"></a><span class="fu">RAWPAR</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">factormodel=</span><span class="st">"PCA"</span>,<span class="at">Ndataset=</span><span class="dv">1000</span>,<span class="at">percentile=</span><span class="dv">95</span>)</span>
+<span id="cb37-176"><a href="#cb37-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-177"><a href="#cb37-177" aria-hidden="true" tabindex="-1"></a><span class="fu">RAWPAR</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">factormodel=</span><span class="st">"PAF"</span>,<span class="at">Ndataset=</span><span class="dv">1000</span>,<span class="at">percentile=</span><span class="dv">95</span>)</span>
+<span id="cb37-178"><a href="#cb37-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-179"><a href="#cb37-179" aria-hidden="true" tabindex="-1"></a><span class="fu">MAP</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)))</span>
+<span id="cb37-180"><a href="#cb37-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-181"><a href="#cb37-181" aria-hidden="true" tabindex="-1"></a><span class="fu">SCREE_PLOT</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)))</span>
+<span id="cb37-182"><a href="#cb37-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-183"><a href="#cb37-183" aria-hidden="true" tabindex="-1"></a><span class="fu">EMPKC</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">corkind=</span><span class="st">"pearson"</span>)</span>
+<span id="cb37-184"><a href="#cb37-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-185"><a href="#cb37-185" aria-hidden="true" tabindex="-1"></a><span class="fu">EFA</span>(<span class="fu">subset</span>(IER_Sim_Data, <span class="at">select =</span> <span class="fu">c</span>(ZLongstring_Index, Zpsychsyn_score, ZEO_score)),<span class="at">extraction=</span><span class="st">'paf'</span>,<span class="at">corkind=</span><span class="st">'pearson'</span>,<span class="at">Nfactors=</span><span class="cn">NULL</span>,<span class="at">Ncases=</span><span class="cn">NULL</span>,<span class="at">iterpaf=</span><span class="dv">100</span>, <span class="at">rotation=</span><span class="st">'oblimin'</span>,<span class="at">verbose=</span><span class="cn">TRUE</span>)</span>
+<span id="cb37-186"><a href="#cb37-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-187"><a href="#cb37-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-188"><a href="#cb37-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-189"><a href="#cb37-189" aria-hidden="true" tabindex="-1"></a><span class="fu"># Directly Measured Latent Method Factor Technique for Handling IER</span></span>
+<span id="cb37-190"><a href="#cb37-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-191"><a href="#cb37-191" aria-hidden="true" tabindex="-1"></a>We conceptualize IER as a response bias that can influence survey responses. Additionally, we consider the indices produced by the various IER detection methods in the previous section measures of IER.</span>
+<span id="cb37-192"><a href="#cb37-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-193"><a href="#cb37-193" aria-hidden="true" tabindex="-1"></a>Thus, the following section presents a demonstration of the directly measured latent method factor technique as a remedy for IER.</span>
+<span id="cb37-194"><a href="#cb37-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-195"><a href="#cb37-195" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step One: Prepare the RStudio Environment</span></span>
+<span id="cb37-196"><a href="#cb37-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-197"><a href="#cb37-197" aria-hidden="true" tabindex="-1"></a>The below code calls the libraries necessary for the technique.</span>
+<span id="cb37-198"><a href="#cb37-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-199"><a href="#cb37-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Lavaan Libraries, message=FALSE, warning=FALSE}</span></span>
+<span id="cb37-200"><a href="#cb37-200" aria-hidden="true" tabindex="-1"></a><span class="in">library(haven)</span></span>
+<span id="cb37-201"><a href="#cb37-201" aria-hidden="true" tabindex="-1"></a><span class="in">library(lavaan)</span></span>
+<span id="cb37-202"><a href="#cb37-202" aria-hidden="true" tabindex="-1"></a><span class="in">library(lavaanPlot)</span></span>
+<span id="cb37-203"><a href="#cb37-203" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-204"><a href="#cb37-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-205"><a href="#cb37-205" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step Two: Model Specification</span></span>
+<span id="cb37-206"><a href="#cb37-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-207"><a href="#cb37-207" aria-hidden="true" tabindex="-1"></a>The lavaan model syntax is used to describe models to be estimated. The syntax defines models using various formula types. The formula types which are used in the technique are below.</span>
+<span id="cb37-208"><a href="#cb37-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-209"><a href="#cb37-209" aria-hidden="true" tabindex="-1"></a>**Latent Variable Definition:**</span>
+<span id="cb37-210"><a href="#cb37-210" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-211"><a href="#cb37-211" aria-hidden="true" tabindex="-1"></a>  <span class="in">`latent variable =~ indicator1 + indicator2 + indicator3`</span></span>
+<span id="cb37-212"><a href="#cb37-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-213"><a href="#cb37-213" aria-hidden="true" tabindex="-1"></a>**Variances and Covariances:**</span>
+<span id="cb37-214"><a href="#cb37-214" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-215"><a href="#cb37-215" aria-hidden="true" tabindex="-1"></a>  <span class="in">`variable1 ~~ variable2`</span></span>
+<span id="cb37-216"><a href="#cb37-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-217"><a href="#cb37-217" aria-hidden="true" tabindex="-1"></a>**Regression:**</span>
+<span id="cb37-218"><a href="#cb37-218" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-219"><a href="#cb37-219" aria-hidden="true" tabindex="-1"></a>  <span class="in">`variable1 ~~ variable2 + variable3 + variable4`</span></span>
+<span id="cb37-220"><a href="#cb37-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-221"><a href="#cb37-221" aria-hidden="true" tabindex="-1"></a>By default, the lavaan syntax will always fix the factor loading of a latent variable\'s first indicator to 1. Add the argument <span class="in">`std.lv = TRUE`</span> to the function call to force this factor loading to be free.</span>
+<span id="cb37-222"><a href="#cb37-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-223"><a href="#cb37-223" aria-hidden="true" tabindex="-1"></a><span class="fu">### Baseline Model</span></span>
+<span id="cb37-224"><a href="#cb37-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-225"><a href="#cb37-225" aria-hidden="true" tabindex="-1"></a>First, you must establish a baseline model that will be used in subsequent models and test. The baseline model is a confirmatory factor analysis (CFA) model of the substantive variables and IER variables. Estimates of the unstandardized factor loadings and error variances for the IER variables are retained from this model to use as fixed parameters in subsequent models (Williams, 2016). Additionally, the factor correlations between the substantive variables are recorded to be used in a later model.</span>
+<span id="cb37-226"><a href="#cb37-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-227"><a href="#cb37-227" aria-hidden="true" tabindex="-1"></a>The code to specify the baseline for this example is as follows:</span>
+<span id="cb37-228"><a href="#cb37-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-229"><a href="#cb37-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Specify Baseline Model}</span></span>
+<span id="cb37-230"><a href="#cb37-230" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb37-231"><a href="#cb37-231" aria-hidden="true" tabindex="-1"></a><span class="in">BaselineModel &lt;- 'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb37-232"><a href="#cb37-232" aria-hidden="true" tabindex="-1"></a><span class="in">fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb37-233"><a href="#cb37-233" aria-hidden="true" tabindex="-1"></a><span class="in">fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb37-234"><a href="#cb37-234" aria-hidden="true" tabindex="-1"></a><span class="in">fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb37-235"><a href="#cb37-235" aria-hidden="true" tabindex="-1"></a><span class="in">fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb37-236"><a href="#cb37-236" aria-hidden="true" tabindex="-1"></a><span class="in">fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb37-237"><a href="#cb37-237" aria-hidden="true" tabindex="-1"></a><span class="in">fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb37-238"><a href="#cb37-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-239"><a href="#cb37-239" aria-hidden="true" tabindex="-1"></a><span class="in">fIER1 =~ ZLongstring_Index</span></span>
+<span id="cb37-240"><a href="#cb37-240" aria-hidden="true" tabindex="-1"></a><span class="in">fIER2=~ Zpsychsyn_score</span></span>
+<span id="cb37-241"><a href="#cb37-241" aria-hidden="true" tabindex="-1"></a><span class="in">fIER3=~ Zmahal'</span></span>
+<span id="cb37-242"><a href="#cb37-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-243"><a href="#cb37-243" aria-hidden="true" tabindex="-1"></a><span class="in">BaselineModel_fit &lt;- cfa(BaselineModel, data=IER_Sim_Data, std.lv=TRUE)</span></span>
+<span id="cb37-244"><a href="#cb37-244" aria-hidden="true" tabindex="-1"></a><span class="in">fitMeasures(BaselineModel_fit, c("chisq", "df", "cfi", "rmsea"))</span></span>
+<span id="cb37-245"><a href="#cb37-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-246"><a href="#cb37-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-247"><a href="#cb37-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-248"><a href="#cb37-248" aria-hidden="true" tabindex="-1"></a>The summary function calls a summary of the fitted model. The factor loadings are found in the "Latent Variables" section of the summary output, and the unstandardized error variances are found in the "Variances" section of the output. The code to view the summary output is as follows:</span>
+<span id="cb37-249"><a href="#cb37-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-250"><a href="#cb37-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r include=FALSE}</span></span>
+<span id="cb37-251"><a href="#cb37-251" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb37-252"><a href="#cb37-252" aria-hidden="true" tabindex="-1"></a><span class="in">summary(BaselineModel_fit)</span></span>
+<span id="cb37-253"><a href="#cb37-253" aria-hidden="true" tabindex="-1"></a><span class="in">inspect(BaselineModel_fit,what="est")$lambda</span></span>
+<span id="cb37-254"><a href="#cb37-254" aria-hidden="true" tabindex="-1"></a><span class="in">inspect(BaselineModel_fit,what="est")$theta</span></span>
+<span id="cb37-255"><a href="#cb37-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-256"><a href="#cb37-256" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-257"><a href="#cb37-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-258"><a href="#cb37-258" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model 1</span></span>
+<span id="cb37-259"><a href="#cb37-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-260"><a href="#cb37-260" aria-hidden="true" tabindex="-1"></a>The first model to examine is a structural model without IER effects which allows for correlations among the substantive latent variables with an orthogonal IER variable. The IER variable's indicators are the standardized IER indices retained in the exploratory factor analysis.</span>
+<span id="cb37-261"><a href="#cb37-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-262"><a href="#cb37-262" aria-hidden="true" tabindex="-1"></a>The IER variable is assumed to be orthogonal, as IER behavior should not be correlated with the substantive variables.</span>
+<span id="cb37-263"><a href="#cb37-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-264"><a href="#cb37-264" aria-hidden="true" tabindex="-1"></a>The code to specify the Model 1 for this example is as follows:</span>
+<span id="cb37-265"><a href="#cb37-265" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-266"><a href="#cb37-266" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Specify Model 1}</span></span>
+<span id="cb37-267"><a href="#cb37-267" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb37-268"><a href="#cb37-268" aria-hidden="true" tabindex="-1"></a><span class="in">Model1 &lt;- 'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb37-269"><a href="#cb37-269" aria-hidden="true" tabindex="-1"></a><span class="in">        fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb37-270"><a href="#cb37-270" aria-hidden="true" tabindex="-1"></a><span class="in">        fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb37-271"><a href="#cb37-271" aria-hidden="true" tabindex="-1"></a><span class="in">        fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb37-272"><a href="#cb37-272" aria-hidden="true" tabindex="-1"></a><span class="in">        fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb37-273"><a href="#cb37-273" aria-hidden="true" tabindex="-1"></a><span class="in">        fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb37-274"><a href="#cb37-274" aria-hidden="true" tabindex="-1"></a><span class="in">        fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb37-275"><a href="#cb37-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-276"><a href="#cb37-276" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER1 =~ ZLongstring_Index</span></span>
+<span id="cb37-277"><a href="#cb37-277" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER2=~ Zpsychsyn_score</span></span>
+<span id="cb37-278"><a href="#cb37-278" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER3=~ Zmahal</span></span>
+<span id="cb37-279"><a href="#cb37-279" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb37-280"><a href="#cb37-280" aria-hidden="true" tabindex="-1"></a><span class="in">        ZLongstring_Index ~~ 0*ZLongstring_Index</span></span>
+<span id="cb37-281"><a href="#cb37-281" aria-hidden="true" tabindex="-1"></a><span class="in">        Zpsychsyn_score ~~ 0*Zpsychsyn_score</span></span>
+<span id="cb37-282"><a href="#cb37-282" aria-hidden="true" tabindex="-1"></a><span class="in">        Zmahal ~~ 0*Zmahal</span></span>
+<span id="cb37-283"><a href="#cb37-283" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb37-284"><a href="#cb37-284" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb37-285"><a href="#cb37-285" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb37-286"><a href="#cb37-286" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj'</span></span>
+<span id="cb37-287"><a href="#cb37-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-288"><a href="#cb37-288" aria-hidden="true" tabindex="-1"></a><span class="in">Model1_fit &lt;- cfa(Model1, data=IER_Sim_Data, std.lv=TRUE)</span></span>
+<span id="cb37-289"><a href="#cb37-289" aria-hidden="true" tabindex="-1"></a><span class="in">fitMeasures(Model1_fit, c("chisq", "df", "cfi", "rmsea"))</span></span>
+<span id="cb37-290"><a href="#cb37-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-291"><a href="#cb37-291" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-292"><a href="#cb37-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-293"><a href="#cb37-293" aria-hidden="true" tabindex="-1"></a>Record the substantive factor correlations estimated in this model to use in subsequent models. This can be done by sifting through the lavaan summary output or by utilizing code to extract the estimates from the summary.</span>
+<span id="cb37-294"><a href="#cb37-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-295"><a href="#cb37-295" aria-hidden="true" tabindex="-1"></a>The summary function calls a summary of the fitted model. The factor loadings are found in the "Latent Variables" section of the summary output, and the unstandardized error variances are found in the "Variances" section of the output. The code to view the summary output is as follows:</span>
+<span id="cb37-296"><a href="#cb37-296" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-297"><a href="#cb37-297" aria-hidden="true" tabindex="-1"></a><span class="in">```{r include=FALSE}</span></span>
+<span id="cb37-298"><a href="#cb37-298" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb37-299"><a href="#cb37-299" aria-hidden="true" tabindex="-1"></a><span class="in">summary(Model1_fit)</span></span>
+<span id="cb37-300"><a href="#cb37-300" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-301"><a href="#cb37-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-302"><a href="#cb37-302" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model 2</span></span>
+<span id="cb37-303"><a href="#cb37-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-304"><a href="#cb37-304" aria-hidden="true" tabindex="-1"></a>Model 2 is a saturated structural model with IER effects. With this model, the impact of the IER latent variable is allowed to be different for each of the indicators of the substantive constructs. This is done so that the subsequent test of the presence of IER can be conducted without making any assumptions about the specific nature of these effects.</span>
+<span id="cb37-305"><a href="#cb37-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-306"><a href="#cb37-306" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Specify Model 2}</span></span>
+<span id="cb37-307"><a href="#cb37-307" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb37-308"><a href="#cb37-308" aria-hidden="true" tabindex="-1"></a><span class="in">Model2 &lt;-'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb37-309"><a href="#cb37-309" aria-hidden="true" tabindex="-1"></a><span class="in">        fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb37-310"><a href="#cb37-310" aria-hidden="true" tabindex="-1"></a><span class="in">        fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb37-311"><a href="#cb37-311" aria-hidden="true" tabindex="-1"></a><span class="in">        fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb37-312"><a href="#cb37-312" aria-hidden="true" tabindex="-1"></a><span class="in">        fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb37-313"><a href="#cb37-313" aria-hidden="true" tabindex="-1"></a><span class="in">        fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb37-314"><a href="#cb37-314" aria-hidden="true" tabindex="-1"></a><span class="in">        fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb37-315"><a href="#cb37-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-316"><a href="#cb37-316" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER1 =~ ZLongstring_Index + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb37-317"><a href="#cb37-317" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER2=~ Zpsychsyn_score + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb37-318"><a href="#cb37-318" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER3=~ Zmahal + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb37-319"><a href="#cb37-319" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb37-320"><a href="#cb37-320" aria-hidden="true" tabindex="-1"></a><span class="in">        ZLongstring_Index ~~ 0*ZLongstring_Index</span></span>
+<span id="cb37-321"><a href="#cb37-321" aria-hidden="true" tabindex="-1"></a><span class="in">        Zpsychsyn_score ~~ 0*Zpsychsyn_score</span></span>
+<span id="cb37-322"><a href="#cb37-322" aria-hidden="true" tabindex="-1"></a><span class="in">        Zmahal ~~ 0*Zmahal</span></span>
+<span id="cb37-323"><a href="#cb37-323" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb37-324"><a href="#cb37-324" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb37-325"><a href="#cb37-325" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb37-326"><a href="#cb37-326" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj'</span></span>
+<span id="cb37-327"><a href="#cb37-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-328"><a href="#cb37-328" aria-hidden="true" tabindex="-1"></a><span class="in">Model2_fit &lt;- cfa(Model2, data=IER_Sim_Data, std.lv=TRUE)</span></span>
+<span id="cb37-329"><a href="#cb37-329" aria-hidden="true" tabindex="-1"></a><span class="in">fitMeasures(Model2_fit, c("chisq", "df", "cfi", "rmsea"))</span></span>
+<span id="cb37-330"><a href="#cb37-330" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-331"><a href="#cb37-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-332"><a href="#cb37-332" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model 3</span></span>
+<span id="cb37-333"><a href="#cb37-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-334"><a href="#cb37-334" aria-hidden="true" tabindex="-1"></a>Model 3 is identical to Model 2, except that the substantive factor correlations are constrained to their unstandardized estimates from Model 1.</span>
+<span id="cb37-335"><a href="#cb37-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-336"><a href="#cb37-336" aria-hidden="true" tabindex="-1"></a>Model 3 is a restricted saturated structural model with IER effects; the term restricted indicates that the values of the substantively important parameters have been restricted to be equal to the estimates from Model 1. The examination of Model 3 provides a direct statistical test of the impact of IER effects.</span>
+<span id="cb37-337"><a href="#cb37-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-338"><a href="#cb37-338" aria-hidden="true" tabindex="-1"></a>The code to specify Model 3 for this example is as follows:</span>
+<span id="cb37-339"><a href="#cb37-339" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-340"><a href="#cb37-340" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Specify Model 3}</span></span>
+<span id="cb37-341"><a href="#cb37-341" aria-hidden="true" tabindex="-1"></a><span class="in">#| eval: false</span></span>
+<span id="cb37-342"><a href="#cb37-342" aria-hidden="true" tabindex="-1"></a><span class="in">Model3 &lt;- 'fssr =~ ssr1 + ssr2 + ssr3</span></span>
+<span id="cb37-343"><a href="#cb37-343" aria-hidden="true" tabindex="-1"></a><span class="in">        fri =~ ri1 + ri2 + ri3</span></span>
+<span id="cb37-344"><a href="#cb37-344" aria-hidden="true" tabindex="-1"></a><span class="in">        fwom =~ wom1 + wom2 + wom3</span></span>
+<span id="cb37-345"><a href="#cb37-345" aria-hidden="true" tabindex="-1"></a><span class="in">        fsat =~ sat1 + sat2 + sat3</span></span>
+<span id="cb37-346"><a href="#cb37-346" aria-hidden="true" tabindex="-1"></a><span class="in">        fdj =~ dj1 + dj2 + dj3</span></span>
+<span id="cb37-347"><a href="#cb37-347" aria-hidden="true" tabindex="-1"></a><span class="in">        fij =~ ij1 + ij2 + ij3 + ij4</span></span>
+<span id="cb37-348"><a href="#cb37-348" aria-hidden="true" tabindex="-1"></a><span class="in">        fpj =~ pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb37-349"><a href="#cb37-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-350"><a href="#cb37-350" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER1 =~ ZLongstring_Index + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb37-351"><a href="#cb37-351" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER2=~ Zpsychsyn_score + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb37-352"><a href="#cb37-352" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER3=~ Zmahal + ssr1 + ssr2 + ssr3 + ri1 + ri2 + ri3 + wom1 + wom2 + wom3 + sat1 + sat2 + sat3 + dj1 + dj2 + dj3 + ij1 + ij2 + ij3 + ij4 + pj1 + pj2 + pj3 + pj4</span></span>
+<span id="cb37-353"><a href="#cb37-353" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb37-354"><a href="#cb37-354" aria-hidden="true" tabindex="-1"></a><span class="in">        ZLongstring_Index ~~ 0*ZLongstring_Index</span></span>
+<span id="cb37-355"><a href="#cb37-355" aria-hidden="true" tabindex="-1"></a><span class="in">        Zpsychsyn_score ~~ 0*Zpsychsyn_score</span></span>
+<span id="cb37-356"><a href="#cb37-356" aria-hidden="true" tabindex="-1"></a><span class="in">        Zmahal ~~ 0*Zmahal</span></span>
+<span id="cb37-357"><a href="#cb37-357" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb37-358"><a href="#cb37-358" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER1 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb37-359"><a href="#cb37-359" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER2 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb37-360"><a href="#cb37-360" aria-hidden="true" tabindex="-1"></a><span class="in">        fIER3 ~~ 0*fssr + 0*fri + 0*fwom + 0*fsat + 0*fdj + 0*fij + 0*fpj</span></span>
+<span id="cb37-361"><a href="#cb37-361" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb37-362"><a href="#cb37-362" aria-hidden="true" tabindex="-1"></a><span class="in">        fssr ~~ 0.382*fri + 0.936*fwom + 0.311*fsat + 0.805*fdj + 0.602*fij + 0.461*fpj</span></span>
+<span id="cb37-363"><a href="#cb37-363" aria-hidden="true" tabindex="-1"></a><span class="in">        fri ~~ 0.319*fwom + 0.782*fsat + 0.506*fdj + 0.493*fij + 0.547*fpj</span></span>
+<span id="cb37-364"><a href="#cb37-364" aria-hidden="true" tabindex="-1"></a><span class="in">        fwom ~~ 0.260*fsat + 0.692*fdj + 0.655*fij + 0.416*fpj</span></span>
+<span id="cb37-365"><a href="#cb37-365" aria-hidden="true" tabindex="-1"></a><span class="in">        fsat ~~ 0.478*fdj + 0.575*fij + 0.689*fpj</span></span>
+<span id="cb37-366"><a href="#cb37-366" aria-hidden="true" tabindex="-1"></a><span class="in">        fdj ~~ 0.639*fij + 0.586*fpj</span></span>
+<span id="cb37-367"><a href="#cb37-367" aria-hidden="true" tabindex="-1"></a><span class="in">        fij ~~ 0.597*fpj'</span></span>
+<span id="cb37-368"><a href="#cb37-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-369"><a href="#cb37-369" aria-hidden="true" tabindex="-1"></a><span class="in">Model3_fit &lt;- cfa(Model3, data=IER_Sim_Data, std.lv=TRUE)</span></span>
+<span id="cb37-370"><a href="#cb37-370" aria-hidden="true" tabindex="-1"></a><span class="in">fitMeasures(Model3_fit, c("chisq", "df", "cfi", "rmsea"))</span></span>
+<span id="cb37-371"><a href="#cb37-371" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-372"><a href="#cb37-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-373"><a href="#cb37-373" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step Three: Compare the models</span></span>
+<span id="cb37-374"><a href="#cb37-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-375"><a href="#cb37-375" aria-hidden="true" tabindex="-1"></a>First, a comparison of Model 1 and Model 2 tests the hypothesis that that there are no method effects due to IER.</span>
+<span id="cb37-376"><a href="#cb37-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-379"><a href="#cb37-379" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-380"><a href="#cb37-380" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb37-381"><a href="#cb37-381" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(Model1_fit, Model2_fit)</span>
+<span id="cb37-382"><a href="#cb37-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-383"><a href="#cb37-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-384"><a href="#cb37-384" aria-hidden="true" tabindex="-1"></a>Next, a comparison of Model 2 and Model 3 tests whether the substantive variable correlations are significantly biased by IER effects.</span>
+<span id="cb37-385"><a href="#cb37-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-388"><a href="#cb37-388" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-389"><a href="#cb37-389" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb37-390"><a href="#cb37-390" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(Model3_fit, Model2_fit)</span>
+<span id="cb37-391"><a href="#cb37-391" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-392"><a href="#cb37-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-393"><a href="#cb37-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-394"><a href="#cb37-394" aria-hidden="true" tabindex="-1"></a>Export IER Scores</span>
+<span id="cb37-395"><a href="#cb37-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-398"><a href="#cb37-398" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-399"><a href="#cb37-399" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb37-400"><a href="#cb37-400" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb37-401"><a href="#cb37-401" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(downloadthis)</span>
+<span id="cb37-402"><a href="#cb37-402" aria-hidden="true" tabindex="-1"></a>IER_Scores <span class="sc">|&gt;</span></span>
+<span id="cb37-403"><a href="#cb37-403" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download_this</span>(</span>
+<span id="cb37-404"><a href="#cb37-404" aria-hidden="true" tabindex="-1"></a>    <span class="at">output_name =</span> <span class="st">"IERScores"</span>,</span>
+<span id="cb37-405"><a href="#cb37-405" aria-hidden="true" tabindex="-1"></a>    <span class="at">output_extension =</span> <span class="st">".xlsx"</span>,</span>
+<span id="cb37-406"><a href="#cb37-406" aria-hidden="true" tabindex="-1"></a>    <span class="at">button_label =</span> <span class="st">"Download data"</span>,</span>
+<span id="cb37-407"><a href="#cb37-407" aria-hidden="true" tabindex="-1"></a>    <span class="at">button_type =</span> <span class="st">"warning"</span>,</span>
+<span id="cb37-408"><a href="#cb37-408" aria-hidden="true" tabindex="-1"></a>    <span class="at">has_icon =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb37-409"><a href="#cb37-409" aria-hidden="true" tabindex="-1"></a>    <span class="at">icon =</span> <span class="st">"fa fa-save"</span></span>
+<span id="cb37-410"><a href="#cb37-410" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb37-411"><a href="#cb37-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-412"><a href="#cb37-412" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
